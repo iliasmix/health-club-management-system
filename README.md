@@ -43,6 +43,30 @@ health-club-management-system/
     └── AdminData.txt              # Text file for storing admin data.
 ```
 
+## **Description of the Folder Structure:**
+
+### **1. `src/`** — Source Code Folder 🖥️
+- **Admin.java**: Contains methods and properties related to admin functionalities (e.g., adding members, managing subscriptions).
+- **Coach.java**: Manages coach-related tasks, such as assigning coaches to members and maintaining coach data.
+- **Member.java**: Defines member details, including adding and displaying member information, as well as managing subscription statuses.
+- **Subscription.java**: Handles the logic of tracking subscriptions, including start dates, renewal, and status management.
+- **HealthClubSystem.java**: This is the central control point of the system that integrates the various components (Admin, Member, Coach, Subscription).
+- **FileHandler.java**: Responsible for reading and writing data to text files to persist member, coach, and admin information.
+- **Main.java**: The starting point of the application. It initializes the program and runs the primary logic.
+
+### **2. `resources/`** — Data Storage Files 💾
+- **MemberData.txt**: A text file that stores member information, such as names, subscription statuses, and expiration dates.
+- **CoachData.txt**: A text file for storing coach data, including details about each coach and their assigned members.
+- **AdminData.txt**: A file to store admin-related information, such as login credentials and system configurations.
+
+## Why This Structure?
+- **Separation of Concerns**: By organizing the code into logical sections (Admin, Member, Coach, etc.), it's easier to manage and maintain.
+- **File-Based Storage**: Using text files for data storage keeps the project simple and lightweight, avoiding the complexity of a database setup.
+- **Easy Navigation**: Clear folder structure helps developers easily locate and modify specific files.
+
+This folder structure ensures your project is scalable, maintainable, and easy to understand for both current and future contributors. 🚀
+
+
 ## Technologies 🛠️
 - **Programming Language**: Java ☕
 - **Storage**: Text files for storing member, coach, and admin data (no database). 📂
