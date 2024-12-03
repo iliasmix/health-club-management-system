@@ -1,4 +1,5 @@
 # Health Club Management System 🏋️‍♀️💪
+![](./resources/image.png)
 
 ## Description 📝
 The **Health Club Management System** is a Java-based application designed to help health clubs manage their operations. It includes features for tracking members, assigning coaches, and managing subscriptions. The system does not use a database but instead uses text files for storing data. 📂
