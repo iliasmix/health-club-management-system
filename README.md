@@ -31,9 +31,10 @@ The project follows this folder structure:
 ``` scss
 health-club-management-system/
 ├── src/                         # Source code folder
-│   ├── Admin.java                 # Admin class for managing admin-related tasks.
-│   ├── Coach.java                 # Coach class for managing coach-related tasks.
-│   ├── Member.java                # Member class for managing member-related tasks.
+│   ├── User.java                  # Base User class (common attributes and methods)
+│   ├── Admin.java                 # Admin class for managing admin-related tasks (extends User).
+│   ├── Coach.java                 # Coach class for managing coach-related tasks (extends User).
+│   ├── Member.java                # Member class for managing member-related tasks (extends User).
 │   ├── Subscription.java          # Class for managing subscriptions.
 │   ├── HealthClubSystem.java      # Main system management class.
 │   ├── FileHandler.java           # Handles reading and writing to text files.
@@ -47,6 +48,7 @@ health-club-management-system/
 ## **Description of the Folder Structure:**
 
 ### **1. `src/`** — Source Code Folder 🖥️
+- **User.java**: acts as the base class that represents general user properties, and the specific roles of Admin, Coach, and Member can be derived from it.
 - **Admin.java**: Contains methods and properties related to admin functionalities (e.g., adding members, managing subscriptions).
 - **Coach.java**: Manages coach-related tasks, such as assigning coaches to members and maintaining coach data.
 - **Member.java**: Defines member details, including adding and displaying member information, as well as managing subscription statuses.
