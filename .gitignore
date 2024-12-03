@@ -8,6 +8,8 @@
 .idea/
 .vscode/
 
+# Mark
+
 # Build directories
 target/
 build/
