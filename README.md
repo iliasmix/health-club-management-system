@@ -125,7 +125,7 @@ This structure ensures a clean, organized, and scalable health club management s
 ### Prerequisites 🖥️
 
 - Java Development Kit (JDK) version 8 or higher installed.
-- NetBeans IDE (with Swing support) for GUI design.
+- JavaFX SDK installed ([https://openjfx.io](Download)).
 - A GitHub account (for version control and collaboration).
 
 ### Installation 🔧
@@ -134,3 +134,6 @@ This structure ensures a clean, organized, and scalable health club management s
    ```bash
    git clone https://github.com/DORMODO/health-club-management-system.git
    ```
+2. Set up the JavaFX SDK in your IDE.
+3. Run the application:
+     - Use the Main.java file as the entry point.
