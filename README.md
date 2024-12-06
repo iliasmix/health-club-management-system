@@ -125,7 +125,7 @@ This structure ensures a clean, organized, and scalable health club management s
 ### Prerequisites 🖥️
 
 - Java Development Kit (JDK) version 8 or higher installed.
-- JavaFX SDK installed ([https://openjfx.io](Download)).
+- JavaFX SDK installed ([Download](https://openjfx.io)).
 - A GitHub account (for version control and collaboration).
 
 ### Installation 🔧
