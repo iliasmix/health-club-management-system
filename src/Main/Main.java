@@ -3,7 +3,8 @@
  * This class initializes the system, displays the menu, and handles user
  * interactions.
  */
-package Main;
+package main;
+
 import services.*;
 import modules.*;
 
