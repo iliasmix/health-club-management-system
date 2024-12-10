@@ -1,4 +1,4 @@
-# Health Club Management System 🏋️‍♀️💪
+# Health Club Management System 💪
 
 ![](./resources/image.png)
 
