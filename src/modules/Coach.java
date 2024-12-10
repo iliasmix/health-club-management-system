@@ -1,11 +1,13 @@
+package modules;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 
 public class Coach extends User {
     private String specialization;
     private ArrayList<Member> members;
-    private HashMap<String, TrainingPlan> trainingPlans;
+//    private HashMap<String, TrainingPlan> trainingPlans;
 
     // Constructor
     public Coach(String username, String password, String email, String specialization) {

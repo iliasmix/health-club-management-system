@@ -3,6 +3,11 @@
  * This class initializes the system, displays the menu, and handles user
  * interactions.
  */
+package Main;
+import services.*;
+import modules.*;
+
+
 public class Main {
     public static void main(String[] args) {
         // Create the central HealthClubSystem instance that manages all operations.

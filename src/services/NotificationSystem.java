@@ -1,4 +1,7 @@
+package services;
 import java.util.ArrayList;
+import modules.Coach;
+import modules.Member;
 
 public class NotificationSystem {
     private static ArrayList<String> notifications = new ArrayList<>();
