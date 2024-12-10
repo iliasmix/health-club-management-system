@@ -68,9 +68,9 @@ public class Coach extends User {
         return members;
     }
 
-    public TrainingPlan getTrainingPlan(Member member) {
-        return trainingPlans.get(member.getUsername());
-    }
+    // public TrainingPlan getTrainingPlan(Member member) {
+    //     return trainingPlans.get(member.getUsername());
+    // }
 
     public void setName(String name) {
         this.setUsername(name);

@@ -3,20 +3,21 @@
  * This class initializes the system, displays the menu, and handles user
  * interactions.
  */
-package main;
-
-import services.*;
-import modules.*;
+package Main;
 
 
 public class Main {
     public static void main(String[] args) {
         // Create the central HealthClubSystem instance that manages all operations.
+
+        //HealthClubSystem doesn't have a no-arg constructor, so this won't work nor the other functions below
+        /*
         HealthClubSystem system = new HealthClubSystem();
+         */
 
         // The system needs to be initialized before starting (e.g., loading data).
         // This includes loading members, coaches, and admin data from files.
-        system.initializeSystem();
+        //system.initializeSystem();
 
         // A loop ensures that the system runs continuously until the user decides to
         // exit.
@@ -34,17 +35,17 @@ public class Main {
                 case 1: // If the user selects Admin.
                     // Direct the user to the admin operations, such as managing members or
                     // generating reports.
-                    system.adminOperations();
+                    //system.adminOperations();
                     break;
 
                 case 2: // If the user selects Coach.
                     // Allow the coach to manage schedules, send messages, or view member details.
-                    system.coachOperations();
+                    //system.coachOperations();
                     break;
 
                 case 3: // If the user selects Member.
                     // Allow the member to view their coach, subscription details, or schedules.
-                    system.memberOperations();
+                    //system.memberOperations();
                     break;
 
                 case 0: // If the user selects Exit.
@@ -61,7 +62,7 @@ public class Main {
 
         // Once the loop exits, perform any necessary cleanup, such as saving data to
         // files.
-        system.cleanup();
+        //system.cleanup();
     }
 
     /**

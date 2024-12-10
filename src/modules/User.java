@@ -37,9 +37,11 @@ public class User {
     }
 
     // Methods for login, logout, profile update
+    /* 
     public boolean login(String username, String password) {
         // Implement login logic
     }
+    */
 
     public void logout() {
         // Implement logout logic

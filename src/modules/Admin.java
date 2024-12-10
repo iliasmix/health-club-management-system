@@ -56,11 +56,15 @@ public class Admin extends User{
     
         // Update member information
         if (newUsername != null && !newUsername.isEmpty()) {
-            member.setUsername();
+
+            /*There is no setUsername in the Member class. */
+            //member.setUsername();
         }
     
         if (newEmail != null && !newEmail.isEmpty()) {
-            member.setEmail(newEmail);
+
+            /* There is not setEmail in the Member class. */
+            //member.setEmail(newEmail);
         }
 
     }
@@ -89,9 +93,12 @@ public class Admin extends User{
         }
         // Remove coach assignments from members
         for (Member member : members) {
-            if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
+            //Coach shouldn't be inside the member, it should be inside the coach
+            /*  
+                if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
                 member.setCoach(null); // Clear the coach assignment for the member
-            }
+                } 
+            */
         }
 
         // Remove the coach from the list
@@ -158,9 +165,9 @@ public class Admin extends User{
         return members;
     }
 
-    public ArrayList<Coach> getCoaches() {
-        return ;
-    }
+    // public ArrayList<Coach> getCoaches() {
+    //     return ;
+    // }
 
     public ArrayList<Billing> getBills() {
         return bills;

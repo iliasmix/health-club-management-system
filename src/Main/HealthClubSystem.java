@@ -1,7 +1,6 @@
-package main;
+package Main;
 
 import java.util.ArrayList;
-import services.*;
 import modules.*;
 public class HealthClubSystem {
     // The admin of the system and lists of coaches and members
