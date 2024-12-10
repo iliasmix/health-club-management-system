@@ -1,4 +1,4 @@
-# Health Club Management System 🏋️‍♀️💪
+# Health Club Management System 💪
 
 ![](./resources/image.png)
 
@@ -18,7 +18,7 @@ The system includes:
 - **Admin Features:**
 
   - 🆕 Add new members.
-  - 🏋️‍♀️ Assign coaches to members.
+  - 💪🏻 Assign coaches to members.
   - 💳 Manage subscriptions (add, update, delete).
 
 - **Member Features:**
