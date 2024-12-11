@@ -9,6 +9,7 @@ public class NotificationSystem {
     public static void sendSubscriptionExpiryNotification(Member member) {
         // Create expiry notification message
         // Add to notifications list
+        // Send the notification to the admin
         // Send notification to member
     }
 
@@ -17,11 +18,7 @@ public class NotificationSystem {
         // Add to notifications list
     }
 
-    public static ArrayList<String> getNotifications() {
-        return notifications;
-    }
-
-    public static void clearNotifications() {
-        notifications.clear();
-    }
+    // public static ArrayList<String> getNotifications() {
+    //     return notifications;
+    // }
 }

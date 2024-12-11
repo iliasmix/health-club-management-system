@@ -5,12 +5,11 @@ import java.util.Date;
 
 
 public class Coach extends User {
-    private String specialization;
     private ArrayList<Member> members;
-//    private HashMap<String, TrainingPlan> trainingPlans;
+    // private HashMap<String, TrainingPlan> trainingPlans;
 
     // Constructor
-    public Coach(String username, String password, String email, String specialization) {
+    public Coach(String username, String password, String email) {
         super(username, password, email);
         // Initialize coach fields
     }
@@ -56,14 +55,6 @@ public class Coach extends User {
     }
 
     // Getters and setters
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
     public ArrayList<Member> getMembers() {
         return members;
     }
