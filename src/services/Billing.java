@@ -44,7 +44,9 @@ public class Billing {
     public Date getBillingDate() {
         return billingDate;
     }
-
+    public void setPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
     public boolean isPaid() {
         return isPaid;
     }

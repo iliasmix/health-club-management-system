@@ -12,7 +12,6 @@ public class Coach extends User {
         super(username, password, email);
         // Initialize coach fields
     }
-
     // !!!!!!!!!!!!!!!!!!!!! Member management methods
     // public void assignMember(Member member) {
     // // Check if member exists
