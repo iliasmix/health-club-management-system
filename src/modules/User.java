@@ -39,7 +39,7 @@ public class User {
     // Methods for login, logout, profile update
     /* 
     public boolean login(String username, String password) {
-        // Implement login logic
+        //Implement login logic
     }
     */
 

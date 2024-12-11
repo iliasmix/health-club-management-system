@@ -15,13 +15,13 @@ public class HealthClubSystem {
         this.members = new ArrayList<>();
     }
 
-    // Method to add a new member to the system
-    public void addMember(Member member) {
-        members.add(member);
-    }
+    // // Method to add a new member to the system
+    // public void addMember(Member member) {
+    //     members.add(member);
+    // }
 
-    // Method to add a new coach to the system
-    public void addCoach(Coach coach) {
-        coaches.add(coach);
-    }
+    // // Method to add a new coach to the system
+    // public void addCoach(Coach coach) {
+    //     coaches.add(coach);
+    // }
 }

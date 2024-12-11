@@ -1,8 +1,7 @@
 package modules;
+
 import java.util.ArrayList;
 import java.util.Date;
-
-
 
 public class Coach extends User {
     private ArrayList<Member> members;
@@ -14,22 +13,22 @@ public class Coach extends User {
         // Initialize coach fields
     }
 
-    // Member management methods
-    public void assignMember(Member member) {
-        // Check if member exists
-        // Add member to list
-    }
+    // !!!!!!!!!!!!!!!!!!!!! Member management methods
+    // public void assignMember(Member member) {
+    // // Check if member exists
+    // // Add member to list
+    // }
 
-    public void removeMember(Member member) {
-        // Remove member from list
-        // Remove associated training plan
-    }
+    // !!!!!!!!!!!!!!!!!!!!!!!! public void removeMember(Member member) {
+    // // Remove member from list
+    // // Remove associated training plan
+    // }
 
     // Training plan methods
     public void createTrainingPlan(Member member, Date startDate, Date endDate) {
         // Validate member is assigned to coach
         // Create new training plan
-        // Store plan in hashmap
+        // Store plan in store in file
     }
 
     public void addExerciseToTrainingPlan(Member member, String exercise) {
@@ -49,25 +48,20 @@ public class Coach extends User {
         // Send to all members
     }
 
-    public void sendMessageToMember(Member member, String message) {
-        // Validate member is assigned
-        // Format and send message
-    }
-
     // Getters and setters
     public ArrayList<Member> getMembers() {
         return members;
     }
 
     // public TrainingPlan getTrainingPlan(Member member) {
-    //     return trainingPlans.get(member.getUsername());
+    // return trainingPlans.get(member.getUsername());
     // }
 
-    public void setName(String name) {
-        this.setUsername(name);
-    }
+    // public void setName(String name) {
+    //     this.setUsername(name);
+    // }
 
-    public String getName() {
-        return this.getUsername();
-    }
+    // public String getName() {
+    //     return this.getUsername();
+    // }
 }

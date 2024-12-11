@@ -8,7 +8,7 @@ public class TrainingPlan {
     private String coachId;
     private Date startDate;
     private Date endDate;
-    private ArrayList<String> exercises;
+    // private ArrayList<String> exercises;
     private String schedule;
 
     // Constructor
@@ -16,10 +16,10 @@ public class TrainingPlan {
         // Initialize training plan details
     }
 
-    // Plan management methods
-    public void addExercise(String exercise) {
-        // Add exercise to plan
-    }
+    // // Plan management methods
+    // public void addExercise(String exercise) {
+    //     // Add exercise to plan
+    // }
 
     public void setSchedule(String schedule) {
         // Set training schedule
@@ -30,9 +30,9 @@ public class TrainingPlan {
         return schedule;
     }
 
-    public ArrayList<String> getExercises() {
-        return exercises;
-    }
+    // public ArrayList<String> getExercises() {
+    //     return exercises;
+    // }
 
     public String getPlanId() {
         return planId;

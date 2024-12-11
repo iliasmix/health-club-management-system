@@ -1,9 +1,9 @@
 package modules;
+
 import services.Billing;
 import java.util.ArrayList;
-import services.Billing;
 
-public class Admin extends User{
+public class Admin extends User {
     private ArrayList<Member> members;
     private ArrayList<Coach> coaches;
     private ArrayList<Billing> bills;
@@ -32,35 +32,34 @@ public class Admin extends User{
         if (member == null) {
             return;
         }
-    
+
         // Check if the member exists in the list
         if (!members.contains(member)) {
             return;
         }
-    
+
         // Remove the member from the list
-        members.remove(member);    
+        members.remove(member);
     }
-    
 
     public void updateMember(Member member, String newUsername, String newEmail) {
         // Validate the member object
         if (member == null) {
             return;
         }
-    
+
         // Check if the member exists in the list
         if (!members.contains(member)) {
             return;
         }
-    
+
         // Update member information
         if (newUsername != null && !newUsername.isEmpty()) {
 
-            /*There is no setUsername in the Member class. */
+            /* There is no setUsername in the Member class. */
             member.setUsername(newUsername);
         }
-    
+
         if (newEmail != null && !newEmail.isEmpty()) {
 
             /* There is not setEmail in the Member class. */
@@ -68,7 +67,6 @@ public class Admin extends User{
         }
 
     }
-    
 
     // Methods to manage coaches
     public void addCoach(Coach coach) {
@@ -92,12 +90,12 @@ public class Admin extends User{
             return;
         }
         // Remove coach assignments from members
-        //need this if any thing happend to coach data type in member class
+        // need this if any thing happend to coach data type in member class
         // for (Member member : coach.getMembers()) {
-        //     // Check if the member is assigned to the coach
-        //     if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
-        //         member.setCoach(null); // Clear the coach assignment for the member
-        //     }
+        // // Check if the member is assigned to the coach
+        // if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
+        // member.setCoach(null); // Clear the coach assignment for the member
+        // }
         // }
         // Remove the coach from the list
         coaches.remove(coach);
@@ -113,7 +111,7 @@ public class Admin extends User{
         // Check if the member exists in the list
         if (!coaches.contains(coach)) {
             return;
-        }        
+        }
         // Update coach information
         coach.setName(newName);
         coach.setSpecialization(newSpecialization);
@@ -126,26 +124,25 @@ public class Admin extends User{
         if (coach == null || !coaches.contains(coach)) {
             return;
         }
-    
+
         // Validate member
         if (member == null || !members.contains(member)) {
             return;
         }
-    
+
         // Assign member to coach
         coach.assignMember(member);
-    
+
         // Update member's coach
         member.setCoach(coach);
-    
+
         // Save data (implementation needed)
     }
-    
 
     // Billing management
     public void createBill(Member member, double amount) {
         // Create new bill
-        Billing biil=new Billing(getPassword(), getEmail(), amount)
+        Billing billing=new Billing(getPassword(), getEmail(), amount)
         // Add to bills list
     }
 
@@ -154,14 +151,14 @@ public class Admin extends User{
         // Process payment
     }
 
-    // Search functionality
-    public ArrayList<Member> searchMembers(String keyword) {
-        // Search members by username or email
+    // ! Search functionality
+    public String searchMembers(String keyword) {
+        // Search members by username or password
         // Return matching members
         return null;
     }
 
-    public ArrayList<Coach> searchCoaches(String keyword) {
+    public String searchCoaches(String keyword) {
         // Search coaches by name or specialization
         // Return matching coaches
         return null;
@@ -176,14 +173,14 @@ public class Admin extends User{
     }
 
     // Subscription management
-    
+
     // Getters
     public ArrayList<Member> getMembers() {
         return members;
     }
 
     // public ArrayList<Coach> getCoaches() {
-    //     return ;
+    // return ;
     // }
 
     public ArrayList<Billing> getBills() {

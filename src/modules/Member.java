@@ -9,6 +9,7 @@ public class Member extends User {
     private ArrayList<String> trainingPlans;
 
     // Constructor
+    // Add coach
     public Member(String username, String password, String email) {
         super(username, password, email);
         // Initialize lists
@@ -44,7 +45,7 @@ public class Member extends User {
     // Subscription methods
     public void viewSubscriptionDetails() {
         // Display subscription information
-        // Show start date, end date, status
+        // Show end date
         // Show expiry warning if applicable
     }
 
@@ -53,30 +54,26 @@ public class Member extends User {
         // Display member's training schedule
     }
 
-    public void viewTrainingPlan() {
-        // Display all training plans
-    }
+    // public void viewTrainingPlan() {
+    //     // Display all training plans
+    // }
 
     // Notification methods
-    public void receiveMessage(String message) {
-        // Add message to notifications
-        // Display new message
-    }
+    // public void receiveMessage(String message) {
+    //     // Add message to notifications
+    //     // Display new message
+    // }
 
     public void viewNotifications() {
         // Display all notifications
     }
 
-    public void clearNotifications() {
-        // Clear all notifications
-    }
+    // // Training plan methods
+    // public void addTrainingPlan(String plan) {
+    //     // Add new training plan
+    // }
 
-    // Training plan methods
-    public void addTrainingPlan(String plan) {
-        // Add new training plan
-    }
-
-    public void clearTrainingPlans() {
-        // Clear all training plans
-    }
+    // public void clearTrainingPlans() {
+    //     // Clear all training plans
+    // }
 }
