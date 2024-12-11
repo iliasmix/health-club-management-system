@@ -1,7 +1,7 @@
 package modules;
 import services.Billing;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
+import services.Billing;
 
 public class Admin extends User{
     private ArrayList<Member> members;
@@ -58,13 +58,13 @@ public class Admin extends User{
         if (newUsername != null && !newUsername.isEmpty()) {
 
             /*There is no setUsername in the Member class. */
-            //member.setUsername();
+            member.setUsername(newUsername);
         }
     
         if (newEmail != null && !newEmail.isEmpty()) {
 
             /* There is not setEmail in the Member class. */
-            //member.setEmail(newEmail);
+            member.setEmail(newEmail);
         }
 
     }
@@ -92,39 +92,60 @@ public class Admin extends User{
             return;
         }
         // Remove coach assignments from members
-        for (Member member : members) {
-            //Coach shouldn't be inside the member, it should be inside the coach
-            /*  
-                if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
-                member.setCoach(null); // Clear the coach assignment for the member
-                } 
-            */
-        }
-
+        //need this if any thing happend to coach data type in member class
+        // for (Member member : coach.getMembers()) {
+        //     // Check if the member is assigned to the coach
+        //     if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
+        //         member.setCoach(null); // Clear the coach assignment for the member
+        //     }
+        // }
         // Remove the coach from the list
         coaches.remove(coach);
-
         // Save data (this could be saving to a database, file, etc.)
         // Save data
     }
 
     public void updateCoach(Coach coach, String newName, String newSpecialization) {
         // Validate coach
+        if (coach == null) {
+            return;
+        }
+        // Check if the member exists in the list
+        if (!coaches.contains(coach)) {
+            return;
+        }        
         // Update coach information
+        coach.setName(newName);
+        coach.setSpecialization(newSpecialization);
         // Save data
     }
 
     // Member-Coach assignment
     public void assignMemberToCoach(Member member, Coach coach) {
-        // Validate member and coach
+        // Validate coach
+        if (coach == null || !coaches.contains(coach)) {
+            return;
+        }
+    
+        // Validate member
+        if (member == null || !members.contains(member)) {
+            return;
+        }
+    
         // Assign member to coach
+        coach.assignMember(member);
+    
         // Update member's coach
-        // Save data
+        member.setCoach(coach);
+    
+        // Save data (implementation needed)
     }
+    
 
     // Billing management
     public void createBill(Member member, double amount) {
         // Create new bill
+        Billing biil=new Billing(getPassword(), getEmail(), amount)
         // Add to bills list
     }
 

@@ -2,7 +2,7 @@ package modules;
 import java.util.ArrayList;
 
 public class Member extends User {
-    private String coach;
+    private Coach coach;
     private String schedule;
     private Subscription subscription;
     private ArrayList<String> notifications;
@@ -17,11 +17,11 @@ public class Member extends User {
     }
 
     // Getters and Setters
-    public String getCoach() {
+    public Coach getCoach() {
         return coach;
     }
 
-    public void setCoach(String coach) {
+    public void setCoach(Coach coach) {
         this.coach = coach;
     }
 
