@@ -155,11 +155,7 @@ public class Admin extends User{
     }
 
     // Subscription management
-    public void checkSubscriptions() {
-        // Check for expired subscriptions
-        // Send notifications for expired subscriptions
-    }
-
+    
     // Getters
     public ArrayList<Member> getMembers() {
         return members;
