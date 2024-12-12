@@ -10,8 +10,8 @@ public class Admin extends User {
     private ArrayList<Billing> bills;
 
     // Constructor
-    public Admin(String username, String password, String email) {
-        super(username, password, email);
+    public Admin(String username, String password) {
+        super(username, password);
         // Initialize ArrayLists
         this.members = new ArrayList<Member>();
         this.coaches = new ArrayList<Coach>();

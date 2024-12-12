@@ -1,9 +1,7 @@
 package modules;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -96,7 +94,7 @@ public class Member extends User {
     }
 
     private void saveTrainingPlansToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TrainingPlan.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TrainingPlans.txt"))) {
             for (String plan : trainingPlans) {
                 writer.write(plan);
                 writer.newLine();
