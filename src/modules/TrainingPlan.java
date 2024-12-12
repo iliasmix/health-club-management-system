@@ -13,7 +13,6 @@ public class TrainingPlan {
 
     // Constructor
     public TrainingPlan(String planId, String memberId, String coachId, Date startDate, Date endDate) {
-        // Initialize training plan details
     }
 
     // // Plan management methods

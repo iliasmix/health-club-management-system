@@ -5,23 +5,23 @@ import java.util.Date;
 
 public class Coach extends User {
     private ArrayList<Member> members;
-    // private HashMap<String, TrainingPlan> trainingPlans;
 
-    // Constructor
-    public Coach(String username, String password, String email) {
-        super(username, password, email);
-        // Initialize coach fields
+    
+    public Coach(String username, String password) {
+        super(username, password);
+        this.username = username;
+        this.password = password;
     }
-    // !!!!!!!!!!!!!!!!!!!!! Member management methods
-    // public void assignMember(Member member) {
-    // // Check if member exists
-    // // Add member to list
-    // }
+    //  Member management methods
+    public void assignMember(Member member) {
+    // Check if member exists
+    // Add member to list
+    }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!! public void removeMember(Member member) {
-    // // Remove member from list
-    // // Remove associated training plan
-    // }
+    public void removeMember(Member member) {
+    // Remove member from list
+    // Remove associated training plan
+    }
 
     // Training plan methods
     public void createTrainingPlan(Member member, Date startDate, Date endDate) {
@@ -53,14 +53,14 @@ public class Coach extends User {
     }
 
     // public TrainingPlan getTrainingPlan(Member member) {
-    // return trainingPlans.get(member.getUsername());
+    // // return trainingPlans.get(member.getUsername());
     // }
 
-    // public void setName(String name) {
-    //     this.setUsername(name);
-    // }
+    public void setName(String name) {
+        this.setUsername(name);
+    }
 
-    // public String getName() {
-    //     return this.getUsername();
-    // }
+    public String getName() {
+        return this.getUsername();
+    }
 }
