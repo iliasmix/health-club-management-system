@@ -1,7 +1,6 @@
 package modules;
 
 import java.io.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,17 +8,19 @@ public class Member extends User {
     private Coach coach;
     private String schedule;
     private Subscription subscription;
-    private ArrayList<String> notifications; // why if there is file handling ?!
+    private ArrayList<String> notifications; // Why if there is file handling?!
     private ArrayList<String> trainingPlans;
 
     // Constructor
-    // Add coach
     public Member(String username, String password) {
         super(username, password);
         this.notifications = new ArrayList<>();
         this.trainingPlans = new ArrayList<>();
+        loadNotificationsFromFile();
+        loadTrainingPlansFromFile();
     }
 
+    // Getter and Setter methods for Coach, Schedule, and Subscription
     public Coach getCoach() {
         return coach;
     }
@@ -49,18 +50,16 @@ public class Member extends User {
         System.out.print("Your start date is: ");
         subscription.getStartDate();
 
-        // --------------------
         System.out.print("Your end date is: ");
         subscription.getEndDate();
 
         if (subscription.checkIfExpired()) {
             System.out.println("Your subscription is expired!");
         }
-        // will add more deatils inshallah..
-
+        // Will add more details InshaAllah..
     }
 
-    // Schedule and training plan methods
+    // Schedule and Training Plan methods
     public void viewSchedule() {
         if (schedule != null && !schedule.isEmpty()) {
             System.out.println("Your current schedule: " + schedule);
@@ -80,10 +79,30 @@ public class Member extends User {
         }
     }
 
+    public void addTrainingPlan(String plan) {
+        if (plan == null || plan.isEmpty()) {
+            System.out.println("Training plan cannot be empty.");
+            return;
+        }
+
+        // Add the plan to the local list
+        trainingPlans.add(plan);
+
+        // Append the plan to the TrainingPlan.txt file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TrainingPlans.txt", true))) {
+            writer.write(plan);
+            writer.newLine();
+            System.out.println("Training plan added successfully.");
+        } catch (IOException e) {
+            System.out.println("Error adding training plan: " + e.getMessage());
+        }
+    }
+
     private void loadTrainingPlansFromFile() {
-        File file = new File("TrainingPlan.txt");
+        File file = new File("TrainingPlans.txt");
         if (file.exists()) {
             try (Scanner scanner = new Scanner(file)) {
+                trainingPlans.clear();
                 while (scanner.hasNextLine()) {
                     trainingPlans.add(scanner.nextLine().trim());
                 }
@@ -126,6 +145,7 @@ public class Member extends User {
         File file = new File("Notifications.txt");
         if (file.exists()) {
             try (Scanner scanner = new Scanner(file)) {
+                notifications.clear();
                 while (scanner.hasNextLine()) {
                     notifications.add(scanner.nextLine().trim());
                 }
