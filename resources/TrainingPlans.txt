@@ -1,1 +1,1 @@
-TrainingPlan ID/Exercise Name
+TrainingPlan ID/Schedule ID/Exercise Name

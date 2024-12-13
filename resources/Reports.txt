@@ -1,1 +1,1 @@
-Report ID/ Admin ID
+Report ID (rp-1, rp-2, ... etc)/Report Content/ Admin ID

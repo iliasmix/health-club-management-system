@@ -23,12 +23,7 @@ public class NotificationSystem {
         }
     }
 
-    public static void sendCoachMessage(Coach coach, String message) {
-        // Send message to all coach's members
-        // Add to notifications list
-    }
+    public static void sendMessage(String senderId, String receiverId, String message ) throws FileNotFoundException {
 
-    // public static ArrayList<String> getNotifications() {
-    //     return notifications;
-    // }
+    }
 }

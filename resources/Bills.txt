@@ -1,1 +1,1 @@
-Member ID/ Plan (3 months - 6months ... etc) / Price/ Start Date/ End Date/ Bill Generation Time
+Bill ID (b-1, b-2, ...etc)/Member ID/Plan (3 months - 6months ... etc)/Price/Start Date/End Date/Bill Generation Time

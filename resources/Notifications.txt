@@ -1,1 +1,1 @@
-sender ID/Reciever ID/Notifcation Message/Notification Date
+Notification ID (n-1, n-2, ...etc)/sender ID/Receiver ID/Notification Message/Notification Date
