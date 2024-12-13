@@ -165,4 +165,9 @@ public class Member extends User {
             System.out.println("Error saving notifications: " + e.getMessage());
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s", getUsername(), getPassword(), getID());
+    }
 }

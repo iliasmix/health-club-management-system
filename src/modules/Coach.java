@@ -104,4 +104,9 @@ public class Coach extends User {
     public String getName() {
         return this.getUsername();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s", getUsername(), getPassword(), getID());
+    }
 }

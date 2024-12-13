@@ -1,65 +1,116 @@
 package services;
+
 import java.util.ArrayList;
 import java.io.*;
-import java.io.File;
+import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
+
+/**
+ * FileHandler class manages all file operations for the Health Club Management
+ * System.
+ * This class provides methods to save and load data for Members and Coaches.
+ * 
+ * File Format Specifications:
+ * - All data is stored in comma-separated format (CSV)
+ * - Member format: username,password,memberID
+ * - Coach format: username,password,coachID
+ * - Member IDs format: M### (e.g., M001)
+ * - Coach IDs format: C### (e.g., C001)
+ */
 public class FileHandler {
+    // ==================== File Path Constants ====================
+    private static final String MEMBERS_FILE = "resources/members.txt";
+    private static final String COACHES_FILE = "resources/coaches.txt";
+    private static final String BILLING_FILE = "bills.txt";
 
-    // File paths for data storage
-    private static final String MEMBERS_FILE = "members.dat";
-    private static final String COACHES_FILE = "coaches.dat";
-    private static final String BILLING_FILE = "Admin.dat";
-
-    // Member data operations
+    // ==================== Member Operations ====================
+    /**
+     * Saves a list of members to the members file.
+     * Each member is stored in the format: username,password,memberID
+     * 
+     * @param members ArrayList of Member objects to be saved
+     */
     public static void saveMemberData(ArrayList<Member> members) {
-        // Serialize and save member data to file
-        // Handle IO exceptions
+        try (PrintWriter writer = new PrintWriter(new FileWriter(MEMBERS_FILE))) {
+            // Write each member's data on a new line
+            for (Member member : members) {
+                writer.println(member.toString());
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving member data: " + e.getMessage());
+        }
     }
 
+    /**
+     * Loads member data from the members file.
+     * Expects each line to be in the format: username,password,memberID
+     * 
+     * @return ArrayList<Member> List of members loaded from the file
+     */
     public static ArrayList<Member> loadMemberData() {
-        // Load and deserialize member data from file
-        // Handle IO and class not found exceptions
-        // Return loaded members or empty list if error
-        return new ArrayList<>();
+        ArrayList<Member> members = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] data = line.split(",");
+                // Verify data format before creating member object
+                if (data.length == 3) {
+                    // Create member with username, password, and ID
+                    Member member = new Member(data[0], data[1], data[2]);
+                    members.add(member);
+                } else {
+                    System.err.println("Invalid member data format: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading member data: " + e.getMessage());
+        }
+        return members;
     }
 
-    // Coach data operations
+    // ==================== Coach Operations ====================
+    /**
+     * Saves a list of coaches to the coaches file.
+     * Each coach is stored in the format: username,password,coachID
+     * 
+     * @param coaches ArrayList of Coach objects to be saved
+     */
     public static void saveCoachData(ArrayList<Coach> coaches) {
-        // Serialize and save coach data to file
-        // Handle IO exceptions
+        try (PrintWriter writer = new PrintWriter(new FileWriter(COACHES_FILE))) {
+            // Write each coach's data on a new line
+            for (Coach coach : coaches) {
+                writer.println(coach.toString());
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving coach data: " + e.getMessage());
+        }
     }
 
+    /**
+     * Loads coach data from the coaches file.
+     * Expects each line to be in the format: username,password,coachID
+     * 
+     * @return ArrayList<Coach> List of coaches loaded from the file
+     */
     public static ArrayList<Coach> loadCoachData() {
-        // Load and deserialize coach data from file
-        // Handle IO and class not found exceptions
-        // Return loaded coaches or empty list if error
-        return new ArrayList<>();
-    }
-
-    // Billing data operations
-    public static void saveBillingData(ArrayList<Billing> bills) {
-        // Serialize and save billing data to file
-        // Handle IO exceptions
-    }
-
-    public static ArrayList<Billing> loadBillingData() {
-        // Load and deserialize billing data from file
-        // Handle IO and class not found exceptions
-        // Return loaded bills or empty list if error
-        return new ArrayList<>();
-    }
-
-    // Utility methods
-    private static void createFileIfNotExists(String filename) {
-        // Check if file exists
-        // Create new file if it doesn't exist
-        // Handle IO exceptions
-    }
-
-    private static void backupFile(String filename) {
-        // Create backup copy of file
-        // Append timestamp to backup filename
-        // Handle IO exceptions
+        ArrayList<Coach> coaches = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(COACHES_FILE))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] data = line.split(",");
+                // Verify data format before creating coach object
+                if (data.length == 3) {
+                    // Create coach with username, password, and ID
+                    Coach coach = new Coach(data[0], data[1], data[2]);
+                    coaches.add(coach);
+                } else {
+                    System.err.println("Invalid coach data format: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading coach data: " + e.getMessage());
+        }
+        return coaches;
     }
 }

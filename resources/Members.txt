@@ -1,2 +1,3 @@
-member id/member username/member pass/ member coach/ start date/ end date
-
+member10,pass1,M001
+member20,pass2,M002
+member30,pass3,M003
