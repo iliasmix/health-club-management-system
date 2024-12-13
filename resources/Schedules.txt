@@ -1,1 +1,1 @@
-Schedule ID/Coach ID/Exercise/Days/Start Date/ End Date
+Schedule ID/Coach ID/Exercise/Days/Start Date/End Date

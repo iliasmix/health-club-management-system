@@ -1,1 +1,1 @@
-Coach ID/ Coach Username/ Coach Pass/ Schedule ID (s-1, s-2, ...etc)
+Coach ID/Coach Username/Coach Pass/Schedule ID (s-1, s-2, ...etc)

@@ -11,10 +11,14 @@ public class TestNotifications {
         Admin a = new Admin("Admin", "1111", "a-1");
         Member m1 = new Member("Ahmad", "1234", "m-1");
         Member m2 = new Member("Mohammad", "1122", "m-2");
-        NotificationSystem.sendSubscriptionExpiryNotification(a, m1);
-        NotificationSystem.sendSubscriptionExpiryNotification(a, m2);
 
-        File file = new File("resources/Notifications.txt");
+//        NotificationSystem.sendSubscriptionExpiryNotification(a, m1);
+//        NotificationSystem.sendSubscriptionExpiryNotification(a, m2);
+
+        NotificationSystem.sendMessage(a.getID(), m1.getID(), "Hi there m1!");
+        NotificationSystem.sendMessage(a.getID(), m2.getID(), "Hi there m2!");
+
+/*        File file = new File("resources/Notifications.txt");
         Scanner input = new Scanner(file);
         while(input.hasNext()) {
             String[] parts = input.nextLine().split("/");
@@ -22,6 +26,6 @@ public class TestNotifications {
                 System.out.println(parts[2]);
             }
         }
-        input.close();
+        input.close();*/
     }
 }
