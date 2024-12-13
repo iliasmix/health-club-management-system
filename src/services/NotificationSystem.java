@@ -6,21 +6,21 @@ import java.io.*;
 import java.util.*;
 
 public class NotificationSystem {
-    //private static ArrayList<String> notifications = new ArrayList<>();
     public static void sendSubscriptionExpiryNotification(Admin admin, Member member) throws FileNotFoundException {
-        // Create expiry notification message
-        //System.out.println("Your subscription has expired!");
-        // Add to notifications list
+        // Create expiry notification message (Pop up)
+        System.out.println("Pop up message!");
+
+        //Save messages to Notifications.txt
         File file = new File("resources\\Notifications.txt");
         try(PrintWriter output = new PrintWriter(new FileWriter(file, true))) {
+            // Send notification to member
             output.println("0/" + member.getID() + "/Your subscription has expired!/" + new Date());
+            // Send the notification to the admin
             output.println("0/" + admin.getID() + "/Member " + member.getID() + "'s subscription has expired!/" + new Date());
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        // Send the notification to the admin
-        // Send notification to member
     }
 
     public static void sendCoachMessage(Coach coach, String message) {

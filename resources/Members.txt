@@ -1,2 +1,2 @@
-member id/member username/member pass/ member coach/ start date/ end date
+Member ID/Member Username/Member Pass/Member's Coach ID/Start Date/End Date/ Member's schedule
 
