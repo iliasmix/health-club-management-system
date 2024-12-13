@@ -18,7 +18,7 @@ public class TestNotifications {
         Scanner input = new Scanner(file);
         while(input.hasNext()) {
             String[] parts = input.nextLine().split("/");
-            if(parts[1].equals(member.getId() + "")) {
+            if(parts[1].equals("m-1")) {
                 System.out.println(parts[2]);
             }
         }
