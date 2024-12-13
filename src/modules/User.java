@@ -9,11 +9,13 @@ public class User {
     // it was private, the reason for mohamed huissen errors, you can NOT inherit private..!
     protected String username;
     protected String password;
+    protected String ID;
         
 
-    public User(String username, String password) {
+    public User(String username, String password, String ID) {
         this.username = username;
-        this.password = password;       
+        this.password = password;
+        this.ID = ID;
     }
 
     public String getUsername() {
@@ -32,7 +34,7 @@ public class User {
         this.password = password;
     }
 
-
+    public String getID() {return this.ID;}
    
     public void login(String username, String password) {
         try {

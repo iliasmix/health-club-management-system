@@ -17,3 +17,5 @@ build/
 # Operating System files
 Thumbs.db
 
+/out/
+/health-club-management-system.iml

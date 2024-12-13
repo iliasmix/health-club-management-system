@@ -11,8 +11,8 @@ import java.util.Date;
 public class Coach extends User {
     private ArrayList<Member> members;
 
-    public Coach(String username, String password) {
-        super(username, password);
+    public Coach(String username, String password, String ID) {
+        super(username, password, ID);
         this.username = username;
         this.password = password;
     }

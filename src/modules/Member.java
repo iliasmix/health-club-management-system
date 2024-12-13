@@ -12,8 +12,8 @@ public class Member extends User {
     private ArrayList<String> trainingPlans;
 
     // Constructor
-    public Member(String username, String password) {
-        super(username, password);
+    public Member(String username, String password, String ID) {
+        super(username, password, ID);
         this.notifications = new ArrayList<>();
         this.trainingPlans = new ArrayList<>();
         loadNotificationsFromFile();

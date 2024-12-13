@@ -10,8 +10,8 @@ public class Admin extends User {
     private ArrayList<Billing> bills;
 
     // Constructor
-    public Admin(String username, String password) {
-        super(username, password);
+    public Admin(String username, String password, String ID) {
+        super(username, password, ID);
         // Initialize ArrayLists
         this.members = new ArrayList<Member>();
         this.coaches = new ArrayList<Coach>();
@@ -64,7 +64,7 @@ public class Admin extends User {
         if (newEmail != null && !newEmail.isEmpty()) {
 
             /* There is not setEmail in the Member class. */
-            member.setEmail(newEmail);
+            //member.setEmail(newEmail);
         }
 
     }
@@ -138,15 +138,15 @@ public class Admin extends User {
             // System.out.println("Member is already assigned to a coach. Reassigning...");
             // Remove the member from the previous coach
             Coach previousCoach = member.getCoach();
-            previousCoach.getMembers().remove(member);
+            //previousCoach.getMembers().remove(member);
         }
     
         // Assign member to coach
-        if (!coach.getMembers().contains(member)) {
-            coach.getMembers().add(member);
-        } else {
-            // System.out.println("Member is already assigned to this coach.");
-        }
+//        if (!coach.getMembers().contains(member)) {
+//            coach.getMembers().add(member);
+//        } else {
+//            // System.out.println("Member is already assigned to this coach.");
+//        }
     
         // Update member's coach
         member.setCoach(coach);
@@ -230,12 +230,12 @@ public class Admin extends User {
         ArrayList<Member> matchingMembers = new ArrayList<>();
     
         // Search for matching members
-        for (Member member : members) {
-            if (member.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
-                member.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
-                matchingMembers.add(member);
-            }
-        }
+//        for (Member member : members) {
+//            if (member.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
+//                member.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
+//                matchingMembers.add(member);
+//            }
+//        }
     
         return matchingMembers; // Return the list of matches
     }
@@ -249,12 +249,12 @@ public class Admin extends User {
         ArrayList<Coach> matchingCoachs = new ArrayList<>();
     
         // Search for matching members
-        for (Coach coach : coaches) {
-            if (coach.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
-                coach.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
-                matchingCoachs.add(coach);
-            }
-        }
+//        for (Coach coach : coaches) {
+//            if (coach.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
+//                coach.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
+//                matchingCoachs.add(coach);
+//            }
+//        }
     
         return matchingCoachs; // Return the list of matches
     }
