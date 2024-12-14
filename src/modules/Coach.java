@@ -1,10 +1,7 @@
 package modules;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.*;
+import java.text.SimpleDateFormat; // for formatting the message simple module.. 
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,8 +13,7 @@ public class Coach extends User {
         this.username = username;
         this.password = password;
     }
-    // -----------------------------------------------------
-    // Member management methods
+    // -----------------------Logical error here------------------------------
     // !!!!!!!! this methods should be in admin.. 3nd mohammed 
     // public void assignMember(Member member) {
     // // Check if member exists
