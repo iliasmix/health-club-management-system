@@ -19,7 +19,7 @@ public class Member extends User {
         
         // loading the saved inforamtion. 
         loadNotificationsFromFile();
-        loadTrainingPlansFromFile();
+        //loadTrainingPlansFromFile();
     }
 
     // Getter and Setter methods for Coach, Schedule, and Subscription
@@ -81,7 +81,9 @@ public class Member extends User {
         }
     }
 
-    public void addTrainingPlan(String plan) {
+    //These are commented out as training plans and schedules are in the Schedules.txt file
+
+/*    public void addTrainingPlan(String plan) {
         if (plan == null || plan.isEmpty()) {
             System.out.println("Training plan cannot be empty.");
             return;
@@ -124,6 +126,8 @@ public class Member extends User {
             System.out.println("Error saving training plans: " + e.getMessage());
         }
     }
+
+    */
 
     // Notification Methods
     public void receiveMessage(String message) {

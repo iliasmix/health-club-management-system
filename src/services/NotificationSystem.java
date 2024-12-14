@@ -6,7 +6,8 @@ import java.io.*;
 import java.util.*;
 
 public class NotificationSystem {
-        private static int notificationId = 1;
+    private static int notificationId = 1;
+
     public static void sendSubscriptionExpiryNotification(Admin admin, Member member) throws FileNotFoundException {
         // Create expiry notification message (Pop up)
         System.out.println("Pop up message!");

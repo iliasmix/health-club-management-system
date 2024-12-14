@@ -38,7 +38,7 @@ public class Coach extends User {
                 new SimpleDateFormat("yyyy-MM-dd").format(startDate),
                 new SimpleDateFormat("yyyy-MM-dd").format(endDate));
 
-        member.addTrainingPlan(trainingPlan);
+        //member.addTrainingPlan(trainingPlan);
         System.out.println("Training plan created successfully for " + member.getUsername());
     }
 
@@ -54,7 +54,7 @@ public class Coach extends User {
             return;
         }
 
-        member.addTrainingPlan("Exercise: " + exercise);
+        //member.addTrainingPlan("Exercise: " + exercise);
         System.out.println("Exercise added to " + member.getUsername() + "'s training plan.");
     }
 
@@ -70,7 +70,7 @@ public class Coach extends User {
             return;
         }
 
-        member.addTrainingPlan("Schedule: " + schedule);
+        //member.addTrainingPlan("Schedule: " + schedule);
         System.out.println("Schedule updated for " + member.getUsername() + ".");
     }
 

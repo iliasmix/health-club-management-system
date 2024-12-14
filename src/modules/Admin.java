@@ -157,6 +157,7 @@ public class Admin extends User {
     
 
     // Billing management
+/*
     public void createBill(String billed, String memberId, double amount) {
         // Validate memberId and amount
         if (memberId == null || memberId.isEmpty()) {
@@ -182,8 +183,9 @@ public class Admin extends User {
     
         // Save data (if needed)
     }
-    
-    //i dont think this logic is correct
+*/
+
+/*    //i dont think this logic is correct
     public void processPayment(String billId) {
         // Validate billId
         if (billId == null || billId.isEmpty()) {
@@ -216,7 +218,7 @@ public class Admin extends User {
         // System.out.println("Payment processed successfully for bill ID: " + billId);
     
         // Save data (if applicable)
-    }
+    }*/
     
 
     // ! Search functionality
