@@ -1,5 +1,7 @@
 package modules;
 
+import services.NotificationSystem;
+
 import java.io.*;
 import java.text.SimpleDateFormat; // for formatting the message simple module.. 
 import java.util.ArrayList;
@@ -72,22 +74,48 @@ public class Coach extends User {
         System.out.println("Schedule updated for " + member.getUsername() + ".");
     }
 
-    // Send a message to all members
-    public void sendMessageToAllMembers(String message) {
+    public void sendMessageToCoachMembers(String message, String coachId) {
         if (message == null || message.isEmpty()) {
             System.out.println("Message cannot be empty.");
             return;
         }
-
-        File file = new File("Notifications.txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            writer.write("Coach: " + message);
-            writer.newLine();
-            System.out.println("Message sent to all members.");
+    
+        File membersFile = new File("resources\\Members.txt");
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(membersFile))) {
+    
+            String line;
+            boolean messageSent = false;
+            while ((line = reader.readLine()) != null) {
+                String[] columns = line.split("/"); // Splitting the line into columns.
+    
+                if (columns.length >= 4) {
+                    String memberId = columns[0];
+                    String memberCoachId = columns[3];
+    
+                    // Check if the Member's Coach ID matches the provided Coach ID.
+                    if (coachId.equals(memberCoachId)) {
+                        try {
+                            NotificationSystem.sendMessage(coachId, memberId, message);
+                            messageSent = true;
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Error sending message to member " + memberId + ": " + e.getMessage());
+                        }
+                    }
+                }
+            }
+    
+            if (messageSent) {
+                System.out.println("Message sent to all members associated with Coach ID: " + coachId);
+            } else {
+                System.out.println("No members found for Coach ID: " + coachId);
+            }
+    
         } catch (IOException e) {
-            System.out.println("Error sending message: " + e.getMessage());
+            System.out.println("Error processing members file: " + e.getMessage());
         }
     }
+    
 
     // public TrainingPlan getTrainingPlan(Member member) {
     // // return trainingPlans.get(member.getUsername());

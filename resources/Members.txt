@@ -1,1 +1,2 @@
 Member ID/Member Username/Member Pass/Member's Coach ID/Start Date/End Date/Schedule ID
+
