@@ -7,7 +7,7 @@ import java.util.*;
 public class NotificationSystem {
     private static int notificationId = 1;
 
-    public static void sendSubscriptionExpiryNotification(Admin admin, Member member) throws FileNotFoundException {
+    public static void sendSubscriptionExpiryNotification(String memberId) throws FileNotFoundException {
         // Create expiry notification message (Pop up)
         System.out.println("Pop up message!");
 
@@ -15,9 +15,9 @@ public class NotificationSystem {
         File file = new File("resources\\Notifications.txt");
         try(PrintWriter output = new PrintWriter(new FileWriter(file, true))) {
             // Send notification to member
-            output.println("0/" + member.getID() + "/Your subscription has expired!/" + new Date());
+            output.println("0/" + memberId + "/Your subscription has expired!/" + new Date());
             // Send the notification to the admin
-            output.println("0/" + admin.getID() + "/Member " + member.getID() + "'s subscription has expired!/" + new Date());
+            output.println("0/" + "a-1" + "/Member " + memberId+ "'s subscription has expired!/" + new Date());
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -47,7 +47,13 @@ public class NotificationSystem {
                         LocalDate expiryDate = LocalDate.of(expiryYear, expiryMonth, expiryDay);
                         LocalDate today = LocalDate.now();
 
-                        return expiryDate.isAfter(today);
+                        if(expiryDate.isAfter(today)) {
+                            return true;
+                        }
+                        else {
+                            NotificationSystem.sendSubscriptionExpiryNotification(memberId);
+                            return false;
+                        }
                     }
                 }
             }
