@@ -1,17 +1,17 @@
 package modules;
-
-import services.Billing;
 import java.util.ArrayList;
-import java.util.stream.Stream;
+import services.Billing;
+import services.FileHandler;
 
-public class Admin extends User {
+
+public class Admin extends User{
     private ArrayList<Member> members;
     private ArrayList<Coach> coaches;
     private ArrayList<Billing> bills;
 
     // Constructor
-    public Admin(String username, String password, String ID) {
-        super(username, password, ID);
+    public Admin(String username, String password, String email) {
+        super(username, password, email);
         // Initialize ArrayLists
         this.members = new ArrayList<Member>();
         this.coaches = new ArrayList<Coach>();
@@ -26,48 +26,44 @@ public class Admin extends User {
         // Add member to list
         members.add(member);
         // Save data
-    }
+        FileHandler.saveMemberData(member);
+        }
 
     public void removeMember(Member member) {
         // Check if the member is null
         if (member == null) {
             return;
         }
-
+    
         // Check if the member exists in the list
         if (!members.contains(member)) {
             return;
         }
-
+    
         // Remove the member from the list
-        members.remove(member);
+        members.remove(member);    
+        FileHandler.deleteMember(member.ID); //member.ID till we found out how we will handle this
     }
+    
 
-    public void updateMember(Member member, String newUsername, String newEmail) {
+    public void updateMember(Member member, String newUsername) {
         // Validate the member object
         if (member == null) {
             return;
         }
-
+    
         // Check if the member exists in the list
         if (!members.contains(member)) {
             return;
         }
-
+    
         // Update member information
         if (newUsername != null && !newUsername.isEmpty()) {
 
-            /* There is no setUsername in the Member class. */
             member.setUsername(newUsername);
         }
-
-        if (newEmail != null && !newEmail.isEmpty()) {
-
-            /* There is not setEmail in the Member class. */
-            //member.setEmail(newEmail);
-        }
-
     }
+    
 
     // Methods to manage coaches
     public void addCoach(Coach coach) {
@@ -78,6 +74,7 @@ public class Admin extends User {
         // Add coach to list
         coaches.add(coach);
         // Save data
+        FileHandler.saveCoachData(coach);
     }
 
     public void removeCoach(Coach coach) {
@@ -91,20 +88,21 @@ public class Admin extends User {
             return;
         }
         // Remove coach assignments from members
-        // need this if any thing happend to coach data type in member class
+        //need this if any thing happend to coach data type in member class
         // for (Member member : coach.getMembers()) {
-        // // Check if the member is assigned to the coach
-        // if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
-        // member.setCoach(null); // Clear the coach assignment for the member
-        // }
+        //     // Check if the member is assigned to the coach
+        //     if (member.getCoach() != null && member.getCoach().equals(coach.getName())) {
+        //         member.setCoach(null); // Clear the coach assignment for the member
+        //     }
         // }
         // Remove the coach from the list
         coaches.remove(coach);
         // Save data (this could be saving to a database, file, etc.)
         // Save data
+        FileHandler.deleteCoach(coach.ID);//coach.ID till we found out how we will handle this
     }
 
-    public void updateCoach(Coach coach, String newName) {
+    public void updateCoach(Coach coach, String newName,String newPassword) {
         // Validate coach
         if (coach == null) {
             return;
@@ -112,155 +110,76 @@ public class Admin extends User {
         // Check if the member exists in the list
         if (!coaches.contains(coach)) {
             return;
-        }
+        }        
         // Update coach information
-        coach.setUsername(newName);
-        // coach.setSpecialization(newSpecialization);
+        coach.setName(newName);
         // Save data
+        FileHandler.updateCoachInfo(coach.ID, newName,newPassword);
     }
 
     // Member-Coach assignment
     public void assignMemberToCoach(Member member, Coach coach) {
         // Validate coach
         if (coach == null || !coaches.contains(coach)) {
-            // System.out.println("Invalid coach or coach not found in the system.");
             return;
         }
     
         // Validate member
         if (member == null || !members.contains(member)) {
-            // System.out.println("Invalid member or member not found in the system.");
             return;
         }
     
-        // Check if the member is already assigned to a coach
-        if (member.getCoach() != null) {
-            // System.out.println("Member is already assigned to a coach. Reassigning...");
-            // Remove the member from the previous coach
-            Coach previousCoach = member.getCoach();
-            //previousCoach.getMembers().remove(member);
-        }
-    
         // Assign member to coach
-//        if (!coach.getMembers().contains(member)) {
-//            coach.getMembers().add(member);
-//        } else {
-//            // System.out.println("Member is already assigned to this coach.");
-//        }
+        coach.assignMember(member);
     
         // Update member's coach
         member.setCoach(coach);
     
-        // Save data (optional implementation)
-        // System.out.println("Member successfully assigned to coach: " + coach.getName());
-    }
-    
+        // Save data (implementation needed)    
+        }
 
     // Billing management
-/*
-    public void createBill(String billed, String memberId, double amount) {
-        // Validate memberId and amount
-        if (memberId == null || memberId.isEmpty()) {
-            // System.out.println("Invalid member ID.");
-            return;
-        }
-        if (amount <= 0) {
-            // System.out.println("Amount must be greater than zero.");
-            return;
-        }
-    
-        // Generate a unique bill ID
-        String billId = java.util.UUID.randomUUID().toString();
-    
-        // Create a new Bill instance
-        Billing bill = new Billing(billId, memberId, amount);
-    
-        // Add the bill to the bills list
-        bills.add(bill);
-    
-        // Print confirmation
-        // System.out.println("Bill created successfully for member ID: " + memberId + ", Amount: $" + amount);
-    
-        // Save data (if needed)
+    public void createBill(Member member, int planMonths, int year, int month, int day) {
+        Billing.createBill(ID, planMonths, year, month, day);
     }
-*/
+    
 
-/*    //i dont think this logic is correct
-    public void processPayment(String billId) {
-        // Validate billId
-        if (billId == null || billId.isEmpty()) {
-            // System.out.println("Invalid bill ID.");
-            return;
+    public ArrayList<Member> searchMembers(String keyword) {
+        ArrayList<Member> matchingMembers = new ArrayList<>();
+        if (keyword == null || keyword.isEmpty()) {
+            return matchingMembers; // Return empty list if keyword is invalid
         }
     
-        // Find the bill by ID
-        Billing billToProcess = null;
-        for (Billing bill : bills) {
-            if (bill.getBillId().equals(billId)) {
-                billToProcess = bill;
-                break;
+        keyword = keyword.toLowerCase(); // Convert to lowercase for case-insensitive search
+    
+        for (Member member : members) {
+            // Check for partial match in username or email
+            if (member.getUsername().toLowerCase().contains(keyword)){
+                matchingMembers.add(member);
             }
         }
     
-        // Check if the bill was found
-        if (billToProcess == null) {
-            // System.out.println("Bill with ID " + billId + " not found.");
-            return;
-        }
-    
-        // Process the payment
-        if (billToProcess.isPaid()) {
-            // System.out.println("Bill with ID " + billId + " is already paid.");
-            return;
-        }
-    
-        billToProcess.setPaid(true); 
-        // System.out.println("Payment processed successfully for bill ID: " + billId);
-    
-        // Save data (if applicable)
-    }*/
-    
-
-    // ! Search functionality
-    public ArrayList<Member> searchMembers(String keyword) {
-        // Validate input
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return new ArrayList<>(); // Return an empty list for invalid input
-        }
-    
-        // Prepare a list for matching members
-        ArrayList<Member> matchingMembers = new ArrayList<>();
-    
-        // Search for matching members
-//        for (Member member : members) {
-//            if (member.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
-//                member.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
-//                matchingMembers.add(member);
-//            }
-//        }
-    
-        return matchingMembers; // Return the list of matches
+        return matchingMembers; // Return the matching members list
     }
     
-    // Search coaches by name 
     public ArrayList<Coach> searchCoaches(String keyword) {
-        // Validate input
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return new ArrayList<>(); // Return an empty list for invalid input
+        ArrayList<Coach> matchingCoaches = new ArrayList<>();
+        if (keyword == null || keyword.isEmpty()) {
+            return matchingCoaches; // Return empty list if keyword is invalid
         }
-        ArrayList<Coach> matchingCoachs = new ArrayList<>();
     
-        // Search for matching members
-//        for (Coach coach : coaches) {
-//            if (coach.getUsername().toLowerCase().contains(keyword.toLowerCase()) ||
-//                coach.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
-//                matchingCoachs.add(coach);
-//            }
-//        }
+        keyword = keyword.toLowerCase(); // Convert to lowercase for case-insensitive search
     
-        return matchingCoachs; // Return the list of matches
+        for (Coach coach : coaches) {
+            // Check for partial match in name or specialization
+            if (coach.getName().toLowerCase().contains(keyword) ) {
+                matchingCoaches.add(coach);
+            }
+        }
+    
+        return matchingCoaches; // Return the matching coaches list
     }
-
+    
     // Reporting
     public void generateReports() {
         // Generate member statistics
@@ -270,14 +189,14 @@ public class Admin extends User {
     }
 
     // Subscription management
-
+    
     // Getters
     public ArrayList<Member> getMembers() {
         return members;
     }
 
     public ArrayList<Coach> getCoaches() {
-    return coaches ;
+        return coaches;
     }
 
     public ArrayList<Billing> getBills() {
