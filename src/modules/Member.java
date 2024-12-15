@@ -1,11 +1,13 @@
 package modules;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Member extends User {
     private Coach coach;
+    private String coachId;
     private String schedule;
     private Subscription subscription;
     private ArrayList<String> notifications; // Why if there is file handling?!
@@ -29,6 +31,15 @@ public class Member extends User {
 
     public void setCoach(Coach coach) {
         this.coach = coach;
+        this.coachId = coach != null ? coach.getID() : null;
+    }
+
+    public String getCoachId() {
+        return coachId;
+    }
+
+    public void setCoachId(String coachId) {
+        this.coachId = coachId;
     }
 
     public String getSchedule() {
@@ -174,6 +185,22 @@ public class Member extends User {
 
     @Override
     public String toString() {
-        return String.format("%s/%s/%s", getUsername(), getPassword(), getID());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = subscription != null && subscription.getStartDate() != null ? 
+            dateFormat.format(subscription.getStartDate()) : "";
+        String endDate = subscription != null && subscription.getEndDate() != null ? 
+            dateFormat.format(subscription.getEndDate()) : "";
+        String status = subscription != null ? String.valueOf(subscription.isActive()) : "";
+        
+        return String.format("%s/%s/%s/%s/%s/%s/%s/%s",
+            getID(),              // Member ID
+            getUsername(),        // Member Username
+            getPassword(),        // Member Pass
+            coachId != null ? coachId : "",  // Member's Coach ID
+            startDate,           // Subscription Start Date
+            endDate,             // Subscription End Date
+            status,             // Subscription Status
+            schedule != null ? schedule : ""  // Schedule ID
+        );
     }
 }
