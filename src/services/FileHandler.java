@@ -5,55 +5,31 @@ import java.io.*;
 import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-/**
- * FileHandler class manages all file operations for the Health Club Management System.
- * This class provides methods to save and load data for all system entities.
- * 
- * File Format Specifications:
- * - All data is stored in forward-slash separated format
- * - Members format: Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Subscription Status/Schedule ID
- * - Coaches format: Coach ID/Coach Username/Coach Pass/Schedule ID
- * - Schedules format: Schedule ID/Coach ID/Day/Exercise/Schedule Start Date/Schedule End Date
- * - Bills format: Bill ID/Member ID/Plan/Start Date/End Date/Price/Bill Generation Time
- */
 public class FileHandler {
     // ==================== File Path Constants ====================
     private static final String MEMBERS_FILE = "resources/Members.txt";
     private static final String COACHES_FILE = "resources/Coaches.txt";
     private static final String SCHEDULES_FILE = "resources/Schedules.txt";
-    private static final String SUBSCRIPTIONS_FILE = "resources/Subscriptions.txt";
-    private static final String NOTIFICATIONS_FILE = "resources/Notifications.txt";
-    private static final String REPORTS_FILE = "resources/Reports.txt";
-    private static final String ADMINS_FILE = "resources/Admins.txt";
     private static final String BILLING_FILE = "resources/Bills.txt";
-
-    // ==================== File Headers ====================
-    private static final String MEMBERS_HEADER = "Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Subscription Status/Schedule ID";
-    private static final String COACHES_HEADER = "Coach ID/Coach Username/Coach Pass/Schedule ID";
-    private static final String SCHEDULES_HEADER = "Schedule ID/Coach ID/Day/Exercise/Schedule Start Date/Schedule End Date";
-    private static final String BILLS_HEADER = "Bill ID/Member ID/Plan/Start Date/End Date/Price/Bill Generation Time";
+    private static final String SUBSCRIPTIONS_FILE = "resources/Subscriptions.txt";
 
     // ==================== Member Operations ====================
-    public static void saveMemberData(ArrayList<Member> members) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(MEMBERS_FILE))) {
-            writer.println(MEMBERS_HEADER);
-            for (Member member : members) {
-                writer.println(member.toString());
-            }
+    public void saveMemberData(Member member) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(MEMBERS_FILE, true))) {
+            writer.println(member.toString());
         } catch (IOException e) {
             System.err.println("Error saving member data: " + e.getMessage());
         }
     }
 
-    public static ArrayList<Member> loadMemberData() {
+    public ArrayList<Member> loadMemberData() {
         ArrayList<Member> members = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
             // Skip header line
-            if (scanner.hasNextLine()) scanner.nextLine();
-            
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
@@ -73,12 +49,9 @@ public class FileHandler {
     }
 
     // ==================== Coach Operations ====================
-    public static void saveCoachData(ArrayList<Coach> coaches) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(COACHES_FILE))) {
-            writer.println(COACHES_HEADER);
-            for (Coach coach : coaches) {
-                writer.println(coach.toString());
-            }
+    public static void saveCoachData(Coach coach) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(COACHES_FILE, true))) {
+            writer.println(coach.toString());
         } catch (IOException e) {
             System.err.println("Error saving coach data: " + e.getMessage());
         }
@@ -88,8 +61,9 @@ public class FileHandler {
         ArrayList<Coach> coaches = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(COACHES_FILE))) {
             // Skip header line
-            if (scanner.hasNextLine()) scanner.nextLine();
-            
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
@@ -109,27 +83,25 @@ public class FileHandler {
 
     // ==================== Schedule Operations ====================
     public static void saveScheduleData(String scheduleData) {
-        boolean isNewFile = !new File(SCHEDULES_FILE).exists();
         try (PrintWriter writer = new PrintWriter(new FileWriter(SCHEDULES_FILE, true))) {
-            if (isNewFile) {
-                writer.println(SCHEDULES_HEADER);
-            }
             writer.println(scheduleData);
         } catch (IOException e) {
             System.err.println("Error saving schedule data: " + e.getMessage());
         }
     }
 
-    public static ArrayList<String> loadScheduleData() {
-        ArrayList<String> schedules = new ArrayList<>();
+    public ArrayList<String[]> loadScheduleData() {
+        ArrayList<String[]> schedules = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(SCHEDULES_FILE))) {
             // Skip header line
-            if (scanner.hasNextLine()) scanner.nextLine();
-            
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
-                    schedules.add(line);
+                    String[] scheduleData = line.split("/");
+                    schedules.add(scheduleData);
                 }
             }
         } catch (IOException e) {
@@ -140,11 +112,7 @@ public class FileHandler {
 
     // ==================== Billing Operations ====================
     public static void saveBillingData(String billingData) {
-        boolean isNewFile = !new File(BILLING_FILE).exists();
         try (PrintWriter writer = new PrintWriter(new FileWriter(BILLING_FILE, true))) {
-            if (isNewFile) {
-                writer.println(BILLS_HEADER);
-            }
             writer.println(billingData);
         } catch (IOException e) {
             System.err.println("Error saving billing data: " + e.getMessage());
@@ -155,8 +123,9 @@ public class FileHandler {
         ArrayList<String> bills = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(BILLING_FILE))) {
             // Skip header line
-            if (scanner.hasNextLine()) scanner.nextLine();
-            
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
@@ -167,5 +136,126 @@ public class FileHandler {
             System.err.println("Error loading billing data: " + e.getMessage());
         }
         return bills;
+    }
+
+    // ==================== Subscription Operations ====================
+    public static void saveSubscriptionData(String subscriptionData) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(SUBSCRIPTIONS_FILE, true))) {
+            writer.println(subscriptionData);
+        } catch (IOException e) {
+            System.err.println("Error saving subscription data: " + e.getMessage());
+        }
+    }
+
+    public static ArrayList<String[]> loadSubscriptionData() {
+        ArrayList<String[]> subscriptions = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(SUBSCRIPTIONS_FILE))) {
+            // Skip header line
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    String[] subscriptionData = line.split("/");
+                    subscriptions.add(subscriptionData);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading subscription data: " + e.getMessage());
+        }
+        return subscriptions;
+    }
+
+    // ==================== Admin Operations ====================
+
+    /**
+     * Updates member information in the Members.txt file
+     */
+    public static void updateMemberInfo(String memberId, String newUsername, String newPassword) {
+        try {
+            File inputFile = new File(MEMBERS_FILE);
+            File tempFile = new File("resources/TempMembers.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            // Copy header
+            if (scanner.hasNextLine()) {
+                writer.println(scanner.nextLine());
+            }
+
+            // Process and update data
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine().trim();
+                if (!currentLine.isEmpty()) {
+                    String[] data = currentLine.split("/");
+                    if (data[0].equals(memberId)) {
+                        // Update member info
+                        data[1] = newUsername;
+                        data[2] = newPassword;
+                        currentLine = String.join("/", data);
+                    }
+                    writer.println(currentLine);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            // Delete old file and rename temp file
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            System.out.println("Member information updated successfully!");
+
+        } catch (IOException e) {
+            System.out.println("Error updating member: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Updates coach information in the Coaches.txt file
+     */
+    public static void updateCoachInfo(String coachId, String newUsername, String newPassword) {
+        try {
+            File inputFile = new File(COACHES_FILE);
+            File tempFile = new File("resources/TempCoaches.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            // Copy header
+            if (scanner.hasNextLine()) {
+                writer.println(scanner.nextLine());
+            }
+
+            // Process and update data
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine().trim();
+                if (!currentLine.isEmpty()) {
+                    String[] data = currentLine.split("/");
+                    if (data[0].equals(coachId)) {
+                        // Update coach info
+                        data[1] = newUsername;
+                        data[2] = newPassword;
+                        currentLine = String.join("/", data);
+                    }
+                    writer.println(currentLine);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            // Delete old file and rename temp file
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            System.out.println("Coach information updated successfully!");
+
+        } catch (IOException e) {
+            System.out.println("Error updating coach: " + e.getMessage());
+        }
     }
 }
