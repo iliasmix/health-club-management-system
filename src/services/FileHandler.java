@@ -15,7 +15,7 @@ public class FileHandler {
     private static final String SUBSCRIPTIONS_FILE = "resources/Subscriptions.txt";
 
     // ==================== Member Operations ====================
-    public void saveMemberData(Member member) {
+    public static void saveMemberData(Member member) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(MEMBERS_FILE, true))) {
             writer.println(member.toString());
         } catch (IOException e) {
@@ -46,6 +46,51 @@ public class FileHandler {
             System.err.println("Error loading member data: " + e.getMessage());
         }
         return members;
+    }
+
+    public static void deleteMember(String memberId) {
+        try {
+            File inputFile = new File(MEMBERS_FILE);
+            File tempFile = new File("resources/TempMembers.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            // Copy header
+            if (scanner.hasNextLine()) {
+                writer.println(scanner.nextLine());
+            }
+
+            // Process and write lines, skipping the member to be deleted
+            boolean memberFound = false;
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine().trim();
+                if (!currentLine.isEmpty()) {
+                    String[] data = currentLine.split("/");
+                    if (!data[0].equals(memberId)) {
+                        writer.println(currentLine);
+                    } else {
+                        memberFound = true;
+                    }
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            // Delete old file and rename temp file
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            if (memberFound) {
+                System.out.println("Member deleted successfully!");
+            } else {
+                System.out.println("Member not found!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error deleting member: " + e.getMessage());
+        }
     }
 
     // ==================== Coach Operations ====================
@@ -79,6 +124,51 @@ public class FileHandler {
             System.err.println("Error loading coach data: " + e.getMessage());
         }
         return coaches;
+    }
+
+    public static void deleteCoach(String coachId) {
+        try {
+            File inputFile = new File(COACHES_FILE);
+            File tempFile = new File("resources/TempCoaches.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            // Copy header
+            if (scanner.hasNextLine()) {
+                writer.println(scanner.nextLine());
+            }
+
+            // Process and write lines, skipping the coach to be deleted
+            boolean coachFound = false;
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine().trim();
+                if (!currentLine.isEmpty()) {
+                    String[] data = currentLine.split("/");
+                    if (!data[0].equals(coachId)) {
+                        writer.println(currentLine);
+                    } else {
+                        coachFound = true;
+                    }
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            // Delete old file and rename temp file
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            if (coachFound) {
+                System.out.println("Coach deleted successfully!");
+            } else {
+                System.out.println("Coach not found!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error deleting coach: " + e.getMessage());
+        }
     }
 
     // ==================== Schedule Operations ====================
@@ -169,9 +259,6 @@ public class FileHandler {
 
     // ==================== Admin Operations ====================
 
-    /**
-     * Updates member information in the Members.txt file
-     */
     public static void updateMemberInfo(String memberId, String newUsername, String newPassword) {
         try {
             File inputFile = new File(MEMBERS_FILE);
@@ -214,9 +301,6 @@ public class FileHandler {
         }
     }
 
-    /**
-     * Updates coach information in the Coaches.txt file
-     */
     public static void updateCoachInfo(String coachId, String newUsername, String newPassword) {
         try {
             File inputFile = new File(COACHES_FILE);
