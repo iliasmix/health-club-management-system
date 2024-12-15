@@ -1,11 +1,10 @@
 package services;
-import modules.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
 public class NotificationSystem {
-    private static int notificationId = 1;
+    private static int notificationId = getNextNotificationIdNum();
 
     public static void sendSubscriptionExpiryNotification(String memberId) throws FileNotFoundException {
         // Create expiry notification message (Pop up)
@@ -15,9 +14,10 @@ public class NotificationSystem {
         File file = new File("resources\\Notifications.txt");
         try(PrintWriter output = new PrintWriter(new FileWriter(file, true))) {
             // Send notification to member
-            output.println("0/" + memberId + "/Your subscription has expired!/" + new Date());
+            output.println("n-" + notificationId + "/0/" + memberId + "/Your subscription has expired!/" + new Date());
+            notificationId++;
             // Send the notification to the admin
-            output.println("0/" + "a-1" + "/Member " + memberId+ "'s subscription has expired!/" + new Date());
+            output.println("n-" + notificationId + "/0/" + "a-1" + "/Member " + memberId+ "'s subscription has expired!/" + new Date());
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -75,6 +75,45 @@ public class NotificationSystem {
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    private static int getNextNotificationIdNum() {
+        File notificationsFile = new File("resources\\Notifications.txt");
+
+        if(!notificationsFile.exists()) {
+            return 1; //Start with ID 1 if the bills file doesn't exist
+        }
+
+        try(Scanner notificationsScanner = new Scanner(notificationsFile)) {
+
+
+
+            //Skip the first line as it is the guideline.
+            if(notificationsScanner.hasNextLine()) {
+                notificationsScanner.nextLine();
+
+                //Check if the file is empty
+                if(!notificationsScanner.hasNext()) {
+                    return 1; //Start with bill ID 1
+                }
+            }
+
+            String lastId = "";
+            while(notificationsScanner.hasNext()) {
+                String[] parts = notificationsScanner.nextLine().split("/");
+                lastId = parts[0]; //This is b-x, where x is an integer
+            }
+
+            String[] idParts = lastId.split("-"); //Split b-x into b and x
+
+            //return x after converting it from a string to an int and add 1 to go to the next ID
+            int lastIdNum = Integer.parseInt(idParts[1]);
+            return lastIdNum + 1;
+
+        } catch (FileNotFoundException ex) {
+            System.err.println("Unable to read: File not found " + ex.getMessage());
+            return 0;
         }
     }
 }
