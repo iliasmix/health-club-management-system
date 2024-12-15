@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class Coach extends User {
     private ArrayList<Member> members;
+    private String scheduleId;
 
     public Coach(String username, String password, String ID) {
         super(username, password, ID);
@@ -129,8 +130,17 @@ public class Coach extends User {
         return this.getUsername();
     }
 
+    public void setScheduleId(String scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s/%s/%s", getUsername(), getPassword(), getID());
+        return String.format("%s/%s/%s/%s",
+            getID(),              // Coach ID
+            getUsername(),        // Coach Username
+            getPassword(),        // Coach Pass
+            scheduleId != null ? scheduleId : ""  // Schedule ID
+        );
     }
 }
