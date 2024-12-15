@@ -15,9 +15,11 @@ public class TestNotifications {
 //        NotificationSystem.sendSubscriptionExpiryNotification(a, m1);
 //        NotificationSystem.sendSubscriptionExpiryNotification(a, m2);
 
-        NotificationSystem.sendMessage("a-1","m-1", "Hi there m1!");
-        NotificationSystem.sendMessage("a-1", "m-2", "Hi there m2!");
+        //NotificationSystem.sendMessage("a-1","m-1", "Hi there m1!");
+        //NotificationSystem.sendMessage("a-1", "m-2", "Hi there m2!");
 
+        System.out.println(NotificationSystem.isSubscriptionActive("m-1"));
+        System.out.println(NotificationSystem.isSubscriptionActive("m-2"));
 /*        File file = new File("resources/Notifications.txt");
         Scanner input = new Scanner(file);
         while(input.hasNext()) {
