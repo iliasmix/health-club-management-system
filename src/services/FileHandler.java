@@ -8,11 +8,11 @@ import modules.Member;
 
 public class FileHandler {
     // ==================== File Path Constants ====================
-    private static final String MEMBERS_FILE = "resources/Members.txt";
-    private static final String COACHES_FILE = "resources/Coaches.txt";
-    private static final String SCHEDULES_FILE = "resources/Schedules.txt";
-    private static final String BILLING_FILE = "resources/Bills.txt";
-    private static final String SUBSCRIPTIONS_FILE = "resources/Subscriptions.txt";
+    private static final String MEMBERS_FILE = "resources\\Members.txt";
+    private static final String COACHES_FILE = "resources\\Coaches.txt";
+    private static final String SCHEDULES_FILE = "resources\\Schedules.txt";
+    private static final String BILLING_FILE = "resources\\Bills.txt";
+    private static final String SUBSCRIPTIONS_FILE = "resources\\Subscriptions.txt";
 
     // ==================== Member Operations ====================
     public static void saveMemberData(Member member) {
@@ -51,7 +51,7 @@ public class FileHandler {
     public static void deleteMember(String memberId) {
         try {
             File inputFile = new File(MEMBERS_FILE);
-            File tempFile = new File("resources/TempMembers.txt");
+            File tempFile = new File("resources\\TempMembers.txt");
 
             Scanner scanner = new Scanner(inputFile);
             PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
@@ -115,7 +115,7 @@ public class FileHandler {
                     String[] data = line.split("/");
                     if (data.length == 4) {
                         Coach coach = new Coach(data[1], data[2], data[0]);
-                        coach.setScheduleId(data[3]);
+                        //coach.setScheduleId(data[3]);
                         coaches.add(coach);
                     }
                 }
@@ -129,7 +129,7 @@ public class FileHandler {
     public static void deleteCoach(String coachId) {
         try {
             File inputFile = new File(COACHES_FILE);
-            File tempFile = new File("resources/TempCoaches.txt");
+            File tempFile = new File("resources\\TempCoaches.txt");
 
             Scanner scanner = new Scanner(inputFile);
             PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
@@ -262,7 +262,7 @@ public class FileHandler {
     public static void updateMemberInfo(String memberId, String newUsername, String newPassword) {
         try {
             File inputFile = new File(MEMBERS_FILE);
-            File tempFile = new File("resources/TempMembers.txt");
+            File tempFile = new File("resources\\TempMembers.txt");
 
             Scanner scanner = new Scanner(inputFile);
             PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
@@ -304,7 +304,7 @@ public class FileHandler {
     public static void updateCoachInfo(String coachId, String newUsername, String newPassword) {
         try {
             File inputFile = new File(COACHES_FILE);
-            File tempFile = new File("resources/TempCoaches.txt");
+            File tempFile = new File("resources\\TempCoaches.txt");
 
             Scanner scanner = new Scanner(inputFile);
             PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
@@ -341,5 +341,32 @@ public class FileHandler {
         } catch (IOException e) {
             System.out.println("Error updating coach: " + e.getMessage());
         }
+    }
+
+
+    public static boolean isMemberAlreadyInTheSystem(String memberID) throws FileNotFoundException {
+        File membersFile = new File(MEMBERS_FILE);
+        Scanner membersScan = new Scanner(membersFile);
+        if(membersScan.hasNextLine()) {
+            membersScan.nextLine();
+        }
+        while(membersScan.hasNext()) {
+            String[] parts = membersScan.nextLine().split("/");
+            if(memberID.equals(parts[0])) return true;
+        }
+        return false;
+    }
+
+    public static boolean isCoachAlreadyInTheSystem(String coachID) throws FileNotFoundException {
+        File coachesFile = new File(COACHES_FILE);
+        Scanner coachesScan = new Scanner(coachesFile);
+        if(coachesScan.hasNextLine()) {
+            coachesScan.nextLine();
+        }
+        while(coachesScan.hasNext()) {
+            String[] parts = coachesScan.nextLine().split("/");
+            if(coachID.equals(parts[0])) return true;
+        }
+        return false;
     }
 }

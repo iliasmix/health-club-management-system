@@ -17,9 +17,11 @@ public class TestNotifications {
 
         //NotificationSystem.sendMessage("a-1","m-1", "Hi there m1!");
         //NotificationSystem.sendMessage("a-1", "m-2", "Hi there m2!");
-
-        System.out.println(NotificationSystem.isSubscriptionActive("m-1"));
-        System.out.println(NotificationSystem.isSubscriptionActive("m-2"));
+        System.out.println(FileHandler.isMemberAlreadyInTheSystem("m-2"));
+        System.out.println(FileHandler.isCoachAlreadyInTheSystem("c-5"));
+        System.out.println(FileHandler.isCoachAlreadyInTheSystem("c-1"));
+        //System.out.println(NotificationSystem.isSubscriptionActive("m-1"));
+        //System.out.println(NotificationSystem.isSubscriptionActive("m-2"));
 /*        File file = new File("resources/Notifications.txt");
         Scanner input = new Scanner(file);
         while(input.hasNext()) {
