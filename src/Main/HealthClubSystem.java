@@ -2,6 +2,7 @@ package Main;
 
 import java.util.ArrayList;
 import modules.*;
+
 public class HealthClubSystem {
     // The admin of the system and lists of coaches and members
     private Admin admin;
@@ -17,11 +18,11 @@ public class HealthClubSystem {
 
     // // Method to add a new member to the system
     // public void addMember(Member member) {
-    //     members.add(member);
+    // members.add(member);
     // }
 
     // // Method to add a new coach to the system
     // public void addCoach(Coach coach) {
-    //     coaches.add(coach);
+    // coaches.add(coach);
     // }
 }

@@ -1,23 +1,31 @@
+package Main;
+
+import java.util.Scanner;
+
 /**
  * Entry point of the Health Club Management System.
  * This class initializes the system, displays the menu, and handles user
  * interactions.
  */
-package Main;
-
+import modules.Admin;
+import modules.Member;
+import modules.Coach;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
         // Create the central HealthClubSystem instance that manages all operations.
 
-        //HealthClubSystem doesn't have a no-arg constructor, so this won't work nor the other functions below
+        // HealthClubSystem doesn't have a no-arg constructor, so this won't work nor
+        // the other functions below
         /*
-        HealthClubSystem system = new HealthClubSystem();
+         * HealthClubSystem system = new HealthClubSystem();
          */
 
         // The system needs to be initialized before starting (e.g., loading data).
         // This includes loading members, coaches, and admin data from files.
-        //system.initializeSystem();
+        // system.initializeSystem();
 
         // A loop ensures that the system runs continuously until the user decides to
         // exit.
@@ -25,31 +33,104 @@ public class Main {
         while (isRunning) {
             // Show the main menu options to the user.
             displayMenu();
-
             // Get the user's choice from the console input (e.g., Admin, Coach, Member, or
             // Exit).
-            int choice = getUserInput();
 
             // Depending on the user's choice, direct them to the appropriate module:
-            switch (choice) {
-                case 1: // If the user selects Admin.
-                    // Direct the user to the admin operations, such as managing members or
-                    // generating reports.
-                    //system.adminOperations();
+            switch (getUserInput()) {
+                case 1:
+                    System.out.println("Enter userName ,password,ID");
+                    Admin admin = new Admin(input.nextLine(), input.nextLine(), input.nextLine());
+                    System.out.println(
+                            "choose operation : \n1- addMember \n2- removeMember \n3- updateMember \n4- addCoach \n5- removeCoach \n6- updateCoach \n7- assignMemberToCoach ");
+
+                    switch (getUserInput()) {
+                        case 1:
+                            System.out.println("Enter members's userName ,password,ID");
+                            admin.addMember(new Member(input.nextLine(), input.nextLine(), input.nextLine()));
+                            break;
+                        case 2:
+                            System.out.println("Enter members's ID");
+                            // admin.removeMember(input.nextLine());
+                            break;
+                        case 3:
+                            System.out.println("Enter members's ID,newUserName ,Email");
+                            // admin.updateMember(input.nextLine(), input.nextLine(), input.nextLine());
+                            break;
+                        case 4:
+                            System.out.println("Enter coach's userName ,password,ID");
+                            admin.addCoach(new Coach(input.nextLine(), input.nextLine(), input.nextLine()));
+                            break;
+                        case 5:
+                            System.out.println("Enter coach's ID");
+                            // admin.removeCoach(input.nextLine());
+                            break;
+                        case 6:
+                            System.out.println("Enter coach's ID,newUserName ,Email");
+                            // admin.updateCoach(input.nextLine(), input.nextLine(), input.nextLine());
+                            break;
+                        case 7:
+                            System.out.println("Enter member's ID and coach's ID");
+                            // admin.assignMemberToCoach(input.nextLine(), input.nextLine());
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
                     break;
 
-                case 2: // If the user selects Coach.
-                    // Allow the coach to manage schedules, send messages, or view member details.
-                    //system.coachOperations();
+                case 2:
+                    System.out.println("Enter userName ,password,ID");
+                    Coach coach = new Coach(input.nextLine(), input.nextLine(), input.nextLine());
+                    System.out.println(
+                            "choose operation : \n1- create Training Plan \n2- add Exercise To Training Plan \n3- set Member Schedule \n4- send Message To Coach Members \n");
+                    switch (getUserInput()) {
+                        case 1:
+                            System.out.println("Enter members's ID ,start date,end date");
+                            // coach.createTrainingPlan(input.nextLine(), input.nextLine(),
+                            // input.nextLine());
+                            break;
+                        case 2:
+                            System.out.println("Enter members's ID,exercise ");
+                            // coach.addExerciseToTrainingPlan(input.nextLine(),
+                            // input.nextLine(),input.nextLine());
+                            break;
+                        case 3:
+                            System.out.println("Enter members's ID,schedule");
+                            // coach.setMemberSchedule(input.nextLine(), input.nextLine());
+                            break;
+                        case 4:
+                            System.out.println("Enter message,coach's ID");
+                            // coach.sendMessageToCoachMembers(input.nextLine(), input.nextLine());
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
                     break;
 
-                case 3: // If the user selects Member.
-                    // Allow the member to view their coach, subscription details, or schedules.
-                    //system.memberOperations();
+                case 3:
+                    System.out.println("Enter userName ,password,ID");
+                    Member member = new Member(input.nextLine(), input.nextLine(), input.nextLine());
+                    System.out.println(
+                            "choose operation : \n1- view Subscription Details \n2- view Schedule \n3- view Training Plan \n");
+                    switch (getUserInput()) {
+                        case 1:
+                            member.viewSubscriptionDetails();
+                            break;
+                        case 2:
+                            member.viewSchedule();
+                            break;
+                        case 3:
+                            member.viewTrainingPlan();
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
                     break;
 
-                case 0: // If the user selects Exit.
-                    // Set the `isRunning` flag to false to break the loop and close the system.
+                case 0:
                     isRunning = false;
                     System.out.println("Exiting the Health Club Management System. Goodbye!");
                     break;
@@ -62,7 +143,7 @@ public class Main {
 
         // Once the loop exits, perform any necessary cleanup, such as saving data to
         // files.
-        //system.cleanup();
+        // system.cleanup();
     }
 
     /**
@@ -99,4 +180,5 @@ public class Main {
 
         return choice;
     }
+
 }
