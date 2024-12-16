@@ -346,26 +346,28 @@ public class FileHandler {
 
     public static boolean isMemberAlreadyInTheSystem(String memberID) throws FileNotFoundException {
         File membersFile = new File(MEMBERS_FILE);
-        Scanner membersScan = new Scanner(membersFile);
-        if(membersScan.hasNextLine()) {
-            membersScan.nextLine();
-        }
-        while(membersScan.hasNext()) {
-            String[] parts = membersScan.nextLine().split("/");
-            if(memberID.equals(parts[0])) return true;
+        try(Scanner membersScan = new Scanner(membersFile)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine();
+            }
+            while (membersScan.hasNext()) {
+                String[] parts = membersScan.nextLine().split("/");
+                if (memberID.equals(parts[0])) return true;
+            }
         }
         return false;
     }
 
     public static boolean isCoachAlreadyInTheSystem(String coachID) throws FileNotFoundException {
         File coachesFile = new File(COACHES_FILE);
-        Scanner coachesScan = new Scanner(coachesFile);
-        if(coachesScan.hasNextLine()) {
-            coachesScan.nextLine();
-        }
-        while(coachesScan.hasNext()) {
-            String[] parts = coachesScan.nextLine().split("/");
-            if(coachID.equals(parts[0])) return true;
+        try(Scanner coachesScan = new Scanner(coachesFile)) {
+            if (coachesScan.hasNextLine()) {
+                coachesScan.nextLine();
+            }
+            while (coachesScan.hasNext()) {
+                String[] parts = coachesScan.nextLine().split("/");
+                if (coachID.equals(parts[0])) return true;
+            }
         }
         return false;
     }

@@ -12,8 +12,11 @@ public class Billing {
         String billId = "b-" + billIdIncrementor;
         billIdIncrementor++;
 
-        //Check if the member's subscription is not active
-
+        //Check if the member's subscription is already active
+        if(NotificationSystem.isSubscriptionActive(memberId)) {
+            System.out.println("Member's subscription is already active!");
+            return;
+        }
 
         int price = getPlanPrice(planMonths);
         if(price == -1) {
@@ -27,6 +30,7 @@ public class Billing {
         try(PrintWriter billsOutput = new PrintWriter(new FileWriter(billsFile, true))) {
             billsOutput.println(billId + "/" + memberId + "/" + planMonths + (planMonths > 1? " months": " month") + "/" + startDate + "/" + endDate + "/" + price + "/" + new Date());
             System.out.println("Bill created successfully!");
+            Billing.updateMemberSubscriptionData(memberId, startDate, endDate);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -61,6 +65,45 @@ public class Billing {
 
         return -1; //If everything fails
     }
+
+    public static void updateMemberSubscriptionData(String memberId, LocalDate startDate, LocalDate endDate) throws FileNotFoundException {
+        File membersFile = new File("resources\\Members.txt");
+        Scanner membersScan = new Scanner(membersFile);
+
+        if(NotificationSystem.isSubscriptionActive(memberId)) {
+            return;
+        }
+
+        if(membersScan.hasNextLine()) {
+            membersScan.nextLine();
+        }
+
+        File tempMembers = new File("resources\\tempMembers.txt");
+        try (PrintWriter tempOutput = new PrintWriter(new FileWriter(tempMembers, true))) {
+            tempOutput.println("Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Schedule ID");
+            while(membersScan.hasNext()) {
+                String[] parts = membersScan.nextLine().split("/");
+                if(memberId.equals(parts[0])) {
+                    parts[4] = startDate.toString();
+                    parts[5] = endDate.toString();
+                }
+                tempOutput.println(String.join("/", parts));
+            }
+
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        membersScan.close();
+
+        if(!membersFile.delete()) {
+            System.out.println("Failed to delete members file!");
+        }
+        if(!tempMembers.renameTo(membersFile)) {
+            System.out.println("Failed to rename temp to members.");
+        }
+    }
+
     private static int getNextBillIdNumber() {
         File billsFile = new File("resources\\Bills.txt");
 

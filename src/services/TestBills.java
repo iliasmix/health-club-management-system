@@ -14,13 +14,23 @@ public class TestBills {
 
         String memberID;
         do {
-            System.out.print("Enter the member's ID (m-x): ");
+            System.out.print("Enter the member's ID (m-x), 0 to terminate: ");
              memberID = input.next();
 
-             if(!memberID.matches("m-\\d+$")) {
+             if(memberID.equals("0")) {
+                 System.out.println("Ending the process...");
+                 System.exit(0);
+             }
+             else if(!memberID.matches("m-\\d+$")) {
                  System.out.println("The member ID must start with an m- then a number!!");
              }
-        } while (!memberID.matches("m-\\d+$"));
+             else if(!FileHandler.isMemberAlreadyInTheSystem(memberID)) {
+                 System.out.println("There is no member with ID " + memberID + " in the system!");
+             }
+             else if(NotificationSystem.isSubscriptionActive(memberID)) {
+                 System.out.println("This member's subscription is active!");
+             }
+        } while (!memberID.matches("m-\\d+$") || NotificationSystem.isSubscriptionActive(memberID) || !FileHandler.isMemberAlreadyInTheSystem(memberID));
 
         int planMonths;
         do {
