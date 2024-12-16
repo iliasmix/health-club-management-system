@@ -1,6 +1,8 @@
 package modules;
 
 import java.io.*; // import all of the built in functions of the input output
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -36,41 +38,62 @@ public class User {
 
     public String getID() {return this.ID;}
    
-    public void login(String username, String password) {
-        try {
-            // Open the file for reading
-            File file = new File("user.txt");
-            Scanner scanner = new Scanner(file);
-
-            boolean isAuthenticated = false;
-
-            // Read file line by line to find matching credentials
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] credentials = line.split(" "); // Assuming username and password are separated by a space
-
-                if (credentials.length == 2) {
-                    String storedUsername = credentials[0].trim();
-                    String storedPassword = credentials[1].trim();
-
-                    if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                        isAuthenticated = true;
-                        this.username = username; // Set current logged-in user
-                        System.out.println("Login successful. Welcome, " + username + "!");
-                        break;
-                    }
+    public static String[] login(String username, String password) {
+        // Try Members first
+        try (BufferedReader reader = new BufferedReader(new FileReader("Members.txt"))) {
+            String line;
+            boolean firstLine = true;
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Skip header
+                }
+                String[] data = line.split("/");
+                if (data[1].equals(username) && data[2].equals(password)) {
+                    return new String[]{data[0], "Member"}; // Return ID and type
                 }
             }
-
-            if (!isAuthenticated) {
-                System.out.println("Invalid username or password.");
-            }
-
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("User file not found.");
+        } catch (IOException e) {
+            System.out.println("Error reading Members file: " + e.getMessage());
         }
+
+        // Try Coaches
+        try (BufferedReader reader = new BufferedReader(new FileReader("Coaches.txt"))) {
+            String line;
+            boolean firstLine = true;
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Skip header
+                }
+                String[] data = line.split("/");
+                if (data[1].equals(username) && data[2].equals(password)) {
+                    return new String[]{data[0], "Coach"}; // Return ID and type
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading Coaches file: " + e.getMessage());
+        }
+
+        // Try Admins
+        try (BufferedReader reader = new BufferedReader(new FileReader("Admins.txt"))) {
+            String line;
+            boolean firstLine = true;
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Skip header
+                }
+                String[] data = line.split("/");
+                if (data[1].equals(username) && data[2].equals(password)) {
+                    return new String[]{data[0], "Admin"}; // Return ID and type
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading Admins file: " + e.getMessage());
+        }
+
+        return null; // Return null if no match found
     }
 
     // Logout function
@@ -83,50 +106,81 @@ public class User {
         }
     }
 
-    public void updateProfile(String newUsername, String newPassword, String newEmail) {
-        if (this.username == null) {
-            System.out.println("No user is currently logged in to update the profile.");
-            return;
+    public static boolean updateProfile(String userId, String newUsername, String newPassword, String userType) {
+        String fileName;
+        switch (userType.toLowerCase()) {
+            case "member":
+                fileName = "Members.txt";
+                break;
+            case "coach":
+                fileName = "Coaches.txt";
+                break;
+            case "admin":
+                fileName = "Admins.txt";
+                break;
+            default:
+                return false;
         }
 
-        try {
-            File inputFile = new File("user.txt");
-            File tempFile = new File("temp_user.txt");
+        ArrayList<String> fileContent = new ArrayList<>();
+        boolean updated = false;
 
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
+        // Read and update the file content
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-            boolean isUpdated = false;
+            fileContent.add(reader.readLine()); // Add header
 
             while ((line = reader.readLine()) != null) {
-                String[] credentials = line.split(" ");
-                if (credentials.length == 2 && credentials[0].trim().equals(this.username)) {
-                    writer.write(newUsername + " " + newPassword + " " + newEmail);
-                    writer.newLine();
-                    isUpdated = true;
-                    this.username = newUsername; // Update current username
-                } else {
+                String[] data = line.split("/");
+                if (data[0].equals(userId)) {
+                    // Update username and password while keeping ID and other fields unchanged
+                    data[1] = newUsername;
+                    data[2] = newPassword;
+                    line = String.join("/", data);
+                    updated = true;
+                }
+                fileContent.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            return false;
+        }
+
+        // Write back to file if updated
+        if (updated) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                for (String line : fileContent) {
                     writer.write(line);
                     writer.newLine();
                 }
+                return true;
+            } catch (IOException e) {
+                System.out.println("Error writing file: " + e.getMessage());
+                return false;
             }
+        }
 
-            reader.close();
-            writer.close();
+        return false;
+    }
 
-            if (isUpdated) {
-                if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
-                    System.out.println("Error updating profile.");
-                    return;
-                }
-                System.out.println("Profile updated successfully.");
+    // Example usage
+    public static void main(String[] args) {
+        // Test login
+        String[] loginResult = login("member1", "1234");
+        if (loginResult != null) {
+            System.out.println("Login successful!");
+            System.out.println("User ID: " + loginResult[0]);
+            System.out.println("User Type: " + loginResult[1]);
+
+            // Test update profile with both username and password
+            boolean updateResult = updateProfile(loginResult[0], "newUsername", "newPassword", loginResult[1]);
+            if (updateResult) {
+                System.out.println("Profile updated successfully!");
             } else {
-                tempFile.delete();
-                System.out.println("No matching user found to update.");
+                System.out.println("Failed to update profile.");
             }
-        } catch (IOException e) {
-            System.out.println("An error occurred while updating the profile.");
+        } else {
+            System.out.println("Login failed!");
         }
     }
 }
