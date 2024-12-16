@@ -1,54 +1,39 @@
 package modules;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-
+import services.FileHandler;
 
 public class Coach extends User {
-    private ArrayList<Member> members;
-    // private HashMap<String, TrainingPlan> trainingPlans;
+    private FileHandler fileHandler;
 
-    // Constructor
-    public Coach(String username, String password, String email) {
-        super(username, password, email);
-        // Initialize coach fields
+    public Coach(String username, String password, String ID) {
+        super(username, password, ID);
+        this.username = username;
+        this.password = password;
+        this.fileHandler = new FileHandler();
     }
 
-    // Member management methods
-    public void assignMember(Member member) {
-        // Check if member exists
-        // Add member to list
-    }
-
-    public void removeMember(Member member) {
-        // Remove member from list
-        // Remove associated training plan
-    }
-
-    // Training plan methods
-    public void createTrainingPlan(Member member, Date startDate, Date endDate) {
-        // Validate member is assigned to coach
-        // Create new training plan
-        // Store plan in hashmap
-    }
-<<<<<<< Updated upstream
-
-=======
-    
-    
     // Add exercise to a member's training plan
->>>>>>> Stashed changes
     public void addExerciseToTrainingPlan(Member member, String exercise) {
-        // Find member's training plan
-        // Add exercise to plan
+        if (member == null) {
+            System.out.println("Invalid member.");
+            return;
+        }
+
+        if (exercise == null || exercise.isEmpty()) {
+            System.out.println("Exercise cannot be empty.");
+            return;
+        }
+
+        member.addTrainingPlan("Exercise: " + exercise);
+        System.out.println("Exercise added to " + member.getUsername() + "'s training plan.");
     }
 
+    // Set a member's schedule and associate it with their training plan
     public void setMemberSchedule(Member member, String schedule) {
-<<<<<<< Updated upstream
-        // Find member's training plan
-        // Update schedule in plan
-        // Update member's schedule
-=======
         if (member == null) {
             System.out.println("Invalid member.");
             return;
@@ -59,30 +44,54 @@ public class Coach extends User {
             return;
         }
 
-        // member.addTrainingPlan("Schedule: " + schedule);
+        member.addTrainingPlan("Schedule: " + schedule);
         System.out.println("Schedule updated for " + member.getUsername() + ".");
->>>>>>> Stashed changes
     }
 
-    // Communication methods
+    // Send a message to all members
     public void sendMessageToAllMembers(String message) {
-        // Format coach message
-        // Send to all members
+        if (message == null || message.isEmpty()) {
+            System.out.println("Message cannot be empty.");
+            return;
+        }
+
+        File file = new File("Notifications.txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write("Coach: " + message);
+            writer.newLine();
+            System.out.println("Message sent to all members.");
+        } catch (IOException e) {
+            System.out.println("Error sending message: " + e.getMessage());
+        }
     }
 
-    public void sendMessageToMember(Member member, String message) {
-        // Validate member is assigned
-        // Format and send message
+    // Update coach's own profile using FileHandler
+    public boolean updateProfile(String newUsername, String newPassword) {
+        FileHandler.updateCoachInfo(this.getID(), newUsername, newPassword);
+        this.username = newUsername;
+        this.password = newPassword;
+        return true;
     }
 
-    // Getters and setters
-    public ArrayList<Member> getMembers() {
-        return members;
+    // Check if coach exists in system using FileHandler
+    public static boolean isCoachExists(String coachID) {
+        try {
+            return FileHandler.isCoachAlreadyInTheSystem(coachID);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error checking coach existence: " + e.getMessage());
+            return false;
+        }
     }
 
-    // public TrainingPlan getTrainingPlan(Member member) {
-    //     return trainingPlans.get(member.getUsername());
-    // }
+    // Save coach data using FileHandler
+    public void saveCoach() {
+        FileHandler.saveCoachData(this);
+    }
+
+    // Delete coach using FileHandler
+    public void deleteCoach() {
+        FileHandler.deleteCoach(this.getID());
+    }
 
     public void setName(String name) {
         this.setUsername(name);
@@ -90,5 +99,10 @@ public class Coach extends User {
 
     public String getName() {
         return this.getUsername();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s/%s/%s", getUsername(), getPassword(), getID());
     }
 }
