@@ -17,7 +17,8 @@ public class Member extends User {
     public Member(String username, String password, String ID) {
         super(username, password, ID);
         this.notifications = new ArrayList<>();
-        this.trainingPlans = new ArrayList<>();
+        this.trainingPlans = new ArrayList<>(); 
+        // 
         
         // loading the saved inforamtion. 
         loadNotificationsFromFile();

@@ -5,7 +5,26 @@ import java.io.*;
 import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
+<<<<<<< Updated upstream
 
+=======
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
+/**
+ * FileHandler class manages all file operations for the Health Club Management System.
+ * This class provides methods to save and load data for all system entities.
+ * 
+ * File Format Specifications:
+ * - All data is stored in forward-slash separated format
+ * - Members format: Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Subscription Status/Schedule ID
+ * - Coaches format: Coach ID/Coach Username/Coach Pass/Schedule ID
+ * - Schedules format: Schedule ID/Coach ID/Day/Exercise/Schedule Start Date/Schedule End Date
+ * - Bills format: Bill ID/Member ID/Plan/Start Date/End Date/Price/Bill Generation Time
+ */
+>>>>>>> Stashed changes
 public class FileHandler {
     // ==================== File Path Constants ====================
     private static final String MEMBERS_FILE = "resources\\Members.txt";

@@ -31,16 +31,37 @@ public class Coach extends User {
         // Create new training plan
         // Store plan in hashmap
     }
+<<<<<<< Updated upstream
 
+=======
+    
+    
+    // Add exercise to a member's training plan
+>>>>>>> Stashed changes
     public void addExerciseToTrainingPlan(Member member, String exercise) {
         // Find member's training plan
         // Add exercise to plan
     }
 
     public void setMemberSchedule(Member member, String schedule) {
+<<<<<<< Updated upstream
         // Find member's training plan
         // Update schedule in plan
         // Update member's schedule
+=======
+        if (member == null) {
+            System.out.println("Invalid member.");
+            return;
+        }
+
+        if (schedule == null || schedule.isEmpty()) {
+            System.out.println("Schedule cannot be empty.");
+            return;
+        }
+
+        // member.addTrainingPlan("Schedule: " + schedule);
+        System.out.println("Schedule updated for " + member.getUsername() + ".");
+>>>>>>> Stashed changes
     }
 
     // Communication methods
