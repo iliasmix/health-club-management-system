@@ -10,15 +10,9 @@ public class Admin extends User{
     private ArrayList<Billing> bills;
 
     // Constructor
-<<<<<<< Updated upstream
     public Admin(String username, String password, String email) {
         super(username, password, email);
         // Initialize ArrayLists
-=======
-    public Admin(String username, String password, String ID) {
-        super(username, password, ID);
-        
->>>>>>> Stashed changes
         this.members = new ArrayList<Member>();
         this.coaches = new ArrayList<Coach>();
         this.bills = new ArrayList<Billing>();

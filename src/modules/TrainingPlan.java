@@ -9,7 +9,7 @@ public class TrainingPlan {
     private String coachId;
     private Date startDate;
     private Date endDate;
-    private String schedule; // Training schedule placeholder
+    private static String schedule; // Training schedule placeholder
     private static final String SCHEDULE_FILE_PATH = "G:\\Health\\health-club-management-system\\resources\\Schedules.txt";
 
     // Constructor
@@ -50,7 +50,7 @@ public class TrainingPlan {
     
 
     // Getter for schedule
-    public String getSchedule() {
+    public static String getSchedule() {
         return schedule;
     }
 

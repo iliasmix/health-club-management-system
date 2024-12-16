@@ -2,8 +2,8 @@ package modules;
 
 import java.io.*; // import all of the built in functions of the input output
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+// import java.util.List;
+// import java.util.Scanner;
 
 
 //  NOTE :  I removed all the email functions as you asked because its unnecessary and will complicate the porject
@@ -164,23 +164,23 @@ public class User {
     }
 
     // Example usage
-    public static void main(String[] args) {
-        // Test login
-        String[] loginResult = login("member1", "1234");
-        if (loginResult != null) {
-            System.out.println("Login successful!");
-            System.out.println("User ID: " + loginResult[0]);
-            System.out.println("User Type: " + loginResult[1]);
+    // public static void main(String[] args) {
+    //     // Test login
+    //     String[] loginResult = login("member1", "1234");
+    //     if (loginResult != null) {
+    //         System.out.println("Login successful!");
+    //         System.out.println("User ID: " + loginResult[0]);
+    //         System.out.println("User Type: " + loginResult[1]);
 
-            // Test update profile with both username and password
-            boolean updateResult = updateProfile(loginResult[0], "newUsername", "newPassword", loginResult[1]);
-            if (updateResult) {
-                System.out.println("Profile updated successfully!");
-            } else {
-                System.out.println("Failed to update profile.");
-            }
-        } else {
-            System.out.println("Login failed!");
-        }
-    }
+    //         // Test update profile with both username and password
+    //         boolean updateResult = updateProfile(loginResult[0], "newUsername", "newPassword", loginResult[1]);
+    //         if (updateResult) {
+    //             System.out.println("Profile updated successfully!");
+    //         } else {
+    //             System.out.println("Failed to update profile.");
+    //         }
+    //     } else {
+    //         System.out.println("Login failed!");
+    //     }
+    // }
 }

@@ -38,7 +38,10 @@ public class FileHandler {
         }
     }
 
-    public ArrayList<Member> loadMemberData() {
+   
+
+
+    public static ArrayList<Member> loadMemberData() {
         ArrayList<Member> members = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
             // Skip header line

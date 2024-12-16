@@ -16,6 +16,16 @@ public class Coach extends User {
         this.fileHandler = new FileHandler();
     }
 
+    public void assignMember(Member member) {
+        // Check if member exists
+        // Add member to list
+    }
+
+    public void removeMember(Member member) {
+        // Remove member from list
+        // Remove associated training plan
+    }
+
     // Add exercise to a member's training plan
     public void addExerciseToTrainingPlan(Member member, String exercise) {
         if (member == null) {
@@ -28,8 +38,21 @@ public class Coach extends User {
             return;
         }
 
-        member.addTrainingPlan("Exercise: " + exercise);
-        System.out.println("Exercise added to " + member.getUsername() + "'s training plan.");
+        try {
+            // Create or get existing training plan
+            TrainingPlan trainingPlan = getOrCreateTrainingPlan(member);
+
+            // Update the schedule with the new exercise
+            String currentSchedule = trainingPlan.getSchedule();
+            String updatedSchedule = currentSchedule.isEmpty() ? exercise : currentSchedule + "\n" + exercise;
+
+            trainingPlan.setSchedule(updatedSchedule);
+            trainingPlan.saveScheduleToFile();
+
+            System.out.println("Exercise added to " + member.getUsername() + "'s training plan.");
+        } catch (IOException e) {
+            System.out.println("Error updating training plan: " + e.getMessage());
+        }
     }
 
     // Set a member's schedule and associate it with their training plan
@@ -44,8 +67,33 @@ public class Coach extends User {
             return;
         }
 
-        member.addTrainingPlan("Schedule: " + schedule);
-        System.out.println("Schedule updated for " + member.getUsername() + ".");
+        try {
+            // Create or get existing training plan
+            TrainingPlan trainingPlan = getOrCreateTrainingPlan(member);
+
+            // Set the new schedule
+            trainingPlan.setSchedule(schedule);
+            trainingPlan.saveScheduleToFile();
+
+            System.out.println("Schedule updated for " + member.getUsername() + ".");
+        } catch (IOException e) {
+            System.out.println("Error updating schedule: " + e.getMessage());
+        }
+    }
+
+    // Helper method to get or create a training plan for a member
+    private TrainingPlan getOrCreateTrainingPlan(Member member) {
+        // Create a new training plan with current date as start date and 3 months later
+        // as end date
+        Date startDate = new Date();
+        Date endDate = new Date(startDate.getTime() + (90L * 24 * 60 * 60 * 1000)); // 90 days later
+
+        return new TrainingPlan(
+                "plan-" + member.getID(), // Generate plan ID based on member ID
+                member.getID(),
+                this.getID(),
+                startDate,
+                endDate);
     }
 
     // Send a message to all members
