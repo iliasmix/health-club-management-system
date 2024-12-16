@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.util.Scanner;
 
@@ -10,25 +10,11 @@ import java.util.Scanner;
 import modules.Admin;
 import modules.Member;
 import modules.Coach;
+import services.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
-        // Create the central HealthClubSystem instance that manages all operations.
-
-        // HealthClubSystem doesn't have a no-arg constructor, so this won't work nor
-        // the other functions below
-        /*
-         * HealthClubSystem system = new HealthClubSystem();
-         */
-
-        // The system needs to be initialized before starting (e.g., loading data).
-        // This includes loading members, coaches, and admin data from files.
-        // system.initializeSystem();
-
-        // A loop ensures that the system runs continuously until the user decides to
-        // exit.
         boolean isRunning = true;
         while (isRunning) {
             // Show the main menu options to the user.
@@ -116,13 +102,13 @@ public class Main {
                             "choose operation : \n1- view Subscription Details \n2- view Schedule \n3- view Training Plan \n");
                     switch (getUserInput()) {
                         case 1:
-                            member.viewSubscriptionDetails();
+                            // member.viewSubscriptionDetails();
                             break;
                         case 2:
-                            member.viewSchedule();
+                            // member.viewSchedule();
                             break;
                         case 3:
-                            member.viewTrainingPlan();
+                            // member.viewTrainingPlan();
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");

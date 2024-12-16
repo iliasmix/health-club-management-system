@@ -1,0 +1,4 @@
+# Format: coachID,name,specialization,experience(years),phoneNumber,email
+c-001,James Anderson,Weight Training,8,+1-555-1123,james.a@gym.com
+c-002,Lisa Martinez,Cardio & HIIT,6,+1-555-1124,lisa.m@gym.com
+c-003,Robert Chen,Yoga & Flexibility,10,+1-555-1125,robert.c@gym.com

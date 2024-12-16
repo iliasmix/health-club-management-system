@@ -1,0 +1,5 @@
+# Format: memberID,name,age,joinDate,phoneNumber,email,coachID
+m-001,John Smith,28,2024-01-15,+1-555-0123,john.smith@email.com,c-001
+m-002,Sarah Johnson,35,2024-01-20,+1-555-0124,sarah.j@email.com,c-002
+m-003,Michael Brown,42,2024-02-01,+1-555-0125,michael.b@email.com,c-001
+m-004,Emily Davis,31,2024-02-05,+1-555-0126,emily.d@email.com,c-003

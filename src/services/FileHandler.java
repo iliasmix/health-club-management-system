@@ -38,9 +38,6 @@ public class FileHandler {
         }
     }
 
-   
-
-
     public static ArrayList<Member> loadMemberData() {
         ArrayList<Member> members = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
@@ -361,7 +358,7 @@ public class FileHandler {
         }
     }
 
-
+    
     public static boolean isMemberAlreadyInTheSystem(String memberID) throws FileNotFoundException {
         File membersFile = new File(MEMBERS_FILE);
         try(Scanner membersScan = new Scanner(membersFile)) {

@@ -1,0 +1,6 @@
+# Format: notificationID,date,memberID,message,status
+n-001,2024-02-25,m-004,Your subscription will expire in 7 days,unread
+n-002,2024-02-20,m-002,New schedule available with Coach Lisa,read
+n-003,2024-02-18,m-001,Your next session is tomorrow at 9 AM,read
+n-004,2024-02-15,m-003,Schedule changed for Thursday session,read
+n-005,2024-02-10,m-005,Welcome to Health Club! Your first session is scheduled,read

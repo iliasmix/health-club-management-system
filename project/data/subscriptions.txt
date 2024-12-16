@@ -1,0 +1,6 @@
+# Format: memberID,planType,startDate,endDate,status,amount
+m-001,6-month,2024-01-15,2024-07-15,active,300
+m-002,3-month,2024-01-20,2024-04-20,active,180
+m-003,12-month,2024-02-01,2025-02-01,active,500
+m-004,1-month,2024-02-05,2024-03-05,active,75
+m-005,3-month,2024-02-10,2024-05-10,active,180

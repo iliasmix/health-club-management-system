@@ -94,7 +94,7 @@ public class MemberDashboard {
     private void addTrainingPlan() {
         String plan = JOptionPane.showInputDialog(null, "Enter the training plan:", "Add Training Plan", JOptionPane.PLAIN_MESSAGE);
         if (plan != null && !plan.isEmpty()) {
-            member.addTrainingPlan(plan);
+            // member.addTrainingPlan(plan);
             JOptionPane.showMessageDialog(null, "Training plan added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Training plan cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -124,8 +124,8 @@ public class MemberDashboard {
         // Create a dummy Member instance for testing
         Member member = new Member("testUser", "password123", "001");
         member.setSchedule("Monday: 10 AM - 12 PM\nWednesday: 2 PM - 4 PM");
-        member.receiveMessage("Welcome to the training program!");
-        member.addTrainingPlan("Plan 1: Cardio for 30 minutes");
+        // member.receiveMessage("Welcome to the training program!");
+        // member.addTrainingPlan("Plan 1: Cardio for 30 minutes");
         
         // Launch the dashboard
         new MemberDashboard(member);
