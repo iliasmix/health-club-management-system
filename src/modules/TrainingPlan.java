@@ -1,6 +1,5 @@
 package modules;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
 
@@ -10,14 +9,13 @@ public class TrainingPlan {
     private String coachId;
     private Date startDate;
     private Date endDate;
-    private static String schedule; // Training schedule placeholder
+    private  static String schedule; // Training schedule placeholder
     private static final String SCHEDULE_FILE_PATH = "resources\\Schedules.txt";
     ArrayList<String> exercises = new ArrayList<>(); // Initialize exercises list
 
     // Constructor
     public TrainingPlan(String coachId, LocalDate startDate, int weeksnum) {
         this.scheduleId = generateScheduleId(); // Auto-increment Schedule ID
-
         this.coachId = coachId;
         this.startDate = java.sql.Date.valueOf(startDate); // Convert LocalDate to Date
         this.endDate = java.sql.Date.valueOf(calculateEndDate(startDate, weeksnum)); // Calculate and assign endDate
@@ -52,21 +50,30 @@ public class TrainingPlan {
     
     // Method to load the schedule from a text file
     public void loadScheduleFromFile() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(SCHEDULE_FILE_PATH))) {
+       File file = new File(SCHEDULE_FILE_PATH);
+       if(!file.exists()) {
+        return ; 
+    } 
+       try (Scanner reader = new Scanner(file)) {
+        if (reader.hasNextLine()){
+            reader.nextLine();
+        }
             StringBuilder scheduleBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                scheduleBuilder.append(line).append(System.lineSeparator());
+            while (reader.hasNextLine()) {
+                scheduleBuilder.append(reader.nextLine()).append(System.lineSeparator());
             }
             this.schedule = scheduleBuilder.toString().trim();
+            System.out.println("Schedule loaded successfully.");
+        } catch (Exception e) {
+            System.out.println("An error occurred while reading the file: " + e.getMessage());
         }
     }
     // Method to save the schedule and exercises to a text file in a specific format
     public void saveScheduleAndExercisesToFile() throws IOException {
-        try (FileWriter writer = new FileWriter(SCHEDULE_FILE_PATH)) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(SCHEDULE_FILE_PATH,true))) {
             for (String exercise : exercises) {
-                String line = this.scheduleId + "/" + this.coachId + "/" + exercise + "/" + this.coachId + "/" + this.startDate + "/" + this.endDate ;
-                writer.write(line);
+                String line = this.scheduleId + "/" + this.coachId + "/" + exercise + "/" + this.startDate + "/" + this.endDate ;
+                writer.println(line);
             }
         }
     }
@@ -88,42 +95,42 @@ public class TrainingPlan {
     }
 
     // Getter for schedule
-    public static String getSchedule() {
-        return schedule;
+     public static String getSchedule() {
+              return schedule;
+          }
+         // Getters for other attributes
+         public String getCoachId() {
+             return coachId;
+         }
+     
+         public Date getStartDate() {
+             return startDate;
+         }
+     
+         public Date getEndDate() {
+             return endDate;
+         }
+     
+     
+     
+         public static void main(String[] args) {
+             try {
+                 TrainingPlan plan = new TrainingPlan("c-1", LocalDate.of(2024, 12, 17), 4);
+         
+                 // System.out.println("Adding exercises...");
+                 // plan.addExercise("Warm-up: 10 minutes treadmill");
+                 // plan.addExercise("Bench Press: 4 sets of 12 reps");
+                 // plan.addExercise("Incline Dumbbell Press: 4 sets of 10 reps");
+                 // plan.addExercise("Triceps Dips: 3 sets of 15 reps");
+         
+                 // System.out.println("Saving schedule and exercises to file...");
+                 plan.loadScheduleFromFile();
+                 
+                 System.out.println("Loaded Schedule: \n"+ TrainingPlan.getSchedule());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-
-    // Getters for other attributes
-    public String getCoachId() {
-        return coachId;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
+    
 }
-
-
-/*public static void main(String[] args) {
-    try {
-        TrainingPlan plan = new TrainingPlan("c-1", LocalDate.of(2024, 12, 17), 4);
-
-        plan.addExercise("Chest and Triceps/Warm-up: 10 minutes treadmill");
-        plan.addExercise("Chest and Triceps/Bench Press: 4 sets of 12 reps");
-        plan.addExercise("Chest and Triceps/Incline Dumbbell Press: 4 sets of 10 reps");
-        plan.addExercise("Chest and Triceps/Triceps Dips: 3 sets of 15 reps");
-        plan.addExercise("Back and Biceps/Warm-up: 10 minutes rowing machine");
-        plan.addExercise("Back and Biceps/Pull-ups: 3 sets of 10 reps");
-        plan.addExercise("Back and Biceps/Barbell Rows: 4 sets of 10 reps");
-        plan.addExercise("Back and Biceps/Biceps Curl: 4 sets of 12 reps");
-
-        plan.saveScheduleAndExercisesToFile();
-        System.out.println("Schedule saved successfully.");
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-}*/
