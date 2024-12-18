@@ -9,109 +9,7 @@ import java.util.Date;
 import java.util.Scanner;
 import services.FileHandler;
 
-/* public void addExerciseToTrainingPlan(Member member, String exercise) {
-        if (member == null) {
-            System.out.println("Invalid member.");
-            return;
-        }
 
-        if (exercise == null || exercise.isEmpty()) {
-            System.out.println("Exercise cannot be empty.");
-            return;
-        }
-
-        try {
-            // Create or get existing training plan
-            TrainingPlan trainingPlan = getOrCreateTrainingPlan(member);
-
-            // Update the schedule with the new exercise
-            String currentSchedule = trainingPlan.getSchedule();
-            String updatedSchedule = currentSchedule.isEmpty() ? exercise : currentSchedule + "\n" + exercise;
-
-            trainingPlan.setSchedule(updatedSchedule);
-            trainingPlan.saveScheduleToFile();
-
-            System.out.println("Exercise added to " + member.getUsername() + "'s training plan.");
-        } catch (IOException e) {
-            System.out.println("Error updating training plan: " + e.getMessage());
-        }
-    }
-
-    // Set a member's schedule and associate it with their training plan
-    public void setMemberSchedule(Member member, String schedule) {
-        if (member == null) {
-            System.out.println("Invalid member.");
-            return;
-        }
-
-        if (schedule == null || schedule.isEmpty()) {
-            System.out.println("Schedule cannot be empty.");
-            return;
-        }
-
-        try {
-            // Create or get existing training plan
-            TrainingPlan trainingPlan = getOrCreateTrainingPlan(member);
-
-            // Set the new schedule
-            trainingPlan.setSchedule(schedule);
-            trainingPlan.saveScheduleToFile();
-
-            System.out.println("Schedule updated for " + member.getUsername() + ".");
-        } catch (IOException e) {
-            System.out.println("Error updating schedule: " + e.getMessage());
-        }
-    }
-
-    // Helper method to get or create a training plan for a member
-    private TrainingPlan getOrCreateTrainingPlan(Member member) {
-        // Create a new training plan with current date as start date and 3 months later
-        // as end date
-        Date startDate = new Date();
-        Date endDate = new Date(startDate.getTime() + (90L * 24 * 60 * 60 * 1000)); // 90 days later
-
-        return new TrainingPlan(
-                "plan-" + member.getID(), // Generate plan ID based on member ID
-                member.getID(),
-                this.getID(),
-                startDate,
-                endDate);
-    }
-
-    // Send a message to all members
-    public void sendMessageToAllMembers(String message) {
-        if (message == null || message.isEmpty()) {
-            System.out.println("Message cannot be empty.");
-            return;
-        }
-
-        File file = new File("Notifications.txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            writer.write("Coach: " + message);
-            writer.newLine();
-            System.out.println("Message sent to all members.");
-        } catch (IOException e) {
-            System.out.println("Error sending message: " + e.getMessage());
-        }
-    }
-
-    // Update coach's own profile using FileHandler
-    public boolean updateProfile(String newUsername, String newPassword) {
-        FileHandler.updateCoachInfo(this.getID(), newUsername, newPassword);
-        this.username = newUsername;
-        this.password = newPassword;
-        return true;
-    }
-
-    // Check if coach exists in system using FileHandler
-    public static boolean isCoachExists(String coachID) {
-        try {
-            return FileHandler.isCoachAlreadyInTheSystem(coachID);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error checking coach existence: " + e.getMessage());
-            return false;
-        }
-    } */
 
 public class Member extends User {
     private Coach coach;
@@ -121,12 +19,17 @@ public class Member extends User {
     private ArrayList<String> notifications;
     private FileHandler fileHandler;
 
-    public Member(String username, String password, String ID) {
-        super(username, password, ID);
+    public Member(String username, String password) {
+        super(username, password, generateAdminID() );
         this.notifications = new ArrayList<>();
         this.fileHandler = new FileHandler();
         FileHandler.loadMemberData();
         loadNotifications();
+    }
+    private static int memberCounter = 0;
+    private static String generateAdminID() {
+        memberCounter++; // Increment the counter
+        return "m-" + memberCounter; // Generate the ID in the format a-1, a-2, etc.
     }
 
     public void setCoach(Coach coach) {
@@ -286,7 +189,7 @@ public class Member extends User {
     }
     
     public void setSubscriptionStart(Date startDate) {
-        this.startDate = dateFormat.format(startDate);
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {

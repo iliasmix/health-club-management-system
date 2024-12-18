@@ -22,6 +22,7 @@ public class Admin extends User {
         adminCounter++; // Increment the counter
         return "a-" + adminCounter; // Generate the ID in the format a-1, a-2, etc.
     }
+    
     // Methods to manage members
     public void addMember(Member member) {
         if (member == null) {
