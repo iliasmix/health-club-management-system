@@ -2,12 +2,10 @@ package modules;
 
 import java.io.*; // import all of the built in functions of the input output
 import java.util.ArrayList;
-// import java.util.List;
-// import java.util.Scanner;
 
 
-//  NOTE :  I removed all the email functions as you asked because its unnecessary and will complicate the porject
-public class User {
+// abstract 
+abstract public class User {
     // it was private, the reason for mohamed huissen errors, you can NOT inherit private..!
     protected String username;
     protected String password;
@@ -38,19 +36,19 @@ public class User {
 
     public String getID() {return this.ID;}
    
-    public static String[] login(String username, String password) {
+    public static boolean login(String username, String password) {
         // Try Members first
-        try (BufferedReader reader = new BufferedReader(new FileReader("Members.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources\\Members.txt"))) {
             String line;
             boolean firstLine = true;
             while ((line = reader.readLine()) != null) {
                 if (firstLine) {
                     firstLine = false;
-                    continue; // Skip header
+                    continue; 
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Member"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
@@ -58,7 +56,7 @@ public class User {
         }
 
         // Try Coaches
-        try (BufferedReader reader = new BufferedReader(new FileReader("Coaches.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources\\Coaches.txt"))) {
             String line;
             boolean firstLine = true;
             while ((line = reader.readLine()) != null) {
@@ -68,7 +66,7 @@ public class User {
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Coach"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
@@ -76,7 +74,7 @@ public class User {
         }
 
         // Try Admins
-        try (BufferedReader reader = new BufferedReader(new FileReader("Admins.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources\\Admins.txt"))) {
             String line;
             boolean firstLine = true;
             while ((line = reader.readLine()) != null) {
@@ -86,14 +84,14 @@ public class User {
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Admin"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading Admins file: " + e.getMessage());
         }
 
-        return null; // Return null if no match found
+        return false; // Return null if no match found
     }
 
     // Logout function
@@ -110,13 +108,13 @@ public class User {
         String fileName;
         switch (userType.toLowerCase()) {
             case "member":
-                fileName = "Members.txt";
+                fileName = "resources\\Members.txt";
                 break;
             case "coach":
-                fileName = "Coaches.txt";
+                fileName = "resources\\Coaches.txt";
                 break;
             case "admin":
-                fileName = "Admins.txt";
+                fileName = "resources\\Admins.txt";
                 break;
             default:
                 return false;
@@ -146,7 +144,6 @@ public class User {
             return false;
         }
 
-        // Write back to file if updated
         if (updated) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
                 for (String line : fileContent) {
