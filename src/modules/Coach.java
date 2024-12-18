@@ -21,15 +21,15 @@ public class Coach extends User {
         // Remove member from list
         // Remove associated training plan
     }
-
+   
     public Coach(String username, String password) {
-        super(username, password, generateAdminID());
+        super(username, password, generateCoachID());
         this.username = username;
         this.password = password;
         this.fileHandler = new FileHandler();
     }
     private static int coachCounter = 0;
-    private static String generateAdminID() {
+    private static String generateCoachID() {
         coachCounter++; // Increment the counter
         return "c-" + coachCounter; // Generate the ID in the format a-1, a-2, etc.
     }
