@@ -1,4 +1,6 @@
 package modules;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import services.Billing;
 import services.FileHandler;
@@ -26,57 +28,76 @@ public class Admin extends User{
         }
     
         // Check if the member exists in the list
-        if (!members.contains(member)) {
+
+        try {
+            if (!FileHandler.isMemberAlreadyInTheSystem(member.ID)) {
+
             return;
         }
-    
-        // Remove the member from the list
-        members.remove(member);    
-        FileHandler.deleteMember(member.ID); //member.ID till we found out how we will handle this
+        FileHandler.deleteMember(member.ID);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
     }
     
 
-    public void updateMember(Member member, String newUsername) {
+    public void updateMember(Member member, String newUsername, String password) {
         // Validate the member object
         if (member == null) {
             return;
         }
     
-        // Check if the member exists in the list
-        if (!members.contains(member)) {
-            return;
-        }
+        try {
+            // Retrieve the member's ID
+            String memberId = member.ID;  
+            // Check if the member exists in the list
+            if (!FileHandler.isMemberAlreadyInTheSystem(member.ID)) {
+                System.out.println("member with ID " + member.ID + " already exists in the system.");
+                return; // If member is not found, exit
+            }
     
-        // Update member information
-        if (newUsername != null && !newUsername.isEmpty()) {
-
-            member.setUsername(newUsername);
+            // Update member information
+            if (newUsername != null && !newUsername.isEmpty()) {
+                member.setUsername(newUsername);
+                // Update member info in the system
+                FileHandler.updateMemberInfo(member.ID, newUsername, password);
+            }
+    
+        } catch (Exception e) {
+            // Handle any exceptions that occur
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
+    
     
 
     // Methods to manage coaches
     public void addCoach(Coach coach) {
         // Validate coach
         if (coach == null) {
-            return;
+            return; // Exit if the coach object is invalid
         }
-        // Add coach to list
-        coaches.add(coach);
-        // Save data
-        FileHandler.saveCoachData(coach);
+        try {
+            // Check if the coach already exists in the system
+            if (FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
+                System.out.println("Coach with ID " + coach.ID + " already exists in the system.");
+                return; // Exit if the coach already exists
+            }
+            // Save the coach data if they don't already exist
+            FileHandler.saveCoachData(coach);
+        } catch (Exception e) {
+            // Handle any exceptions and log the error
+            System.out.println("An error occurred while adding the coach: " + e.getMessage());
+        }
     }
+    
 
     public void removeCoach(Coach coach) {
         // Validate coach
         if (coach == null) {
             return;
         }
-
         // Check if the member exists in the list
-        if (!coaches.contains(coach)) {
-            return;
-        }
         // Remove coach assignments from members
         //need this if any thing happend to coach data type in member class
         // for (Member member : coach.getMembers()) {
@@ -85,49 +106,55 @@ public class Admin extends User{
         //         member.setCoach(null); // Clear the coach assignment for the member
         //     }
         // }
-        // Remove the coach from the list
-        coaches.remove(coach);
-        // Save data (this could be saving to a database, file, etc.)
         // Save data
         FileHandler.deleteCoach(coach.ID);//coach.ID till we found out how we will handle this
     }
 
-    public void updateCoach(Coach coach, String newName,String newPassword) {
+    public void updateCoach(Coach coach, String newUsername, String password) {
         // Validate coach
         if (coach == null) {
             return;
         }
-        // Check if the member exists in the list
-        if (!coaches.contains(coach)) {
-            return;
-        }        
+        try {
+            // Check if the coach already exists in the system
+            if (FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
+                System.out.println("Coach with ID " + coach.ID + " already exists in the system.");
+                return; // Exit if the coach already exists
+            }
+            // Save the coach data if they don't already exist
+            FileHandler.updateCoachInfo(coach.ID, newUsername,password);
+
+        } catch (Exception e) {
+            // Handle any exceptions and log the error
+            System.out.println("An error occurred while adding the coach: " + e.getMessage());
+        }
         // Update coach information
-        coach.setName(newName);
+        coach.setName(newUsername);
         // Save data
-        FileHandler.updateCoachInfo(coach.ID, newName,newPassword);
     }
 
     // Member-Coach assignment
-    public void assignMemberToCoach(Member member, Coach coach) {
-        // Validate coach
-        if (coach == null || !coaches.contains(coach)) {
-            return;
+    public void assignMemberToCoach(Member member, Coach coach) throws FileNotFoundException {
+        try {
+            // Check if the coach already exists in the system
+            if (FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
+                System.out.println("Coach with ID " + coach.ID + " already exists in the system.");
+                return; // Exit if the coach already exists
+                }
+            if (!FileHandler.isMemberAlreadyInTheSystem(member.ID)) {
+                System.out.println("member with ID " + member.ID + " already exists in the system.");
+                    return; // If member is not found, exit
+                }
+            coach.assignMember(member);
+            member.setCoach(coach);    
+            FileHandler.saveCoachData(coach);
+            FileHandler.saveMemberData(member);
+            }
+            catch (Exception e) {
+                // Handle any exceptions and log the error
+                System.out.println("An error occurred while adding the coach: " + e.getMessage());
+            }
         }
-    
-        // Validate member
-        if (member == null || !members.contains(member)) {
-            return;
-        }
-    
-        // Assign member to coach
-        coach.assignMember(member);
-    
-        // Update member's coach
-        member.setCoach(coach);
-    
-        // Save data (implementation needed)    
-        }
-
     // Billing management
     public void createBill(Member member, int planMonths, int year, int month, int day) {
         Billing.createBill(ID, planMonths, year, month, day);
@@ -181,15 +208,15 @@ public class Admin extends User{
     // Subscription management
     
     // Getters
-    public ArrayList<Member> getMembers() {
-        return members;
-    }
+    // public ArrayList<Member> getMembers() {
+    //     return members;
+    // }
 
-    public ArrayList<Coach> getCoaches() {
-        return coaches;
-    }
+    // public ArrayList<Coach> getCoaches() {
+    //     return coaches;
+    // }
 
-    public ArrayList<Billing> getBills() {
-        return bills;
-    }
+    // public ArrayList<Billing> getBills() {
+    //     return bills;
+    // }
 }
