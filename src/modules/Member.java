@@ -1,6 +1,8 @@
 package modules;
+
 import modules.*;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -126,10 +128,12 @@ public class Member extends User {
         FileHandler.loadMemberData();
         loadNotifications();
     }
+
     public void setCoach(Coach coach) {
         this.coach = coach;
     }
-      public String getCoachId() {
+
+    public String getCoachId() {
         return coachId;
     }
 
@@ -144,17 +148,18 @@ public class Member extends User {
     public void setSchedule(String schedule) {
         this.schedule = schedule;
     }
-    
+
     // View subscription end date
     public void viewSubscriptionEndDate() {
         if (subscription != null && subscription.getEndDate() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             System.out.println("Your subscription ends on: " + dateFormat.format(subscription.getEndDate()));
-            
+
             // Check if subscription is about to expire
             Date currentDate = new Date();
-            long daysUntilExpiry = (subscription.getEndDate().getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
-            
+            long daysUntilExpiry = (subscription.getEndDate().getTime() - currentDate.getTime())
+                    / (1000 * 60 * 60 * 24);
+
             if (daysUntilExpiry <= 7 && daysUntilExpiry > 0) {
                 System.out.println("WARNING: Your subscription will expire in " + daysUntilExpiry + " days!");
             } else if (daysUntilExpiry <= 0) {
@@ -172,10 +177,10 @@ public class Member extends User {
             ArrayList<String[]> schedules = fileHandler.loadScheduleData();
             System.out.println("\nYour Training Schedule:");
             System.out.println("Coach ID: " + coachId);
-            
+
             boolean foundSchedule = false;
             String currentDay = "";
-            
+
             for (String[] scheduleData : schedules) {
                 if (scheduleData[1].equals(coachId)) {
                     foundSchedule = true;
@@ -186,7 +191,7 @@ public class Member extends User {
                     System.out.println("- " + scheduleData[3]);
                 }
             }
-            
+
             if (!foundSchedule) {
                 System.out.println("No schedule found for your coach.");
             }
@@ -202,8 +207,9 @@ public class Member extends User {
             if (file.exists()) {
                 Scanner scanner = new Scanner(file);
                 // Skip header
-                if (scanner.hasNextLine()) scanner.nextLine();
-                
+                if (scanner.hasNextLine())
+                    scanner.nextLine();
+
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
                     String[] data = line.split("/");
@@ -227,15 +233,15 @@ public class Member extends User {
                 // Add expiration notification
                 String notification = "Your subscription has expired!";
                 notifications.add(notification);
-                
+
                 // Save notification to file
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("Notifications.txt", true))) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                    writer.write(String.format("n-%d/0/%s/%s/%s\n", 
-                        notifications.size() + 1, 
-                        this.getID(), 
-                        notification,
-                        dateFormat.format(currentDate)));
+                    writer.write(String.format("n-%d/0/%s/%s/%s\n",
+                            notifications.size() + 1,
+                            this.getID(),
+                            notification,
+                            dateFormat.format(currentDate)));
                 } catch (IOException e) {
                     System.out.println("Error saving notification: " + e.getMessage());
                 }
@@ -248,21 +254,104 @@ public class Member extends User {
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String startDate = subscription != null && subscription.getStartDate() != null ? 
-            dateFormat.format(subscription.getStartDate()) : "";
-        String endDate = subscription != null && subscription.getEndDate() != null ? 
-            dateFormat.format(subscription.getEndDate()) : "";
+        String startDate = subscription != null && subscription.getStartDate() != null
+                ? dateFormat.format(subscription.getStartDate())
+                : "";
+        String endDate = subscription != null && subscription.getEndDate() != null
+                ? dateFormat.format(subscription.getEndDate())
+                : "";
         String status = subscription != null ? String.valueOf(subscription.isActive()) : "";
-        
+
         return String.format("%s/%s/%s/%s/%s/%s/%s/%s",
-            getID(),
-            getUsername(),
-            getPassword(),
-            coachId != null ? coachId : "",
-            startDate,
-            endDate,
-            status,
-            schedule != null ? schedule : ""
-        );
+                getID(),
+                getUsername(),
+                getPassword(),
+                coachId != null ? coachId : "",
+                startDate,
+                endDate,
+                status,
+                schedule != null ? schedule : "");
+    }
+
+    private Date startDate;
+    private Date endDate;
+    private boolean isActive;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    // Constructor
+
+    // Getters and Setters
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setSubscriptionStart(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setSubscriptionEnd(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    // Methods
+    public void renewSubscription(Date newEndDate) {
+        this.endDate = newEndDate;
+        this.isActive = true;
+        // FileHandler.saveSubscriptionData(); // Automatically update file after
+        // renewal.
+    }
+
+    public boolean checkIfExpired() {
+        Date currentDate = new Date();
+        return currentDate.after(endDate);
+    }
+
+    /**
+     * Saves subscription data to the file for a specific member.
+     */
+    public void saveSubscriptionData(String memberId, String memberUsername, String coachId, String scheduleId) {
+        String subscriptionData = String.join("/",
+                memberId,
+                memberUsername,
+                coachId,
+                dateFormat.format(startDate),
+                dateFormat.format(endDate),
+                scheduleId);
+        FileHandler.saveSubscriptionData(subscriptionData);
+    }
+
+    /**
+     * Loads subscription data for a specific Member ID.
+     * 
+     * @param memberId The ID of the member whose subscription is to be loaded.
+     * @return A Subscription object if found; otherwise null.
+     */
+    public static Subscription loadSubscriptionByMemberId(String memberId) {
+        ArrayList<String[]> subscriptions = FileHandler.loadSubscriptionData();
+        for (String[] subscriptionData : subscriptions) {
+            if (subscriptionData[0].equals(memberId)) {
+                try {
+                    Date startDate = dateFormat.parse(subscriptionData[4]);
+                    Date endDate = dateFormat.parse(subscriptionData[5]);
+                    return new Subscription(startDate, endDate);
+                } catch (ParseException e) {
+                    System.err.println("Error parsing dates for member " + memberId + ": " + e.getMessage());
+                }
+            }
+        }
+        System.out.println("Subscription for Member ID " + memberId + " not found.");
+        return null;
     }
 }

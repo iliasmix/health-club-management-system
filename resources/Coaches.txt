@@ -1,11 +1,5 @@
-<<<<<<< Updated upstream
-Coach ID/Coach Username/Coach Pass
-C001/coach1/cPass1
-C002/coach2/cPass2
-C003/coach3/cPass3
-=======
 Coach ID/Coach Username/Coach Pass/Schedule ID
-C001/coach4/cPass4/
 C002/coach2/cPass2/
 C003/coach3/cPass3/
->>>>>>> Stashed changes
+coach1/password123/C001
+coach1/password123/C001

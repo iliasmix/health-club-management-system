@@ -8,6 +8,7 @@ import services.FileHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// inheritance
 public class Coach extends User {
     private FileHandler fileHandler;
 
