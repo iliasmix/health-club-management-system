@@ -1,13 +1,11 @@
 package services;
 
-import java.util.ArrayList;
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -385,5 +383,31 @@ public class FileHandler {
             }
         }
         return false;
+    }
+    public static ArrayList<Member> searchMembers(String keyword) throws FileNotFoundException {
+        File membersFile = new File(MEMBERS_FILE);
+        ArrayList<Member> matchingMembers = new ArrayList<>();
+    
+        if (keyword == null || keyword.isEmpty()) {
+            return matchingMembers; // Return empty list if the keyword is invalid
+        }
+    
+        try (Scanner membersScan = new Scanner(membersFile)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine(); // Skip header if present
+            }
+    
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+    
+                // Check if username contains the keyword
+                if (parts.length > 1 && parts[1].contains(keyword)) {
+                    Member member = new Member(parts[0], parts[1], null); // Only ID and username are useful
+                    matchingMembers.add(member);
+                }
+            }
+        }
+    
+        return matchingMembers;
     }
 }
