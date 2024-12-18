@@ -1,1 +1,2 @@
 Bill ID (b-1, b-2, ...etc)/Member ID/Plan (3 months - 6months ... etc.)/Start Date/End Date/Price/Bill Generation Time
+b-1/m-3/6 months/2024-12-15/2025-06-15/1800/Wed Dec 18 21:35:25 EET 2024

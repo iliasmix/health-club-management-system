@@ -1,7 +1,6 @@
 package services;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
@@ -10,17 +9,16 @@ import modules.Member;
 
 /**
  * FileHandler class manages all file operations for the Health Club Management System.
- * This class provides methods to save and load data for all system entities.
  * 
  * File Format Specifications:
  * - All data is stored in forward-slash separated format
  * - Members format: Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Subscription Status/Schedule ID
  * - Coaches format: Coach ID/Coach Username/Coach Pass/Schedule ID
  * - Schedules format: Schedule ID/Coach ID/Day/Exercise/Schedule Start Date/Schedule End Date
- * - Bills format: Bill ID/Member ID/Plan/Start Date/End Date/Price/Bill Generation Time
+ * - Bills format: Bill ID/Member ID/Plan/Start Date/End Date/Price/Bill/Generation Time
  */
 public class FileHandler {
-    // ==================== File Path Constants ====================
+    // File paths
     private static final String MEMBERS_FILE = "resources\\Members.txt";
     private static final String COACHES_FILE = "resources\\Coaches.txt";
     private static final String SCHEDULES_FILE = "resources\\Schedules.txt";
@@ -128,7 +126,7 @@ public class FileHandler {
                     String[] data = line.split("/");
                     if (data.length == 4) {
                         Coach coach = new Coach(data[1], data[2], data[0]);
-                        //coach.setScheduleId(data[3]);
+                        // coach.setScheduleId(data[3]);
                         coaches.add(coach);
                     }
                 }
@@ -356,16 +354,18 @@ public class FileHandler {
         }
     }
 
-    
+    // ==================== Helper Methods ======================
+
     public static boolean isMemberAlreadyInTheSystem(String memberID) throws FileNotFoundException {
         File membersFile = new File(MEMBERS_FILE);
-        try(Scanner membersScan = new Scanner(membersFile)) {
+        try (Scanner membersScan = new Scanner(membersFile)) {
             if (membersScan.hasNextLine()) {
                 membersScan.nextLine();
             }
             while (membersScan.hasNext()) {
                 String[] parts = membersScan.nextLine().split("/");
-                if (memberID.equals(parts[0])) return true;
+                if (memberID.equals(parts[0]))
+                    return true;
             }
         }
         return false;
@@ -373,13 +373,14 @@ public class FileHandler {
 
     public static boolean isCoachAlreadyInTheSystem(String coachID) throws FileNotFoundException {
         File coachesFile = new File(COACHES_FILE);
-        try(Scanner coachesScan = new Scanner(coachesFile)) {
+        try (Scanner coachesScan = new Scanner(coachesFile)) {
             if (coachesScan.hasNextLine()) {
                 coachesScan.nextLine();
             }
             while (coachesScan.hasNext()) {
                 String[] parts = coachesScan.nextLine().split("/");
-                if (coachID.equals(parts[0])) return true;
+                if (coachID.equals(parts[0]))
+                    return true;
             }
         }
         return false;
@@ -409,5 +410,31 @@ public class FileHandler {
         }
     
         return matchingMembers;
+    }
+    public static ArrayList<Coach> searchCoach(String keyword) throws FileNotFoundException {
+        File coachFIle = new File(COACHES_FILE);
+        ArrayList<Coach> matchingCoachs = new ArrayList<>();
+    
+        if (keyword == null || keyword.isEmpty()) {
+            return matchingCoachs; // Return empty list if the keyword is invalid
+        }
+    
+        try (Scanner membersScan = new Scanner(coachFIle)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine(); // Skip header if present
+            }
+    
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+    
+                // Check if username contains the keyword
+                if (parts.length > 1 && parts[1].contains(keyword)) {
+                    Coach coach = new Coach(parts[0], parts[1], null); // Only ID and username are useful
+                    matchingCoachs.add(coach);
+                }
+            }
+        }
+    
+        return matchingCoachs;
     }
 }
