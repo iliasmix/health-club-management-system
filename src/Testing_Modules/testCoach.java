@@ -8,7 +8,7 @@ public class testCoach {
 
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         // Test Coach creation
         Coach coach = new Coach("coach1", "password123", "C001");
         System.out.println("Coach created: " + coach.toString());
@@ -40,7 +40,7 @@ public class testCoach {
         Member member = new Member("member1", "password1", "M001");
         coach.assignMember(member);
         coach.removeMember(member);
-    }
+    }*/
 
 
 }

@@ -37,7 +37,7 @@ public class FileHandler {
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 7) {
-                        Member member = new Member(data[0], data[1], data[2]);
+                        Member member = new Member(data[1], data[2]);
                         member.setCoachId(data[3]);
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         try {
@@ -125,7 +125,7 @@ public class FileHandler {
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 3) {
-                        Coach coach = new Coach(data[1], data[2], data[0]);
+                        Coach coach = new Coach(data[1], data[2]);
 
                         coaches.add(coach);
                     }
@@ -404,7 +404,7 @@ public class FileHandler {
 
                 // Check if username contains the keyword
                 if (parts.length > 1 && parts[1].contains(keyword)) {
-                    Member member = new Member(parts[0], parts[1], null); // Only ID and username are useful
+                    Member member = new Member(parts[1], parts[2]); // Only ID and username are useful
                     matchingMembers.add(member);
                 }
             }
@@ -431,7 +431,7 @@ public class FileHandler {
 
                 // Check if username contains the keyword
                 if (parts.length > 1 && parts[1].contains(keyword)) {
-                    Coach coach = new Coach(parts[0], parts[1], null); // Only ID and username are useful
+                    Coach coach = new Coach(parts[1], parts[2]); // Only ID and username are useful
                     matchingCoachs.add(coach);
                 }
             }

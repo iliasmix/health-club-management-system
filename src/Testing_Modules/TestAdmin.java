@@ -6,7 +6,7 @@ import services.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class TestAdmin {
+/*public class TestAdmin {
     public static void main(String[] args) {
         // Create an Admin object
         Admin admin = new Admin("Admin1", "admin123", "a-1");
@@ -53,4 +53,4 @@ public class TestAdmin {
             System.out.println(c);
         }
     }
-}
+}*/
