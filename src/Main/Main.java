@@ -6,7 +6,8 @@ import java.util.Scanner;
  * Entry point of the Health Club Management System.
  * This class initializes the system, displays the menu, and handles user
  * interactions.
- */
+ */ 
+
 import modules.Admin;
 import modules.Member;
 import modules.Coach;
@@ -57,7 +58,7 @@ public class Main {
                             break;
                         case 7:
                             System.out.println("Enter member's ID and coach's ID");
-                            // admin.assignMemberToCoach(input.nextLine(), input.nextLine());
+                            admin.assignMemberToCoach(input.nextLine(), input.nextLine());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
