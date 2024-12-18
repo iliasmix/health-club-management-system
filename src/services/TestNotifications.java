@@ -8,10 +8,11 @@ import java.util.*;
 
 public class TestNotifications {
     public static void main(String[] args) throws FileNotFoundException {
-        //Admin a = new Admin("Admin", "1111", "a-1");
-        //Member m1 = new Member("Ahmad", "1234", "m-1");
+        Admin a = new Admin("Admin", "1111", "a-1");
+        Member m1 = new Member("Ahmad", "1234", "m-1");
         //Member m2 = new Member("Mohammad", "1122", "m-2");
-
+        NotificationSystem.greet(a);
+        NotificationSystem.greet(m1);
 //        NotificationSystem.sendSubscriptionExpiryNotification(a, m1);
 //        NotificationSystem.sendSubscriptionExpiryNotification(a, m2);
 

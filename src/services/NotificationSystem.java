@@ -1,4 +1,6 @@
 package services;
+import modules.*;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -112,5 +114,19 @@ public class NotificationSystem {
             System.err.println("Unable to read: File not found " + ex.getMessage());
             return 0;
         }
+    }
+
+    public static void greet(User u) throws FileNotFoundException {
+        if(u instanceof Admin) {
+            NotificationSystem.sendMessage("0", u.getID(), "Welcome, admin " + u.getUsername() + "!");
+        }
+        else if(u instanceof Member) {
+            NotificationSystem.sendMessage("0", u.getID(), "Welcome, member " + u.getUsername() + "!");
+        }
+        else if(u instanceof Coach) {
+            NotificationSystem.sendMessage("0", u.getID(), "Welcome, coach " + u.getUsername() + "!");
+        }
+        else
+            return;
     }
 }
