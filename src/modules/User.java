@@ -36,7 +36,7 @@ public class User {
 
     public String getID() {return this.ID;}
    
-    public static String[] login(String username, String password) {
+    public static boolean login(String username, String password) {
         // Try Members first
         try (BufferedReader reader = new BufferedReader(new FileReader("resources\\Members.txt"))) {
             String line;
@@ -48,7 +48,7 @@ public class User {
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Member"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
@@ -66,7 +66,7 @@ public class User {
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Coach"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
@@ -84,14 +84,14 @@ public class User {
                 }
                 String[] data = line.split("/");
                 if (data[1].equals(username) && data[2].equals(password)) {
-                    return new String[]{data[0], "Admin"}; // Return ID and type
+                    return true; // Return ID and type
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading Admins file: " + e.getMessage());
         }
 
-        return null; // Return null if no match found
+        return false; // Return null if no match found
     }
 
     // Logout function
