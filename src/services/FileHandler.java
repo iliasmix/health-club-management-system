@@ -6,6 +6,7 @@ import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
 
+
 /**
  * FileHandler class manages all file operations for the Health Club Management System.
  * 
@@ -410,5 +411,31 @@ public class FileHandler {
         }
     
         return matchingMembers;
+    }
+    public static ArrayList<Coach> searchCoach(String keyword) throws FileNotFoundException {
+        File coachFIle = new File(COACHES_FILE);
+        ArrayList<Coach> matchingCoachs = new ArrayList<>();
+    
+        if (keyword == null || keyword.isEmpty()) {
+            return matchingCoachs; // Return empty list if the keyword is invalid
+        }
+    
+        try (Scanner membersScan = new Scanner(coachFIle)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine(); // Skip header if present
+            }
+    
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+    
+                // Check if username contains the keyword
+                if (parts.length > 1 && parts[1].contains(keyword)) {
+                    Coach coach = new Coach(parts[0], parts[1], null); // Only ID and username are useful
+                    matchingCoachs.add(coach);
+                }
+            }
+        }
+    
+        return matchingCoachs;
     }
 }

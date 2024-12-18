@@ -34,13 +34,13 @@ public class TestBills {
 
         int planMonths;
         do {
-            System.out.print("Enter the plan months (1 or 2 or 3 or 6 or 12): ");
+            System.out.print("Enter the plan months (6 or 12): ");
             planMonths = input.nextInt();
 
-            if(planMonths != 1 && planMonths != 2 && planMonths != 3 && planMonths != 6 && planMonths != 12) {
+            if(planMonths != 6 && planMonths != 12) {
                 System.out.println("Invalid input!");
             }
-        } while(planMonths != 1 && planMonths != 2 && planMonths != 3 && planMonths != 6 && planMonths != 12);
+        } while(planMonths != 6 && planMonths != 12);
 
         int startYear;
         do {
