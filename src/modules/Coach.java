@@ -3,7 +3,7 @@ package modules;
 import java.io.*;
 // import java.text.SimpleDateFormat;
 // import java.util.ArrayList;
-import java.util.Date;
+
 import services.FileHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class Coach extends User {
         } catch (IOException e) {
             System.out.println("Error sending message: " + e.getMessage());
         }
-    
+    }
 
     public void saveCoach() {
         FileHandler.saveCoachData(this);
@@ -98,4 +98,3 @@ public class Coach extends User {
         return String.format("%s/%s/%s", getUsername(), getPassword(), getID());
     }
 }
-
