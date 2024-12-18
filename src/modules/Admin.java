@@ -49,7 +49,6 @@ public class Admin extends User {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
-
     public void updateMember(Member member, String newUsername, String password) {
         // Validate the member object
         if (member == null) {
