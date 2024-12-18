@@ -63,19 +63,14 @@ public class TrainingPlan {
     }
     // Method to save the schedule and exercises to a text file in a specific format
     public void saveScheduleAndExercisesToFile() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SCHEDULE_FILE_PATH))) {
-            writer.write(/* "Schedule ID: " + */this.scheduleId + "\n");
-            writer.write(/* "Coach ID: " + */this.coachId + "\n");
-            writer.write("Exercises:\n");
+        try (FileWriter writer = new FileWriter(SCHEDULE_FILE_PATH)) {
             for (String exercise : exercises) {
-                writer.write("- " + exercise + "\n");
+                String line = this.scheduleId + "/" + this.coachId + "/" + exercise + "/" + this.coachId + "/" + this.startDate + "/" + this.endDate ;
+                writer.write(line);
             }
-            writer.write(/* "Start Date: " + */this.startDate + "\n");
-            writer.write(/*"End Date: " +  */this.endDate + "\n");
-           
         }
     }
-
+    
     // Method to add a new exercise to the list
     public void addExercise(String exercise) {
         if (exercise == null || exercise.trim().isEmpty()) {
@@ -110,3 +105,25 @@ public class TrainingPlan {
         return endDate;
     }
 }
+
+
+/*public static void main(String[] args) {
+    try {
+        TrainingPlan plan = new TrainingPlan("c-1", LocalDate.of(2024, 12, 17), 4);
+
+        plan.addExercise("Chest and Triceps/Warm-up: 10 minutes treadmill");
+        plan.addExercise("Chest and Triceps/Bench Press: 4 sets of 12 reps");
+        plan.addExercise("Chest and Triceps/Incline Dumbbell Press: 4 sets of 10 reps");
+        plan.addExercise("Chest and Triceps/Triceps Dips: 3 sets of 15 reps");
+        plan.addExercise("Back and Biceps/Warm-up: 10 minutes rowing machine");
+        plan.addExercise("Back and Biceps/Pull-ups: 3 sets of 10 reps");
+        plan.addExercise("Back and Biceps/Barbell Rows: 4 sets of 10 reps");
+        plan.addExercise("Back and Biceps/Biceps Curl: 4 sets of 12 reps");
+
+        plan.saveScheduleAndExercisesToFile();
+        System.out.println("Schedule saved successfully.");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+}*/

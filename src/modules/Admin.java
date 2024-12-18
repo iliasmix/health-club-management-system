@@ -5,17 +5,9 @@ import services.FileHandler;
 
 
 public class Admin extends User{
-    private ArrayList<Member> members;
-    private ArrayList<Coach> coaches;
-    private ArrayList<Billing> bills;
-
     // Constructor
-    public Admin(String username, String password, String email) {
-        super(username, password, email);
-        // Initialize ArrayLists
-        this.members = new ArrayList<Member>();
-        this.coaches = new ArrayList<Coach>();
-        this.bills = new ArrayList<Billing>();
+    public Admin(String username, String password, String ID) {
+        super(username, password, ID);
     }
 
     // Methods to manage members
@@ -23,8 +15,6 @@ public class Admin extends User{
         if (member == null) {
             return;
         }
-        // Add member to list
-        members.add(member);
         // Save data
         FileHandler.saveMemberData(member);
         }
