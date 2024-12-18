@@ -20,14 +20,14 @@ public class Member extends User {
     private FileHandler fileHandler;
 
     public Member(String username, String password) {
-        super(username, password, generateAdminID() );
+        super(username, password, generateCoachID() );
         this.notifications = new ArrayList<>();
         this.fileHandler = new FileHandler();
         FileHandler.loadMemberData();
         loadNotifications();
     }
     private static int memberCounter = 0;
-    private static String generateAdminID() {
+    private static String generateCoachID() {
         memberCounter++; // Increment the counter
         return "m-" + memberCounter; // Generate the ID in the format a-1, a-2, etc.
     }
