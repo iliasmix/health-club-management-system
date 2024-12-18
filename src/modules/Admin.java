@@ -9,10 +9,19 @@ import services.FileHandler;
 
 public class Admin extends User{
     // Constructor
-    public Admin(String username, String password, String ID) {
-        super(username, password, ID);
+
+    private static int adminCounter = 0; // Static counter for auto-incrementing IDs
+
+    // Constructor with auto-incrementing ID
+    public Admin(String username, String password) {
+        super(username, password, generateAdminID());
     }
 
+    // Method to generate a new admin ID
+    private static String generateAdminID() {
+        adminCounter++; // Increment the counter
+        return "a-" + adminCounter; // Generate the ID in the format a-1, a-2, etc.
+    }
     // Methods to manage members
     public void addMember(Member member) {
         if (member == null) {
