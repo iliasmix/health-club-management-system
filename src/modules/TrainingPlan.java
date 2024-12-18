@@ -83,7 +83,7 @@ public class TrainingPlan {
     public void displayExercisePlan() {
         System.out.println("Exercise Plan:");
         for (String exercise : exercises) {
-            System.out.println("- " + exercise);
+            System.out.println("/" + exercise);
         }
     }
 
