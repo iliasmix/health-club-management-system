@@ -1,4 +1,4 @@
-package main;
+package Main;
 
 import java.util.Scanner;
 
@@ -6,11 +6,10 @@ import java.util.Scanner;
  * Entry point of the Health Club Management System.
  * This class initializes the system, displays the menu, and handles user
  * interactions.
- */ 
+ */
 
-import modules.Admin;
-import modules.Member;
-import modules.Coach;
+import modules.*;
+
 import services.FileHandler;
 
 public class Main {
@@ -22,12 +21,18 @@ public class Main {
             displayMenu();
             // Get the user's choice from the console input (e.g., Admin, Coach, Member, or
             // Exit).
-
             // Depending on the user's choice, direct them to the appropriate module:
+
             switch (getUserInput()) {
                 case 1:
                     System.out.println("Enter userName ,password,ID");
-                    Admin admin = new Admin(input.nextLine(), input.nextLine(), input.nextLine());
+                    String userName = input.nextLine();
+                    String password = input.nextLine();
+                    Admin admin = new Admin(userName, password, input.nextLine());
+                    while (!(User.login(userName, password))) {
+                        System.out.println("INVALID userName and password : ");
+                    }
+
                     System.out.println(
                             "choose operation : \n1- addMember \n2- removeMember \n3- updateMember \n4- addCoach \n5- removeCoach \n6- updateCoach \n7- assignMemberToCoach ");
 
@@ -38,7 +43,7 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Enter members's ID");
-                            // admin.removeMember(input.nextLine());
+                            admin.removeMember(input.nextLine());
                             break;
                         case 3:
                             System.out.println("Enter members's ID,newUserName ,Email");
@@ -50,7 +55,7 @@ public class Main {
                             break;
                         case 5:
                             System.out.println("Enter coach's ID");
-                            // admin.removeCoach(input.nextLine());
+                            admin.removeCoach(input.nextLine());
                             break;
                         case 6:
                             System.out.println("Enter coach's ID,newUserName ,Email");
@@ -58,7 +63,7 @@ public class Main {
                             break;
                         case 7:
                             System.out.println("Enter member's ID and coach's ID");
-                            admin.assignMemberToCoach(input.nextLine(), input.nextLine());
+                            // admin.assignMemberToCoach(input.nextLine(), input.nextLine());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
@@ -68,7 +73,12 @@ public class Main {
 
                 case 2:
                     System.out.println("Enter userName ,password,ID");
-                    Coach coach = new Coach(input.nextLine(), input.nextLine(), input.nextLine());
+                    String userName2 = input.nextLine();
+                    String password2 = input.nextLine();
+                    Coach coach = new Coach(userName2, password2, input.nextLine());
+                    while (!(User.login(userName2, password2))) {
+                        System.out.println("INVALID userName and password : ");
+                    }
                     System.out.println(
                             "choose operation : \n1- create Training Plan \n2- add Exercise To Training Plan \n3- set Member Schedule \n4- send Message To Coach Members \n");
                     switch (getUserInput()) {
@@ -98,7 +108,12 @@ public class Main {
 
                 case 3:
                     System.out.println("Enter userName ,password,ID");
-                    Member member = new Member(input.nextLine(), input.nextLine(), input.nextLine());
+                    String userName3 = input.nextLine();
+                    String password3 = input.nextLine();
+                    Member member = new Member(userName3, password3, input.nextLine());
+                    while (!(User.login(userName3, password3))) {
+                        System.out.println("INVALID userName and password : ");
+                    }
                     System.out.println(
                             "choose operation : \n1- view Subscription Details \n2- view Schedule \n3- view Training Plan \n");
                     switch (getUserInput()) {

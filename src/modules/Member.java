@@ -284,9 +284,9 @@ public class Member extends User {
     public Date getStartDate() {
         return startDate;
     }
-
+    
     public void setSubscriptionStart(Date startDate) {
-        this.startDate = startDate;
+        this.startDate = dateFormat.format(startDate);
     }
 
     public Date getEndDate() {
