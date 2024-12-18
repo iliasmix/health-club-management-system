@@ -37,21 +37,21 @@ public class Billing {
     }
 
     private static int getPlanPrice(int planMonths) {
-        File subscriptionsFile = new File("resources\\Subscriptions.txt");
+        File pricingFile = new File("resources\\Pricing.txt");
 
-        if(!subscriptionsFile.exists()) {
+        if(!pricingFile.exists()) {
             return -1; //Let the default be 1 month
         }
 
-        try(Scanner subscriptionsScan = new Scanner(subscriptionsFile)) {
+        try(Scanner pricingScan = new Scanner(pricingFile)) {
 
             //Skip the first line as it is the file guideline.
-            if(subscriptionsScan.hasNextLine()) {
-                subscriptionsScan.nextLine();
+            if(pricingScan.hasNextLine()) {
+                pricingScan.nextLine();
             }
 
-            while(subscriptionsScan.hasNext()) {
-                String[] parts = subscriptionsScan.nextLine().split("/");
+            while(pricingScan.hasNext()) {
+                String[] parts = pricingScan.nextLine().split("/");
 
                 //If the first part (Months count) equals plan months return the second part (the price)
                 if(parts[0].equals(planMonths + "")) {
