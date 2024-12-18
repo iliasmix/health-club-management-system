@@ -1,5 +1,6 @@
 package Main;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -28,7 +29,7 @@ public class Main {
                     System.out.println("Enter userName ,password,ID");
                     String userName = input.nextLine();
                     String password = input.nextLine();
-                    Admin admin = new Admin(userName, password, input.nextLine());
+                    Admin admin = new Admin(userName, password);
                     while (!(User.login(userName, password))) {
                         System.out.println("INVALID userName and password : ");
                     }
@@ -39,7 +40,7 @@ public class Main {
                     switch (getUserInput()) {
                         case 1:
                             System.out.println("Enter members's userName ,password,ID");
-                            admin.addMember(new Member(input.nextLine(), input.nextLine(), input.nextLine()));
+                            admin.addMember(new Member(input.nextLine(), input.nextLine()));
                             break;
                         case 2:
                             System.out.println("Enter members's ID");
@@ -47,23 +48,23 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Enter members's ID,newUserName ,Email");
-                            // admin.updateMember(input.nextLine(), input.nextLine(), input.nextLine());
+                            admin.updateMember(input.nextLine(), input.nextLine(), input.nextLine());
                             break;
                         case 4:
                             System.out.println("Enter coach's userName ,password,ID");
-                            admin.addCoach(new Coach(input.nextLine(), input.nextLine(), input.nextLine()));
+                            admin.addCoach(new Coach(input.nextLine(), input.nextLine()));
                             break;
                         case 5:
                             System.out.println("Enter coach's ID");
                             admin.removeCoach(input.nextLine());
                             break;
                         case 6:
-                            System.out.println("Enter coach's ID,newUserName ,Email");
-                            // admin.updateCoach(input.nextLine(), input.nextLine(), input.nextLine());
+                            System.out.println("Enter coach's ID,newUserN9ame ,Email");
+                            admin.updateCoach(input.nextLine(), input.nextLine(), input.nextLine());
                             break;
                         case 7:
                             System.out.println("Enter member's ID and coach's ID");
-                            // admin.assignMemberToCoach(input.nextLine(), input.nextLine());
+                            admin.assignMemberToCoach(input.nextLine(), input.nextLine());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
@@ -75,30 +76,21 @@ public class Main {
                     System.out.println("Enter userName ,password,ID");
                     String userName2 = input.nextLine();
                     String password2 = input.nextLine();
-                    Coach coach = new Coach(userName2, password2, input.nextLine());
+                    Coach coach = new Coach(userName2, password2);
                     while (!(User.login(userName2, password2))) {
                         System.out.println("INVALID userName and password : ");
                     }
                     System.out.println(
-                            "choose operation : \n1- create Training Plan \n2- add Exercise To Training Plan \n3- set Member Schedule \n4- send Message To Coach Members \n");
+                            "choose operation : \n1 - set Member Schedule \n2 - send Message To Coach Members \n");
                     switch (getUserInput()) {
                         case 1:
-                            System.out.println("Enter members's ID ,start date,end date");
-                            // coach.createTrainingPlan(input.nextLine(), input.nextLine(),
-                            // input.nextLine());
+                            System.out.println("Enter members's Schedule ,start date(Year,Month,Day) ,week number");
+                            LocalDate date = LocalDate.of(input.nextInt(), input.nextInt(), input.nextInt());
+                            coach.setSchedulesForAllMembers(input.nextLine(), date, input.nextInt());
                             break;
                         case 2:
-                            System.out.println("Enter members's ID,exercise ");
-                            // coach.addExerciseToTrainingPlan(input.nextLine(),
-                            // input.nextLine(),input.nextLine());
-                            break;
-                        case 3:
-                            System.out.println("Enter members's ID,schedule");
-                            // coach.setMemberSchedule(input.nextLine(), input.nextLine());
-                            break;
-                        case 4:
-                            System.out.println("Enter message,coach's ID");
-                            // coach.sendMessageToCoachMembers(input.nextLine(), input.nextLine());
+                            System.out.println("Enter members's Message : ");
+                            coach.sendMessageToAllMembers(input.nextLine());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
@@ -110,21 +102,18 @@ public class Main {
                     System.out.println("Enter userName ,password,ID");
                     String userName3 = input.nextLine();
                     String password3 = input.nextLine();
-                    Member member = new Member(userName3, password3, input.nextLine());
+                    Member member = new Member(userName3, password3);
                     while (!(User.login(userName3, password3))) {
                         System.out.println("INVALID userName and password : ");
                     }
                     System.out.println(
-                            "choose operation : \n1- view Subscription Details \n2- view Schedule \n3- view Training Plan \n");
+                            "choose operation : \n1- view Subscription end date \n2- view coache and Schedule \n");
                     switch (getUserInput()) {
                         case 1:
-                            // member.viewSubscriptionDetails();
+                            member.viewSubscriptionEndDate();
                             break;
                         case 2:
-                            // member.viewSchedule();
-                            break;
-                        case 3:
-                            // member.viewTrainingPlan();
+                            member.viewCoachAndSchedule();
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
