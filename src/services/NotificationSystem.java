@@ -9,20 +9,22 @@ public class NotificationSystem {
     private static int notificationId = getNextNotificationIdNum();
 
     public static void sendSubscriptionExpiryNotification(String memberId) throws FileNotFoundException {
-        // Create expiry notification message (Pop up)
-        System.out.println("Pop up message!");
+        if(!NotificationSystem.isSubscriptionActive(memberId)) {
+            // Create expiry notification message (Pop up)
+            System.out.println("Pop up message!");
 
-        //Save messages to Notifications.txt
-        File file = new File("resources\\Notifications.txt");
-        try(PrintWriter output = new PrintWriter(new FileWriter(file, true))) {
-            // Send notification to member
-            output.println("n-" + notificationId + "/0/" + memberId + "/Your subscription has expired!/" + new Date());
-            notificationId++;
-            // Send the notification to the admin
-            output.println("n-" + notificationId + "/0/" + "a-1" + "/Member " + memberId+ "'s subscription has expired!/" + new Date());
-        }
-        catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            //Save messages to Notifications.txt
+            File file = new File("resources\\Notifications.txt");
+            try(PrintWriter output = new PrintWriter(new FileWriter(file, true))) {
+                // Send notification to member
+                output.println("n-" + notificationId + "/0/" + memberId + "/Your subscription has expired!/" + new Date());
+                notificationId++;
+                // Send the notification to the admin
+                output.println("n-" + notificationId + "/0/" + "a-1" + "/Member " + memberId+ "'s subscription has expired!/" + new Date());
+            }
+            catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
