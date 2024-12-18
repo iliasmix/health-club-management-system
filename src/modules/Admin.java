@@ -1,5 +1,4 @@
 package modules;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import services.Billing;
@@ -168,14 +167,12 @@ public class Admin extends User{
         }
     
         keyword = keyword.toLowerCase(); // Convert to lowercase for case-insensitive search
-    
-        for (Member member : members) {
-            // Check for partial match in username or email
-            if (member.getUsername().toLowerCase().contains(keyword)){
-                matchingMembers.add(member);
-            }
+        try {
+            matchingMembers=FileHandler.searchMembers(keyword);
+        } catch (Exception e) {
+            System.out.println("An error occurred while adding the coach: " + e.getMessage());
         }
-    
+        
         return matchingMembers; // Return the matching members list
     }
     
@@ -186,14 +183,11 @@ public class Admin extends User{
         }
     
         keyword = keyword.toLowerCase(); // Convert to lowercase for case-insensitive search
-    
-        for (Coach coach : coaches) {
-            // Check for partial match in name or specialization
-            if (coach.getName().toLowerCase().contains(keyword) ) {
-                matchingCoaches.add(coach);
-            }
+        try {
+            matchingCoaches=FileHandler.searchCoach(keyword);
+        } catch (Exception e) {
+            System.out.println("An error occurred while adding the coach: " + e.getMessage());
         }
-    
         return matchingCoaches; // Return the matching coaches list
     }
     
