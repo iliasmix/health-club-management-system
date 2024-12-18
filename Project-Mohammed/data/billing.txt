@@ -1,6 +1,0 @@
-# Format: billID,memberID,amount,date,description,status
-b-001,m-001,300,2024-01-15,6-month membership,paid
-b-002,m-002,180,2024-01-20,3-month membership,paid
-b-003,m-003,500,2024-02-01,12-month membership,paid
-b-004,m-004,75,2024-02-05,1-month membership,paid
-b-005,m-005,180,2024-02-10,3-month membership,paid
