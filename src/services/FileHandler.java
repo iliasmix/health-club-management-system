@@ -1,6 +1,8 @@
 package services;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
@@ -37,14 +39,20 @@ public class FileHandler {
                     if (data.length == 7) {
                         Member member = new Member(data[0], data[1], data[2]);
                         member.setCoachId(data[3]);
-                        member.setSubscriptionStart(data[4]);
-                        member.setSubscriptionEnd(data[5]);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            member.setSubscriptionStart(dateFormat.parse(data[4]));
+                            member.setSubscriptionEnd(dateFormat.parse(data[5]));
+                        } catch (ParseException e) {
+                            System.err.println("Error parsing date for member " + data[0] + ": " + e.getMessage());
+                        }
                         member.setSchedule(data[6]);
 
                         members.add(member);
                     }
                 }
             }
+
         } catch (IOException e) {
             System.err.println("Error loading member data: " + e.getMessage());
         }
