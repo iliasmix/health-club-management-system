@@ -1,15 +1,10 @@
 package services;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 
 /**
  * FileHandler class manages all file operations for the Health Club Management System.
@@ -389,6 +384,7 @@ public class FileHandler {
         }
         return false;
     }
+
     public static ArrayList<Member> searchMembers(String keyword) throws FileNotFoundException {
         File membersFile = new File(MEMBERS_FILE);
         ArrayList<Member> matchingMembers = new ArrayList<>();
