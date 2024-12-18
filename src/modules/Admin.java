@@ -1,6 +1,8 @@
 package modules;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import services.Billing;
 import services.FileHandler;
 
@@ -145,11 +147,11 @@ public class Admin extends User{
                     return; // If member is not found, exit
                 }
             coach.assignMember(member);
-            member.setCoach(coach);    
+            member.setCoach(coach);
             FileHandler.saveCoachData(coach);
             FileHandler.saveMemberData(member);
             }
-            catch (Exception e) {
+            catch (FileNotFoundException e) {
                 // Handle any exceptions and log the error
                 System.out.println("An error occurred while adding the coach: " + e.getMessage());
             }
@@ -192,13 +194,41 @@ public class Admin extends User{
     }
     
     // Reporting
-    public void generateReports() {
-        // Generate member statistics
-        // Generate subscription statistics
-        // Generate coach statistics
-        // Generate billing statistics
-    }
+    public void generateReports() throws FileNotFoundException {
+        // Initialize counters
+        int counter3 = 0;
+        int counter6 = 0;
+        
+        // Specify the file to read from
+        File nillsFile = new File("resources\\Bills.txt");
 
+        try (Scanner billsScan = new Scanner(nillsFile)) {
+            // Skip the header if there is one
+            if (billsScan.hasNextLine()) {
+                billsScan.nextLine();
+            }
+
+            // Process each line in the file
+            while (billsScan.hasNext()) {
+                String[] parts = billsScan.nextLine().split("/");
+
+                // Check if the duration (in parts[2]) is "6 months" (case-insensitive)
+                if (parts[2].equalsIgnoreCase("6 months")) {
+                    counter6++;  // Increment for 6 months
+                } else if(parts[2].equalsIgnoreCase("3 months")){
+                    counter3++;  // Increment for other durations (optional)
+                }
+            }
+            
+            // Output the results
+            System.out.println("Bills with 6 months duration: " + counter6);
+            System.out.println("Bills with other durations: " + counter3);
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("The file was not found: " + e.getMessage());
+        }
+    }
+}
     // Subscription management
     
     // Getters
@@ -213,4 +243,3 @@ public class Admin extends User{
     // public ArrayList<Billing> getBills() {
     //     return bills;
     // }
-}
