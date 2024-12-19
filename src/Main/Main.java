@@ -1,4 +1,4 @@
-package main;
+package Main;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;

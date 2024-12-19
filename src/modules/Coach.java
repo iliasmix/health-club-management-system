@@ -9,24 +9,24 @@ import services.NotificationSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+// import java.util.List;
 import java.util.Scanner;
 
-import javax.management.Notification;
+// import javax.management.Notification;
 
 // inheritance
 public class Coach extends User {
     private FileHandler fileHandler;
 
-    public void assignMember(Member member) {
-        // Check if member exists
-        // Add member to list
-    }
+    // public void assignMember(Member member) {
+    //     // Check if member exists
+    //     // Add member to list
+    // }
 
-    public void removeMember(Member member) {
-        // Remove member from list
-        // Remove associated training plan
-    }
+    // public void removeMember(Member member) {
+    //     // Remove member from list
+    //     // Remove associated training plan
+    // }
 
     public Coach(String username, String password) {
         super(username, password, generateCoachID());
@@ -75,26 +75,31 @@ public class Coach extends User {
     }
     
     // done here
-    public void sendMessageToAllMembers(String coachId, String message) {
-        try {
-            File members = new File("resources\\Members.txt");
-            try(Scanner membersScan = new Scanner(members)) {
-
-                if (membersScan.hasNextLine()) {
-                    membersScan.nextLine();
-                }
-
-                while (membersScan.hasNext()) {
-                    String[] parts = membersScan.nextLine().split("/");
-                    if (parts[3].equals(coachId)) {
-                        NotificationSystem.sendMessage(parts[3], parts[0], message);
-                    }
+    public static void sendMessageToAllMembers(String coachId, String message) {
+        File membersFile = new File("resources\\Members.txt");
+    
+        try (Scanner membersScan = new Scanner(membersFile)) {
+            // Skip header if it exists
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine();
+            }
+    
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+    
+                if (parts.length > 3 && parts[3].equals(coachId)) {
+                    String memberId = parts[0]; // Receiver ID (3rd column)
+                    System.out.println("Sending message to Member ID: " + memberId);
+                    NotificationSystem.sendMessage(coachId, memberId, message);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Members file not found: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
+     
 
     public void saveCoach() {
         FileHandler.saveCoachData(this);
