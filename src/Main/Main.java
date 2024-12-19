@@ -41,7 +41,7 @@ public class Main {
 
                     boolean exit = false;
                     /* ============================================================ */
-                    /*=================== USER AUTHOROIZATION (2.5 marks) ===================== */
+                    /*=================== USER AUTHOROIZATION AND MANIPULATION MODULE (2.5 marks) ===================== */
                     while (!exit) {
                         System.out.println("Choose an operation:\n" +
                                 "---------------------------------\n" +
