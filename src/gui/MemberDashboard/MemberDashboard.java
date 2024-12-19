@@ -1,79 +1,113 @@
 package gui.MemberDashboard;
 
-import gui.*;
-import modules.Member;
-
 import javax.swing.*;
 import java.awt.*;
+import modules.Member;
 
 public class MemberDashboard extends JFrame {
-    private final Member member;
-    private final DisplayPanel displayPanel;
-    private final ActionPanel actionPanel;
+    private Member member;
+    private JTextArea outputArea;
 
     public MemberDashboard(Member member) {
         this.member = member;
-        this.displayPanel = new DisplayPanel();
-        this.actionPanel = new ActionPanel();
 
-        setupFrame();
-        setupComponents();
-        setupListeners();
-    }
-
-    private void setupFrame() {
-        setTitle("Member Dashboard");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 500);
+        // Initialize frame
+        setTitle("Health Club Management System - Member Dashboard");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(true);
+
+        // Create main panel
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Create welcome label
+        JLabel welcomeLabel = new JLabel("Welcome, " + member.getUsername() + "!", SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        welcomeLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        mainPanel.add(welcomeLabel, BorderLayout.NORTH);
+
+        // Create buttons panel
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+        createAndAddButtons(buttonPanel);
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Create output area
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        outputArea.setBackground(new Color(245, 245, 245));
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        scrollPane.setPreferredSize(new Dimension(600, 150));
+        mainPanel.add(scrollPane, BorderLayout.SOUTH);
+
+        // Add main panel to frame
+        add(mainPanel);
+
+        setVisible(true);
     }
 
-    private void setupComponents() {
-        setLayout(new BorderLayout(10, 10));
+    private void createAndAddButtons(JPanel buttonPanel) {
+        String[] buttonLabels = {
+                "View Subscription End Date",
+                "View Coach and Schedule",
+                "Logout"
+        };
 
-        // Add header
-        add(new DashboardHeader(member.getUsername()), BorderLayout.NORTH);
-
-        // Add action panel (buttons)
-        add(actionPanel, BorderLayout.WEST);
-
-        // Add display panel
-        add(displayPanel, BorderLayout.CENTER);
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            styleButton(button);
+            button.addActionListener(e -> handleButtonClick(label));
+            buttonPanel.add(button);
+        }
     }
 
-    private void setupListeners() {
-        // Subscription button listener
-        actionPanel.addSubscriptionListener(e -> {
-            try {
-                member.viewSubscriptionEndDate(member.getID());
-                displayPanel.setDisplayText("Fetching subscription details...\n");
-            } catch (Exception ex) {
-                displayPanel.setDisplayText("Error: " + ex.getMessage());
-            }
-        });
+    private void styleButton(JButton button) {
+        button.setBackground(new Color(240, 240, 240));
+        button.setFont(new Font("Arial", Font.PLAIN, 12));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(8, 15, 8, 15)));
+    }
 
-        // Coach schedule button listener
-        actionPanel.addCoachScheduleListener(e -> {
-            try {
-                member.viewCoachAndSchedule(member.getID());
-                displayPanel.setDisplayText("Fetching coach and schedule details...\n");
-            } catch (Exception ex) {
-                displayPanel.setDisplayText("Error: " + ex.getMessage());
-            }
-        });
-
-        // Logout button listener
-        actionPanel.addLogoutListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to logout?",
-                "Confirm Logout",
-                JOptionPane.YES_NO_OPTION
-            );
-            if (confirm == JOptionPane.YES_OPTION) {
+    private void handleButtonClick(String action) {
+        switch (action) {
+            case "View Subscription End Date":
+                viewSubscriptionEndDate();
+                break;
+            case "View Coach and Schedule":
+                viewCoachAndSchedule();
+                break;
+            case "Logout":
                 dispose();
-            }
-        });
+                break;
+        }
+    }
+
+    private void viewSubscriptionEndDate() {
+        try {
+            outputArea.setText(""); // Clear previous output
+            outputArea.append("=== Subscription Information ===\n");
+            member.viewSubscriptionEndDate(member.getID());
+            outputArea.append("=============================\n");
+        } catch (Exception e) {
+            showError("Error retrieving subscription information: " + e.getMessage());
+        }
+    }
+
+    private void viewCoachAndSchedule() {
+        try {
+            outputArea.setText(""); // Clear previous output
+            outputArea.append("=== Coach and Schedule Information ===\n");
+            member.viewCoachAndSchedule(member.getID());
+            outputArea.append("==================================\n");
+        } catch (Exception e) {
+            showError("Error retrieving coach and schedule information: " + e.getMessage());
+        }
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

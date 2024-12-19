@@ -52,9 +52,11 @@ public class Admin extends User {
 
     public void updateMember(String memberId, String newUsername, String password) {
         // Validate the member object
-/*        if (member == null) {
-            return;
-        }*/
+        /*
+         * if (member == null) {
+         * return;
+         * }
+         */
 
         FileHandler.updateMemberInfo(memberId, newUsername, password);
         // try {
@@ -186,15 +188,17 @@ public class Admin extends User {
         }
         return matchingCoaches; // Return the matching coaches list
     }
-    public ArrayList<Member> listMembers(){
-        ArrayList<Member> members=new ArrayList<>();
+
+    public ArrayList<Member> listMembers() {
+        ArrayList<Member> members = new ArrayList<>();
         try {
-        members= FileHandler.lisetMembers();
+            members = FileHandler.lisetMembers();
         } catch (FileNotFoundException ex) {
-        System.err.println(ex);
+            System.err.println(ex);
         }
         return members;
     }
+
     // Reporting
     public void generateReports() throws FileNotFoundException {
         // Initialize counters
