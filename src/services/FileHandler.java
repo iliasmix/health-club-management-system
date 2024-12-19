@@ -439,4 +439,21 @@ public class FileHandler {
 
         return matchingCoachs;
     }
+    public static ArrayList<Member> lisetMembers() throws FileNotFoundException {
+        File membersFile = new File(MEMBERS_FILE);
+        ArrayList<Member> matchingMembers = new ArrayList<>();
+        try (Scanner membersScan = new Scanner(membersFile)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine(); // Skip header if present
+            }
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+                Member member = new Member(parts[1], parts[2]); // Only ID and username are useful
+                matchingMembers.add(member);
+                }
+            }
+        
+        return matchingMembers;
+    }
+
 }
