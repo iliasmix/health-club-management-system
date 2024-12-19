@@ -48,7 +48,7 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Enter members's ID,newUserName ,Email");
-                            admin.updateMember(input.next(), input.next(), input.next());
+                           //  admin.updateMember(input.next(), input.next(), input.next());
                             break;
                         case 4:
                             System.out.println("Enter coach's userName ,password,ID");
@@ -65,7 +65,7 @@ public class Main {
                         case 7:
                             System.out.println("Enter member's ID and coach's ID");
                             System.out.println("I hate this function");
-                            //admin.assignMemberToCoach(input.next(), input.next());
+                            // admin.assignMemberToCoach(input.next(), input.next());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
@@ -74,10 +74,10 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("Enter userName ,password,ID");
+                    System.out.println("Hi, Please Enter User Name and Password: ");
                     String userName2 = input.next();
                     String password2 = input.next();
-                    Coach coach = new Coach(userName2, password2);
+                    Coach coach = new Coach(userName2, password2); 
                     while (!(User.login(userName2, password2))) {
                         System.out.println("INVALID userName and password : ");
                     }
@@ -90,8 +90,12 @@ public class Main {
                             coach.setSchedulesForAllMembers(input.next(), date, input.nextInt());
                             break;
                         case 2:
+                            System.out.println("===================-------==================");
+                            System.out.println("Enter (IN ORDER)Coach ID Message : ");
+                            System.out.println("Enter Member ID  Message : ");
                             System.out.println("Enter members's Message : ");
-                            coach.sendMessageToAllMembers(input.next());
+                            System.out.println("Note: Do NOT press enter just seperate by a space!");
+                            coach.sendMessageToAllMembers(input.next(),input.next(),input.next());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");

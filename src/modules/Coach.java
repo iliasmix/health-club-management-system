@@ -5,8 +5,13 @@ import java.io.*;
 // import java.util.ArrayList;
 
 import services.FileHandler;
+import services.NotificationSystem;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.management.Notification;
 
 // inheritance
 public class Coach extends User {
@@ -21,18 +26,21 @@ public class Coach extends User {
         // Remove member from list
         // Remove associated training plan
     }
-   
+
     public Coach(String username, String password) {
         super(username, password, generateCoachID());
         this.username = username;
         this.password = password;
         this.fileHandler = new FileHandler();
     }
+
     private static int coachCounter = 0;
+
     private static String generateCoachID() {
         coachCounter++; // Increment the counter
         return "c-" + coachCounter; // Generate the ID in the format a-1, a-2, etc.
     }
+
     // Assign a training schedule to all members associated with the coach
     public void setSchedulesForAllMembers(String schedule, LocalDate startDate, int weeksnum) {
         ArrayList<Member> members = FileHandler.loadMemberData(); // Load all member data
@@ -65,20 +73,13 @@ public class Coach extends User {
             System.out.println("No members assigned to this coach.");
         }
     }
-
-    public void sendMessageToAllMembers(String message) {
-        if (message == null || message.isEmpty()) {
-            System.out.println("Message cannot be empty.");
-            return;
-        }
-
-        File file = new File("Notifications.txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            writer.write("Coach: " + message);
-            writer.newLine();
-            System.out.println("Message sent to all members.");
-        } catch (IOException e) {
-            System.out.println("Error sending message: " + e.getMessage());
+    
+    // done here
+    public void sendMessageToAllMembers(String CoachID, String memberId, String message) {
+        try {
+            NotificationSystem.sendMessage(CoachID, memberId, message);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error sending message to member " + memberId + ": " + e.getMessage());
         }
     }
 
