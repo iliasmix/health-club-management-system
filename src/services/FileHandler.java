@@ -19,7 +19,7 @@ public class FileHandler {
     // ==================== Member Operations ====================
     public static void saveMemberData(Member member) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(MEMBERS_FILE, true))) {
-            writer.println(member.toString());
+            writer.println(member.getID() + "/" + member.getUsername() + "/" + member.getPassword() + "/" + member.getCoachId() + "/" + member.getStartDate() + "/" + member.getEndDate() + "/" + member.getSchedule());
         } catch (IOException e) {
             System.err.println("Error saving member data: " + e.getMessage());
         }

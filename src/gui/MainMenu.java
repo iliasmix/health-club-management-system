@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenu extends JFrame {
-    private final JPanel mainPanel;
+/*    private final JPanel mainPanel;
     private final JLabel titleLabel;
     private final JButton adminButton;
     private final JButton coachButton;
@@ -163,5 +163,5 @@ public class MainMenu extends JFrame {
         }
         this.setVisible(false);
         return true;
-    }
+    }*/
 }

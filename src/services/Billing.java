@@ -13,7 +13,7 @@ public class Billing {
         billIdIncrementor++;
 
         //Check if the member's subscription is already active
-        if(NotificationSystem.isSubscriptionActive(memberId)) {
+        if(!NotificationSystem.isSubscriptionActive(memberId)) {
             System.out.println("Member's subscription is already active!");
             return;
         }

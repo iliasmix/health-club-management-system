@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 
 import modules.*;
+import services.Billing;
 import services.FileHandler;
 
 public class Main {
@@ -62,7 +63,12 @@ public class Main {
                         switch (getUserInput()) {
                             case 1:
                                 System.out.println("Enter members's userName ,password");
-                                admin.addMember(new Member(input.next(), input.next()));
+                                Member newMem = new Member(input.next(), input.next());
+                                admin.addMember(newMem);
+                                System.out.println("Enter member's plan months (6 or 12): ");
+                                int planMonths = input.nextInt();
+                                System.out.println("Enter start date(year, month, day)");
+                                Billing.createBill(newMem.getID(), planMonths, input.nextInt(),input.nextInt(),input.nextInt());
                                 break;
                             case 2:
                                 System.out.println("Enter members's ID");
@@ -150,7 +156,7 @@ public class Main {
                         switch (choice) {
                             case 1:
                                 System.out.println(
-                                        "Enter member's Schedule, start date (Year, Month, Day), and week number:");
+                                        "Enter the new start date (Year, Month, Day): ");
                                 LocalDate date = LocalDate.of(input.nextInt(), input.nextInt(), input.nextInt());
                                 System.out.println("Enter the schedules you want to set and number of weeks ");
                                 coach.setSchedulesForAllMembers(input.next(), date, input.nextInt());
@@ -253,7 +259,7 @@ public class Main {
     /**
      * Reads and validates the user's input from the console.
      * Ensures the input is a valid integer corresponding to menu options.
-     * 
+     *
      * @return the validated choice as an integer.
      */
     private static int getUserInput() {
