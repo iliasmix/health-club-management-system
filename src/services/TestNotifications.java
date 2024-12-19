@@ -1,3 +1,4 @@
+/*
 package services;
 import modules.TrainingPlan;
 import modules.Admin;
@@ -32,3 +33,4 @@ public class TestNotifications {
 
     }
 }
+*/

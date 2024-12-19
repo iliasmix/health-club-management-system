@@ -1,4 +1,4 @@
 Coach ID/Coach Username/Coach Pass
-C001/coach1/cPass1
-C002/coach2/cPass2
-C003/coach3/cPass3
+c-1/coach1/cPass1
+c-2/coach2/cPass2
+c-3/coach3/cPass3

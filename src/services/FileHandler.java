@@ -1,6 +1,8 @@
 package services;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
@@ -35,16 +37,22 @@ public class FileHandler {
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 7) {
-                        Member member = new Member(data[0], data[1], data[2]);
+                        Member member = new Member(data[1], data[2]);
                         member.setCoachId(data[3]);
-                        member.setSubscriptionStart(data[4]);
-                        member.setSubscriptionEnd(data[5]);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            member.setSubscriptionStart(dateFormat.parse(data[4]));
+                            member.setSubscriptionEnd(dateFormat.parse(data[5]));
+                        } catch (ParseException e) {
+                            System.err.println("Error parsing date for member " + data[0] + ": " + e.getMessage());
+                        }
                         member.setSchedule(data[6]);
 
                         members.add(member);
                     }
                 }
             }
+
         } catch (IOException e) {
             System.err.println("Error loading member data: " + e.getMessage());
         }
@@ -117,7 +125,7 @@ public class FileHandler {
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 3) {
-                        Coach coach = new Coach(data[1], data[2], data[0]);
+                        Coach coach = new Coach(data[1], data[2]);
 
                         coaches.add(coach);
                     }
@@ -396,7 +404,7 @@ public class FileHandler {
 
                 // Check if username contains the keyword
                 if (parts.length > 1 && parts[1].contains(keyword)) {
-                    Member member = new Member(parts[0], parts[1], null); // Only ID and username are useful
+                    Member member = new Member(parts[1], parts[2]); // Only ID and username are useful
                     matchingMembers.add(member);
                 }
             }
@@ -423,7 +431,7 @@ public class FileHandler {
 
                 // Check if username contains the keyword
                 if (parts.length > 1 && parts[1].contains(keyword)) {
-                    Coach coach = new Coach(parts[0], parts[1], null); // Only ID and username are useful
+                    Coach coach = new Coach(parts[1], parts[2]); // Only ID and username are useful
                     matchingCoachs.add(coach);
                 }
             }
