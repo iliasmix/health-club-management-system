@@ -4,7 +4,7 @@ import java.io.*; // import all of the built in functions of the input output
 import java.util.ArrayList;
 
 
-// abstract 
+// abstract data type here 
 abstract public class User {
     // it was private, the reason for mohamed huissen errors, you can NOT inherit private..!
     protected String username;

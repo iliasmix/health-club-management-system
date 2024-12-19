@@ -40,6 +40,8 @@ public class Main {
                     }
 
                     boolean exit = false;
+                    /* ============================================================ */
+                    /*=================== USER AUTHOROIZATION (2.5 marks) ===================== */
                     while (!exit) {
                         System.out.println("Choose an operation:\n" +
                                 "---------------------------------\n" +
@@ -84,7 +86,6 @@ public class Main {
                                 break;
                             case 7:
                                 System.out.println("Enter member's ID and coach's ID");
-                                System.out.println("I hate this function");
                                 admin.assignMemberToCoach(input.next(), input.next());
                                 break;
                             case 8:
@@ -151,6 +152,7 @@ public class Main {
                                 System.out.println(
                                         "Enter member's Schedule, start date (Year, Month, Day), and week number:");
                                 LocalDate date = LocalDate.of(input.nextInt(), input.nextInt(), input.nextInt());
+                                System.out.println("Enter the schedules you want to set and number of weeks ");
                                 coach.setSchedulesForAllMembers(input.next(), date, input.nextInt());
                                 break;
                             case 2:

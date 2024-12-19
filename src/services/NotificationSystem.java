@@ -117,7 +117,8 @@ public class NotificationSystem {
             return 0;
         }
     }
-
+    
+    // polymorphism
     public static void greet(User u) throws FileNotFoundException {
         if(u instanceof Admin) {
             NotificationSystem.sendMessage("0", u.getID(), "Welcome, admin " + u.getUsername() + "!");

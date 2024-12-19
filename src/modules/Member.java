@@ -1,6 +1,6 @@
 package modules;
 
- import modules.*;
+import modules.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Scanner;
 import services.FileHandler;
 
+
+// Inheritance
 public class Member extends User {
     private Coach coach;
     private String coachId;
