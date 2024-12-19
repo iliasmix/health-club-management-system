@@ -68,7 +68,7 @@ public class Main {
                                 break;
                             case 3:
                                 System.out.println("Enter members's ID,newUserName, password");
-                                admin.updateMember(input.next(), input.next(), input.next());
+                               //  admin.updateMember(input.next(), input.next(), input.next());
                                 break;
                             case 4:
                                 System.out.println("Enter coach's userName ,password");
@@ -159,7 +159,8 @@ public class Main {
                                         "Enter the message separated by spaces:");
                                 input.nextLine();
                                 String message = input.nextLine();
-                                coach.sendMessageToAllMembers(coach.getID(), message);
+                                String coachID  = input.nextLine();
+                                Coach.sendMessageToAllMembers(coachID, message);
                                 break;
                             case 0:
                                 exit = true;

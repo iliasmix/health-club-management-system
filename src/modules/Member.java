@@ -1,6 +1,6 @@
 package modules;
 
-import modules.*;
+ import modules.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -104,34 +104,34 @@ public class Member extends User {
     }
 
     // View coach and schedule
-    public void viewCoachAndSchedule() {
-        // Load coach information
-        if (coachId != null && !coachId.isEmpty()) {
-            ArrayList<String[]> schedules = fileHandler.loadScheduleData();
-            System.out.println("\nYour Training Schedule:");
-            System.out.println("Coach ID: " + coachId);
+    // public void viewCoachAndSchedule(String coachID) {
+    //     // Load coach information
+    //     if (coachId != null && !coachId.isEmpty()) {
+    //         ArrayList<String[]> schedules = fileHandler.loadScheduleData();
+    //         System.out.println("\nYour Training Schedule:");
+    //         System.out.println("Coach ID: " + coachId);
 
-            boolean foundSchedule = false;
-            String currentDay = "";
+    //         boolean foundSchedule = false;
+    //         String currentDay = "";
 
-            for (String[] scheduleData : schedules) {
-                if (scheduleData[1].equals(coachId)) {
-                    foundSchedule = true;
-                    if (!currentDay.equals(scheduleData[2])) {
-                        currentDay = scheduleData[2];
-                        System.out.println("\n" + currentDay + ":");
-                    }
-                    System.out.println("- " + scheduleData[3]);
-                }
-            }
+    //         for (String[] scheduleData : schedules) {
+    //             if (scheduleData[1].equals(coachID)) {
+    //                 foundSchedule = true;
+    //                 if (!currentDay.equals(scheduleData[2])) {
+    //                     currentDay = scheduleData[2];
+    //                     System.out.println("\n" + currentDay + ":");
+    //                 }
+    //                 System.out.println("- " + scheduleData[3]);
+    //             }
+    //         }
 
-            if (!foundSchedule) {
-                System.out.println("No schedule found for your coach.");
-            }
-        } else {
-            System.out.println("No coach assigned.");
-        }
-    }
+    //         if (!foundSchedule) {
+    //             System.out.println("No schedule found for your coach.");
+    //         }
+    //     } else {
+    //         System.out.println("No coach assigned.");
+    //     }
+    // }
 
     // Load notifications
     private void loadNotifications() {

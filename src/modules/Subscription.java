@@ -94,4 +94,9 @@ public class Subscription {
         System.out.println("Subscription for Member ID " + memberId + " not found.");
         return null;
     }
+
+    public static void Subscription(Date startDate2, Date endDate2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Subscription'");
+    }
 }
