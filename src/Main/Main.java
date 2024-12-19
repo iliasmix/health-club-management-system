@@ -168,28 +168,50 @@ public class Main {
                     }
                     break;
 
-                case 3:
-                    System.out.println("Enter userName ,password,ID");
+                    case 3:
+                    System.out.println("Enter userName, password:");
                     String userName3 = input.next();
                     String password3 = input.next();
+                
                     Member member = new Member(userName3, password3);
+                
+                    // Login Loop
                     while (!(User.login(userName3, password3))) {
-                        System.out.println("INVALID userName and password : ");
+                        System.out.println("INVALID userName and password. Please try again:");
+                        userName3 = input.next();
+                        password3 = input.next();
+                        member = new Member(userName3, password3);
                     }
-                    System.out.println(
-                            "choose operation : \n1- view Subscription end date \n2- view coache and Schedule \n");
-                    switch (getUserInput()) {
-                        case 1:
-                            member.viewSubscriptionEndDate();
-                            break;
-                        case 2:
-                            member.viewCoachAndSchedule();
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                            break;
+                
+                    boolean exitMemberMenu = false;
+                
+                    // Operations Menu Loop
+                    while (!exitMemberMenu) {
+                        System.out.println("Choose an operation:\n" +
+                                "---------------------------------\n" +
+                                "1 - View Subscription End Date\n" +
+                                "2 - View Coach and Schedule\n" +
+                                "0 - Exit\n" +
+                                "---------------------------------");
+                
+                        switch (getUserInput()) {
+                            case 1:
+                                member.viewSubscriptionEndDate();
+                                break;
+                            case 2:
+                                member.viewCoachAndSchedule();
+                                break;
+                            case 0:
+                                exitMemberMenu = true;
+                                System.out.println("Exiting to main menu...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
                     }
                     break;
+                
 
                 case 0:
                     isRunning = false;
