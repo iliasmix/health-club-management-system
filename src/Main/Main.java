@@ -35,8 +35,18 @@ public class Main {
                         System.out.println("INVALID userName and password : ");
                     }
 
-                    System.out.println(
-                            "choose operation : \n1- addMember \n2- removeMember \n3- updateMember \n4- addCoach \n5- removeCoach \n6- updateCoach \n7- assignMemberToCoach \n 8- Search");
+                    System.out.println("Choose an operation:\n" +
+                    "---------------------------------\n" +
+                    "1 - Add Member\n" +
+                    "2 - Remove Member\n" +
+                    "3 - Update Member\n" +
+                    "4 - Add Coach\n" +
+                    "5 - Remove Coach\n" +
+                    "6 - Update Coach\n" +
+                    "7 - Assign Member to Coach\n" +
+                    "8 - Search Members\n" +
+                    "9 - List All Members\n" +
+                    "---------------------------------");
 
                     switch (getUserInput()) {
                         case 1:
