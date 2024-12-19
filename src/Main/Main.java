@@ -1,6 +1,7 @@
 package Main;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -35,7 +36,7 @@ public class Main {
                     }
 
                     System.out.println(
-                            "choose operation : \n1- addMember \n2- removeMember \n3- updateMember \n4- addCoach \n5- removeCoach \n6- updateCoach \n7- assignMemberToCoach ");
+                            "choose operation : \n1- addMember \n2- removeMember \n3- updateMember \n4- addCoach \n5- removeCoach \n6- updateCoach \n7- assignMemberToCoach \n 8- Search");
 
                     switch (getUserInput()) {
                         case 1:
@@ -48,7 +49,7 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Enter members's ID,newUserName ,Email");
-                           //  admin.updateMember(input.next(), input.next(), input.next());
+                            // admin.updateMember(input.next(), input.next(), input.next());
                             break;
                         case 4:
                             System.out.println("Enter coach's userName ,password,ID");
@@ -67,6 +68,22 @@ public class Main {
                             System.out.println("I hate this function");
                             // admin.assignMemberToCoach(input.next(), input.next());
                             break;
+                        case 8:
+                            System.out.println("Enter a keyword to search for members:");
+                            String keyword = input.next();
+
+                            ArrayList<Member> matchingMembers = admin.searchMembers(keyword);
+
+                            if (matchingMembers.isEmpty()) {
+                                System.out.println("No members found matching the keyword: " + keyword);
+                            } else {
+                                System.out.println("Matching members:");
+                                for (Member member : matchingMembers) {
+                                    System.out.println(member); // Assumes Member class has a meaningful toString
+                                                                // implementation
+                                }
+                            }
+                            break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
                             break;
@@ -77,7 +94,7 @@ public class Main {
                     System.out.println("Hi, Please Enter User Name and Password: ");
                     String userName2 = input.next();
                     String password2 = input.next();
-                    Coach coach = new Coach(userName2, password2); 
+                    Coach coach = new Coach(userName2, password2);
                     while (!(User.login(userName2, password2))) {
                         System.out.println("INVALID userName and password : ");
                     }
@@ -95,7 +112,7 @@ public class Main {
                             System.out.println("Enter Member ID  Message : ");
                             System.out.println("Enter members's Message : ");
                             System.out.println("Note: Do NOT press enter just seperate by a space!");
-                            coach.sendMessageToAllMembers(input.next(),input.next(),input.next());
+                            coach.sendMessageToAllMembers(input.next(), input.next(), input.next());
                             break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
