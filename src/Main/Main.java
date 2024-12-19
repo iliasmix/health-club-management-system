@@ -25,78 +25,96 @@ public class Main {
 
             switch (getUserInput()) {
                 case 1:
-                    System.out.println("Enter userName ,password");
+                    System.out.println("Enter userName and password:");
                     String userName = input.next();
                     String password = input.next();
+
                     Admin admin = new Admin(userName, password);
+
                     while (!(User.login(userName, password))) {
-                        System.out.println("INVALID userName and password : ");
+                        System.out.println("INVALID userName and password. Please try again:");
+                        userName = input.next();
+                        password = input.next();
                     }
 
-                    System.out.println("Choose an operation:\n" +
-                    "---------------------------------\n" +
-                    "1 - Add Member\n" +
-                    "2 - Remove Member\n" +
-                    "3 - Update Member\n" +
-                    "4 - Add Coach\n" +
-                    "5 - Remove Coach\n" +
-                    "6 - Update Coach\n" +
-                    "7 - Assign Member to Coach\n" +
-                    "8 - Search Members\n" +
-                    "9 - List All Members\n" +
-                    "---------------------------------");
+                    boolean exit = false;
+                    while (!exit) {
+                        System.out.println("Choose an operation:\n" +
+                                "---------------------------------\n" +
+                                "1 - Add Member\n" +
+                                "2 - Remove Member\n" +
+                                "3 - Update Member\n" +
+                                "4 - Add Coach\n" +
+                                "5 - Remove Coach\n" +
+                                "6 - Update Coach\n" +
+                                "7 - Assign Member to Coach\n" +
+                                "8 - Search Members\n" +
+                                "9 - List All Members\n" +
+                                "0 - Exit\n" +
+                                "---------------------------------");
 
-                    switch (getUserInput()) {
-                        case 1:
-                            System.out.println("Enter members's userName ,password");
-                            admin.addMember(new Member(input.next(), input.next()));
-                            break;
-                        case 2:
-                            System.out.println("Enter members's ID");
-                            admin.removeMember(input.next());
-                            break;
-                        case 3:
-                            System.out.println("Enter members's ID,newUserName, password");
-                            admin.updateMember(input.next(), input.next(), input.next());
-                            break;
-                        case 4:
-                            System.out.println("Enter coach's userName ,password");
-                            admin.addCoach(new Coach(input.next(), input.next()));
-                            break;
-                        case 5:
-                            System.out.println("Enter coach's ID");
-                            admin.removeCoach(input.next());
-                            break;
-                        case 6:
-                            System.out.println("Enter coach's ID,newUsername ,Email");
-                            admin.updateCoach(input.next(), input.next(), input.next());
-                            break;
-                        case 7:
-                            System.out.println("Enter member's ID and coach's ID");
-                            System.out.println("I hate this function");
-                            // admin.assignMemberToCoach(input.next(), input.next());
-                            break;
-                        case 8:
-                            System.out.println("Enter a keyword to search for members:");
-                            String keyword = input.next();
+                        switch (getUserInput()) {
+                            case 1:
+                                System.out.println("Enter members's userName ,password");
+                                admin.addMember(new Member(input.next(), input.next()));
+                                break;
+                            case 2:
+                                System.out.println("Enter members's ID");
+                                admin.removeMember(input.next());
+                                break;
+                            case 3:
+                                System.out.println("Enter members's ID,newUserName, password");
+                                admin.updateMember(input.next(), input.next(), input.next());
+                                break;
+                            case 4:
+                                System.out.println("Enter coach's userName ,password");
+                                admin.addCoach(new Coach(input.next(), input.next()));
+                                break;
+                            case 5:
+                                System.out.println("Enter coach's ID");
+                                admin.removeCoach(input.next());
+                                break;
+                            case 6:
+                                System.out.println("Enter coach's ID,newUsername ,Email");
+                                admin.updateCoach(input.next(), input.next(), input.next());
+                                break;
+                            case 7:
+                                System.out.println("Enter member's ID and coach's ID");
+                                System.out.println("I hate this function");
+                                // admin.assignMemberToCoach(input.next(), input.next());
+                                break;
+                            case 8:
+                                System.out.println("Enter a keyword to search for members:");
+                                String keyword = input.next();
 
-                            ArrayList<Member> matchingMembers = admin.searchMembers(keyword);
+                                ArrayList<Member> matchingMembers = admin.searchMembers(keyword);
 
-                            if (matchingMembers.isEmpty()) {
-                                System.out.println("No members found matching the keyword: " + keyword);
-                            } else {
-                                System.out.println("Matching members:");
-                                for (Member member : matchingMembers) {
-                                    System.out.println(member); // Assumes Member class has a meaningful toString
-                                                                // implementation
+                                if (matchingMembers.isEmpty()) {
+                                    System.out.println("No members found matching the keyword: " + keyword);
+                                } else {
+                                    System.out.println("Matching members:");
+                                    for (Member member : matchingMembers) {
+                                        System.out.println(member); // Assumes Member class has a meaningful toString
+                                    }
                                 }
-                            }
-                            break;
-                        case 9: 
-                            
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                            break;
+                                break;
+                            case 9:
+                                // System.out.println("Listing all members...");
+                                // ArrayList<Member> allMembers = admin.listAllMembers(); // Assuming a method
+                                // for listing
+                                // // members
+                                // for (Member member : allMembers) {
+                                // System.out.println(member);
+                                // }
+                                // break;
+                            case 0:
+                                exit = true;
+                                System.out.println("Exiting to main menu...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
                     }
                     break;
 
@@ -104,52 +122,95 @@ public class Main {
                     System.out.println("Hi, Please Enter User Name and Password: ");
                     String userName2 = input.next();
                     String password2 = input.next();
+
                     Coach coach = new Coach(userName2, password2);
+
                     while (!(User.login(userName2, password2))) {
-                        System.out.println("INVALID userName and password : ");
+                        System.out.println("INVALID userName and password. Please try again:");
+                        userName2 = input.next();
+                        password2 = input.next();
                     }
-                    System.out.println(
-                            "choose operation : \n1 - set Member Schedule \n2 - send Message To Coach Members \n");
-                    switch (getUserInput()) {
-                        case 1:
-                            System.out.println("Enter members's Schedule ,start date(Year,Month,Day) ,week number");
-                            LocalDate date = LocalDate.of(input.nextInt(), input.nextInt(), input.nextInt());
-                            coach.setSchedulesForAllMembers(input.next(), date, input.nextInt());
-                            break;
-                        case 2:
-                            System.out.println("===================-------==================");
-                            System.out.println("Enter (IN ORDER)Coach ID Message : ");
-                            System.out.println("Enter Member ID  Message : ");
-                            System.out.println("Enter members's Message : ");
-                            System.out.println("Note: Do NOT press enter just seperate by a space!");
-                            coach.sendMessageToAllMembers(input.next(), input.next(), input.next());
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                            break;
+
+                    boolean exit2 = false;
+                    while (!exit2) {
+                        System.out.println(
+                                "Choose operation:\n" +
+                                        "---------------------------------\n" +
+                                        "1 - Set Member Schedule\n" +
+                                        "2 - Send Message to Coach Members\n" +
+                                        "0 - Exit\n" +
+                                        "---------------------------------");
+
+                        int choice = getUserInput();
+                        switch (choice) {
+                            case 1:
+                                System.out.println(
+                                        "Enter member's Schedule, start date (Year, Month, Day), and week number:");
+                                LocalDate date = LocalDate.of(input.nextInt(), input.nextInt(), input.nextInt());
+                                coach.setSchedulesForAllMembers(input.next(), date, input.nextInt());
+                                break;
+                            case 2:
+                                System.out.println("===================-------==================");
+                                System.out.println(
+                                        "Enter (IN ORDER): Coach ID, Member ID, and Message separated by spaces:");
+                                String coachId = input.next();
+                                String memberId = input.next();
+                                String message = input.next();
+                                coach.sendMessageToAllMembers(coachId, memberId, message);
+                                break;
+                            case 0:
+                                exit = true;
+                                System.out.println("Exiting to main menu...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
                     }
                     break;
 
                 case 3:
-                    System.out.println("Enter userName ,password,ID");
+                    System.out.println("Enter userName, password:");
                     String userName3 = input.next();
                     String password3 = input.next();
+
                     Member member = new Member(userName3, password3);
+
+                    // Login Loop
                     while (!(User.login(userName3, password3))) {
-                        System.out.println("INVALID userName and password : ");
+                        System.out.println("Invalid User Name and Password. Please try again:");
+                        userName3 = input.next();
+                        password3 = input.next();
+                        member = new Member(userName3, password3);
                     }
-                    System.out.println(
-                            "choose operation : \n1- view Subscription end date \n2- view coache and Schedule \n");
-                    switch (getUserInput()) {
-                        case 1:
-                            member.viewSubscriptionEndDate();
-                            break;
-                        case 2:
-                            member.viewCoachAndSchedule();
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                            break;
+
+                    boolean exitMemberMenu = false;
+
+                    // Operations Menu Loop
+                    while (!exitMemberMenu) {
+                        System.out.println("Choose an operation:\n" +
+                                "---------------------------------\n" +
+                                "1 - View Subscription End Date\n" +
+                                "2 - View Coach and Schedule\n" +
+                                "0 - Exit\n" +
+                                "---------------------------------");
+
+                        switch (getUserInput()) {
+                            case 1:
+
+                                member.viewSubscriptionEndDate();
+                                break;
+                            case 2:
+                                member.viewCoachAndSchedule();
+                                break;
+                            case 0:
+                                exitMemberMenu = true;
+                                System.out.println("Exiting to main menu...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
                     }
                     break;
 
