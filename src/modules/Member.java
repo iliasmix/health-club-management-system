@@ -18,11 +18,7 @@ public class Member extends User {
     private FileHandler fileHandler;
 
     public Member(String username, String password) {
-        super(username, password, generateCoachID() );
-        this.notifications = new ArrayList<>();
-        this.fileHandler = new FileHandler();
-        FileHandler.loadMemberData();
-        loadNotifications();
+        super(username, password, generateCoachID());
     }
 
     private static int memberCounter = 0;

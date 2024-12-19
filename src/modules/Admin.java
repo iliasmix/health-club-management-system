@@ -56,7 +56,6 @@ public class Admin extends User {
             return;
         }
 
-        
         // try {
         // // Retrieve the member's ID
         // String memberId = member.ID;
