@@ -56,11 +56,11 @@ public class Main {
                             admin.removeMember(input.next());
                             break;
                         case 3:
-                            System.out.println("Enter members's ID,newUserName ,Email");
+                            System.out.println("Enter members's ID,newUserName, password");
                             admin.updateMember(input.next(), input.next(), input.next());
                             break;
                         case 4:
-                            System.out.println("Enter coach's userName ,password,ID");
+                            System.out.println("Enter coach's userName ,password");
                             admin.addCoach(new Coach(input.next(), input.next()));
                             break;
                         case 5:

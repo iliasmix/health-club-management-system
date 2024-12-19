@@ -159,16 +159,14 @@ public class Member extends User {
         String endDate = subscription != null && subscription.getEndDate() != null
                 ? dateFormat.format(subscription.getEndDate())
                 : "";
-        String status = subscription != null ? String.valueOf(subscription.isActive()) : "";
 
-        return String.format("%s/%s/%s/%s/%s/%s/%s/%s",
+        return String.format("%s/%s/%s/%s/%s/%s/%s",
                 getID(),
                 getUsername(),
                 getPassword(),
                 coachId != null ? coachId : "",
                 startDate,
                 endDate,
-                status,
                 schedule != null ? schedule : "");
     }
 

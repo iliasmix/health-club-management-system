@@ -42,7 +42,6 @@ public class Admin extends User {
 
         try {
             if (!FileHandler.isMemberAlreadyInTheSystem(ID)) {
-
                 return;
             }
             FileHandler.deleteMember(ID);
@@ -89,12 +88,14 @@ public class Admin extends User {
         }
         try {
             // Check if the coach already exists in the system
-            if (FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
+            if (!FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
                 System.out.println("Coach with ID " + coach.ID + " already exists in the system.");
                 return; // Exit if the coach already exists
             }
+            System.out.println("Coach added successfully!");
             // Save the coach data if they don't already exist
             FileHandler.saveCoachData(coach);
+            System.out.println("Coach saved successfully!");
         } catch (Exception e) {
             // Handle any exceptions and log the error
             System.out.println("An error occurred while adding the coach: " + e.getMessage());

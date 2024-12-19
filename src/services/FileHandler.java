@@ -35,11 +35,19 @@ public class FileHandler {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
+                    System.out.println("line number 38");
                     String[] data = line.split("/");
+                    System.out.println("line number 40");
                     if (data.length == 7) {
+                        System.out.println("line number 42");
+                        System.out.println(" data: " + data[0] + data[1] + data[2] + data[3] + data[4] + data[5] + data[6]);
                         Member member = new Member(data[1], data[2]);
+
+                        System.out.println("line number 44");
                         member.setCoachId(data[3]);
+                        System.out.println("line number 46");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        System.out.println("line number 48");
                         try {
                             member.setSubscriptionStart(dateFormat.parse(data[4]));
                             member.setSubscriptionEnd(dateFormat.parse(data[5]));
@@ -126,7 +134,6 @@ public class FileHandler {
                     String[] data = line.split("/");
                     if (data.length == 3) {
                         Coach coach = new Coach(data[1], data[2]);
-
                         coaches.add(coach);
                     }
                 }

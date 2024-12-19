@@ -31,7 +31,6 @@ public class Coach extends User {
         super(username, password, generateCoachID());
         this.username = username;
         this.password = password;
-        this.fileHandler = new FileHandler();
     }
 
     private static int coachCounter = 0;
