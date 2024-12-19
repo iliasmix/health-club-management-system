@@ -49,7 +49,7 @@ public class Member extends User {
     }
 
     // View subscription end date
-    public void viewSubscriptionEndDate() {
+    /*public void viewSubscriptionEndDate() {
         if (subscription != null && subscription.getEndDate() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             System.out.println("Your subscription ends on: " + dateFormat.format(subscription.getEndDate()));
@@ -66,6 +66,40 @@ public class Member extends User {
             }
         } else {
             System.out.println("No active subscription found.");
+        }
+    }*/
+
+        public void viewSubscriptionEndDate(String memberId) throws FileNotFoundException {
+            File membersFile = new File("resources\\Members.txt");
+            try(Scanner membersScan = new Scanner(membersFile)) {
+                if (membersScan.hasNextLine()) {
+                    membersScan.nextLine(); // Skip header if present
+                }
+
+                while (membersScan.hasNextLine()) {
+                    String[] parts = membersScan.nextLine().split("/");
+                    if(memberId.equals(parts[0])) {
+                        System.out.println(parts[5]);
+                        return;
+                    }
+                }
+            }
+        }
+
+    public void viewCoachAndSchedule(String memberId) throws FileNotFoundException {
+        File membersFile = new File("resources\\Members.txt");
+        try(Scanner membersScan = new Scanner(membersFile)) {
+            if (membersScan.hasNextLine()) {
+                membersScan.nextLine(); // Skip header if present
+            }
+
+            while (membersScan.hasNextLine()) {
+                String[] parts = membersScan.nextLine().split("/");
+                if(memberId.equals(parts[0])) {
+                    System.out.println("Coach: " + parts[3] + ", schedule: " + parts[6]);
+                    return;
+                }
+            }
         }
     }
 

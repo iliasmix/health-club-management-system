@@ -10,6 +10,7 @@ import services.NotificationSystem;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.management.Notification;
 
@@ -74,11 +75,24 @@ public class Coach extends User {
     }
     
     // done here
-    public void sendMessageToAllMembers(String CoachID, String memberId, String message) {
+    public void sendMessageToAllMembers(String coachId, String message) {
         try {
-            NotificationSystem.sendMessage(CoachID, memberId, message);
+            File members = new File("resources\\Members.txt");
+            try(Scanner membersScan = new Scanner(members)) {
+
+                if (membersScan.hasNextLine()) {
+                    membersScan.nextLine();
+                }
+
+                while (membersScan.hasNext()) {
+                    String[] parts = membersScan.nextLine().split("/");
+                    if (parts[3].equals(coachId)) {
+                        NotificationSystem.sendMessage(parts[3], parts[0], message);
+                    }
+                }
+            }
         } catch (FileNotFoundException e) {
-            System.out.println("Error sending message to member " + memberId + ": " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

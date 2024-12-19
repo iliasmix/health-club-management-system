@@ -1,3 +1,4 @@
 Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Schedule ID
 m-1/tohfa/5555/c-3/2024-12-12/2025-2-12/s-1
 m-2/member3/4567/c-1/2024-12-15/2025-06-15/s-1
+m-2/member3/4567/c-1///sdfasdfasdfasd

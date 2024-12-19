@@ -54,7 +54,7 @@ public class Main {
                                 "9 - List All Members\n" +
                                 "10 - List All Coaches\n" +
                                 "11 - Generate reports\n" +
-                                "0 - Exit\n" +
+                                "0 - Log out\n" +
                                 "---------------------------------");
 
                         switch (getUserInput()) {
@@ -142,7 +142,7 @@ public class Main {
                                         "---------------------------------\n" +
                                         "1 - Set Member Schedule\n" +
                                         "2 - Send Message to Coach Members\n" +
-                                        "0 - Exit\n" +
+                                        "0 - Log out\n" +
                                         "---------------------------------");
 
                         int choice = getUserInput();
@@ -156,11 +156,10 @@ public class Main {
                             case 2:
                                 System.out.println("===================-------==================");
                                 System.out.println(
-                                        "Enter (IN ORDER): Coach ID, Member ID, and Message separated by spaces:");
-                                String coachId = input.next();
-                                String memberId = input.next();
-                                String message = input.next();
-                                coach.sendMessageToAllMembers(coachId, memberId, message);
+                                        "Enter the message separated by spaces:");
+                                input.nextLine();
+                                String message = input.nextLine();
+                                coach.sendMessageToAllMembers(coach.getID(), message);
                                 break;
                             case 0:
                                 exit = true;
@@ -196,16 +195,15 @@ public class Main {
                                 "---------------------------------\n" +
                                 "1 - View Subscription End Date\n" +
                                 "2 - View Coach and Schedule\n" +
-                                "0 - Exit\n" +
+                                "0 - Log out\n" +
                                 "---------------------------------");
 
                         switch (getUserInput()) {
                             case 1:
-
-                                member.viewSubscriptionEndDate();
+                                member.viewSubscriptionEndDate(member.getID());
                                 break;
                             case 2:
-                                member.viewCoachAndSchedule();
+                                member.viewCoachAndSchedule(member.getID());
                                 break;
                             case 0:
                                 exitMemberMenu = true;
@@ -245,6 +243,7 @@ public class Main {
         System.out.println("2. Coach Login");
         System.out.println("3. Member Login");
         System.out.println("0. Exit");
+        System.out.println("---------------");
         System.out.print("Enter your choice: ");
     }
 
