@@ -2,3 +2,5 @@ cCoach ID/Coach Username/Coach Pass
 c-1/soso/toto
 c-2/toto/cPass2
 c-3/koko/cPass3
+c-1/admin12/1111
+c-1/JohnDoe/password123

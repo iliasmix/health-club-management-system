@@ -1,167 +1,135 @@
 package gui;
 
-import modules.Admin;
-import modules.Coach;
-import modules.Member;
 import javax.swing.*;
 import java.awt.*;
+import modules.*;
+import gui.MemberDashboard.MemberDashboard;
 
 public class MainMenu extends JFrame {
-    private final JPanel mainPanel;
-    private final JLabel titleLabel;
-    private final JButton adminButton;
-    private final JButton coachButton;
-    private final JButton memberButton;
-    private final JButton exitButton;
-
-    public MainMenu() {
-        // Setup frame
-        setTitle("Health Club Management System");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 500);
-        setLocationRelativeTo(null);
-        setResizable(false);
-
-        // Initialize components
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        // Title
-        titleLabel = new JLabel("Health Club Management System");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Buttons
-        adminButton = createStyledButton("Admin Login");
-        coachButton = createStyledButton("Coach Login");
-        memberButton = createStyledButton("Member Login");
-        exitButton = createStyledButton("Exit");
-
-        setupLayout();
-        setupListeners();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> initializeGUI());
     }
 
-    private JButton createStyledButton(String text) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(200, 40));
-        button.setFont(new Font("Arial", Font.PLAIN, 14));
-        return button;
-    }
+    private static void initializeGUI() {
+        JFrame frame = new JFrame("Health Club Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
 
-    private void setupLayout() {
-        mainPanel.add(titleLabel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        mainPanel.add(adminButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        mainPanel.add(coachButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        mainPanel.add(memberButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        mainPanel.add(exitButton);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        add(mainPanel);
-    }
+        JLabel welcomeLabel = new JLabel("Welcome to Health Club Management System", SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-    private void setupListeners() {
-        adminButton.addActionListener(e -> showLoginDialog("Admin"));
-        coachButton.addActionListener(e -> showLoginDialog("Coach"));
-        memberButton.addActionListener(e -> showLoginDialog("Member"));
-        exitButton.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to exit?",
-                "Confirm Exit",
-                JOptionPane.YES_NO_OPTION
-            );
-            if (confirm == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
-        });
-    }
+        JButton adminLoginButton = new JButton("Admin Login");
+        JButton coachLoginButton = new JButton("Coach Login");
+        JButton memberLoginButton = new JButton("Member Login");
+        JButton exitButton = new JButton("Exit");
 
-    private void showLoginDialog(String userType) {
-        JDialog loginDialog = new JDialog(this, userType + " Login", true);
-        loginDialog.setLayout(new BorderLayout());
-        loginDialog.setSize(300, 200);
-        loginDialog.setLocationRelativeTo(this);
+        // Style buttons
+        styleButton(adminLoginButton);
+        styleButton(coachLoginButton);
+        styleButton(memberLoginButton);
+        styleButton(exitButton);
 
-        JPanel loginPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        panel.add(welcomeLabel);
+        panel.add(adminLoginButton);
+        panel.add(coachLoginButton);
+        panel.add(memberLoginButton);
+        panel.add(exitButton);
 
-        JTextField usernameField = new JTextField(15);
-        JPasswordField passwordField = new JPasswordField(15);
-        JButton loginButton = new JButton("Login");
-        JButton cancelButton = new JButton("Cancel");
-        JLabel statusLabel = new JLabel(" ");
-        statusLabel.setForeground(Color.RED);
+        frame.add(panel);
+        frame.setVisible(true);
 
-        // Add components to panel
-        gbc.gridx = 0; gbc.gridy = 0;
-        loginPanel.add(new JLabel("Username:"), gbc);
-        gbc.gridx = 1;
-        loginPanel.add(usernameField, gbc);
+        // Admin Login Action
+        adminLoginButton.addActionListener(e -> {
+            JPanel loginPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+            JTextField usernameField = new JTextField();
+            JPasswordField passwordField = new JPasswordField();
+            loginPanel.add(new JLabel("Username:"));
+            loginPanel.add(usernameField);
+            loginPanel.add(new JLabel("Password:"));
+            loginPanel.add(passwordField);
 
-        gbc.gridx = 0; gbc.gridy = 1;
-        loginPanel.add(new JLabel("Password:"), gbc);
-        gbc.gridx = 1;
-        loginPanel.add(passwordField, gbc);
+            int result = JOptionPane.showConfirmDialog(frame, loginPanel, "Admin Login",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.add(loginButton);
-        buttonPanel.add(cancelButton);
+            if (result == JOptionPane.OK_OPTION) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
 
-        loginDialog.add(loginPanel, BorderLayout.CENTER);
-        loginDialog.add(buttonPanel, BorderLayout.SOUTH);
-        loginDialog.add(statusLabel, BorderLayout.NORTH);
-
-        loginButton.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
-
-            if (handleLogin(userType, username, password)) {
-                loginDialog.dispose();
-            } else {
-                statusLabel.setText("Invalid username or password");
-            }
-        });
-
-        cancelButton.addActionListener(e -> loginDialog.dispose());
-
-        loginDialog.setVisible(true);
-    }
-
-    private boolean handleLogin(String userType, String username, String password) {
-        if (!modules.User.login(username, password)) {
-            return false;
-        }
-
-        switch (userType) {
-            case "Admin":
                 Admin admin = new Admin(username, password);
-                SwingUtilities.invokeLater(() -> {
-                    AdminDashboard dashboard = new AdminDashboard(admin);
-                    dashboard.setVisible(true);
-                });
-                break;
-            case "Coach":
+                if (User.login(username, password)) {
+                    new AdminDashboard(admin);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid login credentials.");
+                }
+            }
+        });
+
+        // Coach Login Action
+        coachLoginButton.addActionListener(e -> {
+            JPanel loginPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+            JTextField usernameField = new JTextField();
+            JPasswordField passwordField = new JPasswordField();
+            loginPanel.add(new JLabel("Username:"));
+            loginPanel.add(usernameField);
+            loginPanel.add(new JLabel("Password:"));
+            loginPanel.add(passwordField);
+
+            int result = JOptionPane.showConfirmDialog(frame, loginPanel, "Coach Login",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+
                 Coach coach = new Coach(username, password);
-                SwingUtilities.invokeLater(() -> {
-                    CoachDashboard dashboard = new CoachDashboard(coach);
-                    dashboard.setVisible(true);
-                });
-                break;
-            case "Member":
+                if (User.login(username, password)) {
+                    new CoachGUI(coach);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid login credentials.");
+                }
+            }
+        });
+
+        // Member Login Action
+        memberLoginButton.addActionListener(e -> {
+            JPanel loginPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+            JTextField usernameField = new JTextField();
+            JPasswordField passwordField = new JPasswordField();
+            loginPanel.add(new JLabel("Username:"));
+            loginPanel.add(usernameField);
+            loginPanel.add(new JLabel("Password:"));
+            loginPanel.add(passwordField);
+
+            int result = JOptionPane.showConfirmDialog(frame, loginPanel, "Member Login",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+
                 Member member = new Member(username, password);
-                SwingUtilities.invokeLater(() -> {
-                    MemberDashboard dashboard = new MemberDashboard(member);
-                    dashboard.setVisible(true);
-                });
-                break;
-        }
-        this.setVisible(false);
-        return true;
+                if (User.login(username, password)) {
+                    new MemberDashboard(member);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid login credentials.");
+                }
+            }
+        });
+
+        // Exit Action
+        exitButton.addActionListener(e -> frame.dispose());
+    }
+
+    private static void styleButton(JButton button) {
+        button.setFont(new Font("Arial", Font.PLAIN, 12));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(5, 15, 5, 15)));
     }
 }
