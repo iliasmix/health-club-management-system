@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.Scanner;
 import services.FileHandler;
 
-
-
 public class Member extends User {
     private Coach coach;
     private String coachId;
@@ -20,13 +18,11 @@ public class Member extends User {
     private FileHandler fileHandler;
 
     public Member(String username, String password) {
-        super(username, password, generateCoachID() );
-        this.notifications = new ArrayList<>();
-        this.fileHandler = new FileHandler();
-        FileHandler.loadMemberData();
-        loadNotifications();
+        super(username, password, generateCoachID());
     }
+
     private static int memberCounter = 0;
+
     private static String generateCoachID() {
         memberCounter++; // Increment the counter
         return "m-" + memberCounter; // Generate the ID in the format a-1, a-2, etc.
@@ -187,7 +183,7 @@ public class Member extends User {
     public Date getStartDate() {
         return startDate;
     }
-    
+
     public void setSubscriptionStart(Date startDate) {
         this.startDate = startDate;
     }

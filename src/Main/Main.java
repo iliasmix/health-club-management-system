@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Enter members's ID,newUserName ,Email");
-                            // admin.updateMember(input.next(), input.next(), input.next());
+                            admin.updateMember(input.next(), input.next(), input.next());
                             break;
                         case 4:
                             System.out.println("Enter coach's userName ,password,ID");
