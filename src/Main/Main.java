@@ -177,7 +177,7 @@ public class Main {
                 
                     // Login Loop
                     while (!(User.login(userName3, password3))) {
-                        System.out.println("INVALID userName and password. Please try again:");
+                        System.out.println("Invalid User Name and Password. Please try again:");
                         userName3 = input.next();
                         password3 = input.next();
                         member = new Member(userName3, password3);
@@ -196,6 +196,7 @@ public class Main {
                 
                         switch (getUserInput()) {
                             case 1:
+                                 
                                 member.viewSubscriptionEndDate();
                                 break;
                             case 2:

@@ -23,8 +23,6 @@ public class Member extends User {
         super(username, password, generateCoachID() );
         this.notifications = new ArrayList<>();
         this.fileHandler = new FileHandler();
-        FileHandler.loadMemberData();
-        loadNotifications();
     }
     private static int memberCounter = 0;
     private static String generateCoachID() {
