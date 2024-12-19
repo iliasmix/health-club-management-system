@@ -35,19 +35,13 @@ public class FileHandler {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
-                    System.out.println("line number 38");
                     String[] data = line.split("/");
-                    System.out.println("line number 40");
                     if (data.length == 7) {
-                        System.out.println("line number 42");
-                        System.out.println(" data: " + data[0] + data[1] + data[2] + data[3] + data[4] + data[5] + data[6]);
+                        System.out.println(data[0] + "/" + data[1] + "/" + data[2] + "/" + data[3] + "/" + data[4] + "/" + data[5] + "/" + data[6]);
                         Member member = new Member(data[1], data[2]);
 
-                        System.out.println("line number 44");
                         member.setCoachId(data[3]);
-                        System.out.println("line number 46");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        System.out.println("line number 48");
                         try {
                             member.setSubscriptionStart(dateFormat.parse(data[4]));
                             member.setSubscriptionEnd(dateFormat.parse(data[5]));
@@ -133,6 +127,7 @@ public class FileHandler {
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 3) {
+                        System.out.println(data[0] + "/" + data[1] + "/" + data[2]);
                         Coach coach = new Coach(data[1], data[2]);
                         coaches.add(coach);
                     }
@@ -277,6 +272,46 @@ public class FileHandler {
 
     // ==================== Admin Operations ====================
 
+    public static void assignCoachToMember(String memberId, String coachID) {
+        try {
+            File inputFile = new File(MEMBERS_FILE);
+            File tempFile = new File("resources\\TempMembers.txt");
+
+            Scanner scanner = new Scanner(inputFile);
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            // Copy header
+            if (scanner.hasNextLine()) {
+                writer.println(scanner.nextLine());
+            }
+
+            // Process and update data
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine().trim();
+                if (!currentLine.isEmpty()) {
+                    String[] data = currentLine.split("/");
+                    if (data[0].equals(memberId)) {
+                        // Update member info
+                        data[3] = coachID;
+                        currentLine = String.join("/", data);
+                    }
+                    writer.println(currentLine);
+                }
+            }
+
+            scanner.close();
+            writer.close();
+
+            // Delete old file and rename temp file
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+
+            System.out.println("Member information updated successfully!");
+
+        } catch (IOException e) {
+            System.out.println("Error updating member: " + e.getMessage());
+        }
+    }
     public static void updateMemberInfo(String memberId, String newUsername, String newPassword) {
         try {
             File inputFile = new File(MEMBERS_FILE);

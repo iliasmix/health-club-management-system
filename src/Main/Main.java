@@ -1,5 +1,6 @@
 package main;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,9 +12,10 @@ import java.util.Scanner;
  */
 
 import modules.*;
+import services.FileHandler;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
         boolean isRunning = true;
         while (isRunning) {
@@ -50,6 +52,8 @@ public class Main {
                                 "7 - Assign Member to Coach\n" +
                                 "8 - Search Members\n" +
                                 "9 - List All Members\n" +
+                                "10 - List All Coaches\n" +
+                                "11 - Generate reports\n" +
                                 "0 - Exit\n" +
                                 "---------------------------------");
 
@@ -81,7 +85,7 @@ public class Main {
                             case 7:
                                 System.out.println("Enter member's ID and coach's ID");
                                 System.out.println("I hate this function");
-                                // admin.assignMemberToCoach(input.next(), input.next());
+                                admin.assignMemberToCoach(input.next(), input.next());
                                 break;
                             case 8:
                                 System.out.println("Enter a keyword to search for members:");
@@ -99,14 +103,14 @@ public class Main {
                                 }
                                 break;
                             case 9:
-                                // System.out.println("Listing all members...");
-                                // ArrayList<Member> allMembers = admin.listAllMembers(); // Assuming a method
-                                // for listing
-                                // // members
-                                // for (Member member : allMembers) {
-                                // System.out.println(member);
-                                // }
-                                // break;
+                                FileHandler.loadMemberData();
+                                break;
+                            case 10:
+                                FileHandler.loadCoachData();
+                                break;
+                            case 11:
+                                admin.generateReports();
+                                break;
                             case 0:
                                 exit = true;
                                 System.out.println("Exiting to main menu...");

@@ -50,12 +50,13 @@ public class Admin extends User {
         }
     }
 
-    public void updateMember(Member member, String newUsername, String password) {
+    public void updateMember(String memberId, String newUsername, String password) {
         // Validate the member object
-        if (member == null) {
+/*        if (member == null) {
             return;
-        }
+        }*/
 
+        FileHandler.updateMemberInfo(memberId, newUsername, password);
         // try {
         // // Retrieve the member's ID
         // String memberId = member.ID;
@@ -146,23 +147,8 @@ public class Admin extends User {
     }
 
     // Member-Coach assignment
-    public void assignMemberToCoach(Member member, Coach coach) throws FileNotFoundException {
-        try {
-            // Check if the coach already exists in the system
-            if (FileHandler.isCoachAlreadyInTheSystem(coach.ID)) {
-                System.out.println("Coach with ID " + coach.ID + " already exists in the system.");
-                return; // Exit if the coach already exists
-            }
-            if (!FileHandler.isMemberAlreadyInTheSystem(member.ID)) {
-                System.out.println("member with ID " + member.ID + " already exists in the system.");
-                return; // If member is not found, exit
-            }
-            member.setCoach(coach);
-            FileHandler.saveMemberData(member);
-        } catch (FileNotFoundException e) {
-            // Handle any exceptions and log the error
-            System.out.println("An error occurred while adding the coach: " + e.getMessage());
-        }
+    public void assignMemberToCoach(String memberID, String coachID) {
+        FileHandler.assignCoachToMember(memberID, coachID);
     }
 
     // Billing management
@@ -238,7 +224,7 @@ public class Admin extends User {
 
             // Output the results
             System.out.println("Bills with 6 months duration: " + counter6);
-            System.out.println("Bills with other durations: " + counter3);
+            System.out.println("Bills with 12 months durations: " + counter3);
 
         } catch (FileNotFoundException e) {
             System.out.println("The file was not found: " + e.getMessage());
