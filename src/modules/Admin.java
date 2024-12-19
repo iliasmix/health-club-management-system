@@ -199,7 +199,15 @@ public class Admin extends User {
         }
         return matchingCoaches; // Return the matching coaches list
     }
-
+    public ArrayList<Member> listMembers(){
+        ArrayList<Member> members=new ArrayList<>();
+        try {
+        members= FileHandler.lisetMembers();
+        } catch (FileNotFoundException ex) {
+        System.err.println(ex);
+        }
+        return members;
+    }
     // Reporting
     public void generateReports() throws FileNotFoundException {
         // Initialize counters
