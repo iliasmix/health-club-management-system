@@ -94,6 +94,8 @@ public class Main {
                                 }
                             }
                             break;
+                        case 9: 
+                            
                         default:
                             System.out.println("Invalid choice. Please try again.");
                             break;
