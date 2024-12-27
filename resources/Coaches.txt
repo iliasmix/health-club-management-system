@@ -2,3 +2,8 @@ cCoach ID/Coach Username/Coach Pass
 c-1/coach1/pass1
 c-2/coach2/pass2
 c-3/coach3/pass3
+c-1/JohnDoe/password123
+c-1/JohnDoe/password123
+c-1/JohnDoe/password123
+c-1/JohnDoe/password123
+c-1/ΑΣΔΑ/password123

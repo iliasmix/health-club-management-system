@@ -3,10 +3,12 @@ package services;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modules.Coach;
 import modules.Member;
+import modules.TrainingPlan;
 
 public class FileHandler {
     // File paths
@@ -25,21 +27,23 @@ public class FileHandler {
         }
     }
 
+    public static void saveScheduleData(TrainingPlan trainingPlan) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(SCHEDULES_FILE, true))) {
+            writer.println(trainingPlan.getScheduleId() + "/" + trainingPlan.getCoachId() + "/" + trainingPlan.getStartDate() + "/" + trainingPlan.getEndDate() + "/" + trainingPlan.getExercises());
+        } catch (IOException e) {
+            System.err.println("Error saving schedule data: " + e.getMessage());
+        }
+    }
+
     public static ArrayList<Member> loadMemberData() {
         ArrayList<Member> members = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
-            // Skip header line
-            if (scanner.hasNextLine())
-                scanner.nextLine();
-
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 7) {
-                        System.out.println(data[0] + "/" + data[1] + "/" + data[2] + "/" + data[3] + "/" + data[4] + "/" + data[5] + "/" + data[6]);
                         Member member = new Member(data[1], data[2]);
-
                         member.setCoachId(data[3]);
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         try {
@@ -49,12 +53,10 @@ public class FileHandler {
                             System.err.println("Error parsing date for member " + data[0] + ": " + e.getMessage());
                         }
                         member.setSchedule(data[6]);
-
                         members.add(member);
                     }
                 }
             }
-
         } catch (IOException e) {
             System.err.println("Error loading member data: " + e.getMessage());
         }
@@ -118,16 +120,11 @@ public class FileHandler {
     public static ArrayList<Coach> loadCoachData() {
         ArrayList<Coach> coaches = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(COACHES_FILE))) {
-            // Skip header line
-            if (scanner.hasNextLine())
-                scanner.nextLine();
-
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
                     String[] data = line.split("/");
                     if (data.length == 3) {
-                        System.out.println(data[0] + "/" + data[1] + "/" + data[2]);
                         Coach coach = new Coach(data[1], data[2]);
                         coaches.add(coach);
                     }
@@ -399,30 +396,42 @@ public class FileHandler {
     // ==================== Helper Methods ======================
 
     public static boolean isMemberAlreadyInTheSystem(String memberID) throws FileNotFoundException {
-        File membersFile = new File(MEMBERS_FILE);
-        try (Scanner membersScan = new Scanner(membersFile)) {
-            if (membersScan.hasNextLine()) {
-                membersScan.nextLine();
-            }
-            while (membersScan.hasNext()) {
-                String[] parts = membersScan.nextLine().split("/");
-                if (memberID.equals(parts[0]))
+        try (Scanner scanner = new Scanner(new File(MEMBERS_FILE))) {
+            while (scanner.hasNextLine()) {
+                String[] parts = scanner.nextLine().split("/");
+                if (parts[0].equals(memberID)) {
                     return true;
+                }
             }
         }
         return false;
     }
-
-    public static boolean isCoachAlreadyInTheSystem(String coachID) throws FileNotFoundException {
-        File coachesFile = new File(COACHES_FILE);
-        try (Scanner coachesScan = new Scanner(coachesFile)) {
-            if (coachesScan.hasNextLine()) {
-                coachesScan.nextLine();
+    public static ArrayList<TrainingPlan> loadTrainingPlansForCoach(String coachId) {
+        ArrayList<TrainingPlan> trainingPlans = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(SCHEDULES_FILE))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    String[] data = line.split("/");
+                    if (data.length >= 5 && data[1].equals(coachId)) {
+                        TrainingPlan plan = new TrainingPlan(data[1], LocalDate.parse(data[2]), Integer.parseInt(data[3]));
+                        plan.setSchedule(data[4]);
+                        trainingPlans.add(plan);
+                    }
+                }
             }
-            while (coachesScan.hasNext()) {
-                String[] parts = coachesScan.nextLine().split("/");
-                if (coachID.equals(parts[0]))
+        } catch (IOException e) {
+            System.err.println("Error loading training plans: " + e.getMessage());
+        }
+        return trainingPlans;
+    }
+    public static boolean isCoachAlreadyInTheSystem(String coachID) throws FileNotFoundException {
+        try (Scanner scanner = new Scanner(new File(COACHES_FILE))) {
+            while (scanner.hasNextLine()) {
+                String[] parts = scanner.nextLine().split("/");
+                if (parts[0].equals(coachID)) {
                     return true;
+                }
             }
         }
         return false;
@@ -494,7 +503,7 @@ public class FileHandler {
                 matchingMembers.add(member);
                 }
             }
-        
+
         return matchingMembers;
     }
 

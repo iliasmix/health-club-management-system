@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Coach extends User {
+public class Coach extends modules.User {
     private FileHandler fileHandler;
 
     public Coach(String username, String password) {
@@ -24,16 +24,17 @@ public class Coach extends User {
         coachCounter++;
         return "c-" + coachCounter;
     }
+    public String getID() {return this.ID;}
 
     public void setSchedulesForAllMembers(String schedule, LocalDate startDate, int weeksnum) {
-        ArrayList<Member> members = FileHandler.loadMemberData();
+        ArrayList<modules.Member> members = FileHandler.loadMemberData();
         boolean hasAssignedMembers = false;
 
-        for (Member member : members) {
+        for (modules.Member member : members) {
             if (this.getID().equals(member.getCoachId())) {
                 hasAssignedMembers = true;
 
-                TrainingPlan trainingPlan = new TrainingPlan(this.getID(), startDate, weeksnum);
+                modules.TrainingPlan trainingPlan = new modules.TrainingPlan(this.getID(), startDate, weeksnum);
                 trainingPlan.setSchedule(schedule);
 
                 try {
@@ -52,6 +53,10 @@ public class Coach extends User {
         } else {
             System.out.println("No members assigned to this coach.");
         }
+    }
+    public ArrayList<modules.TrainingPlan> getTrainingPlans() {
+        // Λογική για την επιστροφή όλων των Training Plans του Coach
+        return FileHandler.loadTrainingPlansForCoach(this.getID());
     }
 
     public static void sendMessageToAllMembers(String coachId, String message) {

@@ -23,7 +23,12 @@ public class TrainingPlan {
 
         //ArrayList<String> exercises = new ArrayList<>(); // Initialize exercises list
     }
-    
+    public String getScheduleId() {
+        return scheduleId;
+    }
+    public ArrayList<String> getExercises() {
+        return this.exercises;
+    }
     // Generate auto-incremented schedule ID
     private String generateScheduleId() {
         return "s-" + (++idCounter);

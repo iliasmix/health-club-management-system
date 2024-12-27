@@ -1,3 +1,30 @@
 Member ID/Member Username/Member Pass/Member's Coach ID/Subscription Start Date/Subscription End Date/Schedule ID
 m-1/member1/5555/c-1/2024-12-12/2025-2-12/s-1
-m-2/member3/4567/c-1/2024-12-15/2025-06-15/s-1
+m-3/member3/4567/c-1/Sun Dec 15 00:00:00 EET 2024/Sun Jun 15 00:00:00 EEST 2025/kalhmera
+m-5/member1/5555/c-1/Thu Dec 12 00:00:00 EET 2024/Wed Feb 12 00:00:00 EET 2025/we
+m-6/member3/4567/c-1/Sun Dec 15 00:00:00 EET 2024/Sun Jun 15 00:00:00 EEST 2025/we
+m-7/member1/5555/c-1/null/null/we
+m-8/member3/4567/c-1/null/null/we
+m-10/member1/5555/c-1/Thu Dec 12 00:00:00 EET 2024/Wed Feb 12 00:00:00 EET 2025/dfd
+m-11/member3/4567/c-1/Sun Dec 15 00:00:00 EET 2024/Sun Jun 15 00:00:00 EEST 2025/dfd
+m-12/member1/5555/c-1/null/null/dfd
+m-13/member3/4567/c-1/null/null/dfd
+m-14/member1/5555/c-1/null/null/dfd
+m-15/member3/4567/c-1/null/null/dfd
+m-16/member1/5555/c-1/null/null/dfd
+m-17/member3/4567/c-1/null/null/dfd
+m-19/member1/5555/c-1/Thu Dec 12 00:00:00 EET 2024/Wed Feb 12 00:00:00 EET 2025/werw
+m-20/member3/4567/c-1/Sun Dec 15 00:00:00 EET 2024/Sun Jun 15 00:00:00 EEST 2025/werw
+m-21/member1/5555/c-1/null/null/werw
+m-22/member3/4567/c-1/null/null/werw
+m-23/member1/5555/c-1/null/null/werw
+m-24/member3/4567/c-1/null/null/werw
+m-25/member1/5555/c-1/null/null/werw
+m-26/member3/4567/c-1/null/null/werw
+m-27/member1/5555/c-1/null/null/werw
+m-28/member3/4567/c-1/null/null/werw
+m-29/member1/5555/c-1/null/null/werw
+m-31/member1/5555/c-1/null/null/werw
+m-32/member3/4567/c-1/null/null/werw
+m-33/member1/5555/c-1/null/null/werw
+m-34/member3/4567/c-1/null/null/werw
